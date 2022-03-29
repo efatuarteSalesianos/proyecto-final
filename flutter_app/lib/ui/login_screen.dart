@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Container(
             height: MediaQuery.of(context).size.height,
-            color: const Color(0xFFE1E1E1),
+            color: const Color(0xFFFF5A5F),
             padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
             child: BlocConsumer<LoginBloc, LoginState>(
                 listenWhen: (context, state) {
@@ -191,8 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(288, 40),
-                      primary: const Color(0xFF0095F6),
+                      fixedSize: const Size(250, 50),
+                      primary: const Color(0xFFFF5A5F),
                       onPrimary: Colors.white,
                     ),
                     onPressed: () {
@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SvgPicture.asset('assets/images/icon/fb.svg',
+                          SvgPicture.asset('assets/images/icons/fb.svg',
                               width: 30, semanticsLabel: 'Facebook'),
                           const Padding(
                             padding: EdgeInsets.only(left: 5),
@@ -311,7 +311,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: const Text(
                             'Regístrate',
                             style: TextStyle(
-                                fontSize: 16, color: Color(0xFF0095F6)),
+                                fontSize: 16, color: Color(0xFFFF5A5F)),
                           )),
                     ],
                   )),

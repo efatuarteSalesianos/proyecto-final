@@ -47,7 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     PreferenceUtils.init();
     _dateController.text = "";
     super.initState();
-    ;
   }
 
   @override
@@ -80,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          decoration: const BoxDecoration(color: Color(0xFFE1E1E1)),
+          decoration: const BoxDecoration(color: Color(0xFFFF5A5F)),
           child: ListView(
             children: [
               Container(
@@ -121,7 +120,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     fixedSize: const Size(275, 40),
-                                    primary: const Color(0xFF0095F6),
+                                    primary: const Color(0xFFFF5A5F),
                                     onPrimary: Colors.white,
                                   ),
                                   onPressed: () {
@@ -134,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(
-                                            'assets/images/icon/fb_white.svg',
+                                            'assets/images/icons/fb_white.svg',
                                             width: 28,
                                             semanticsLabel: 'Facebook'),
                                         const Padding(
@@ -545,8 +544,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 },
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(275, 40),
-                                    primary: const Color(0xFF0095F6),
+                                    fixedSize: const Size(250, 50),
+                                    primary: const Color(0xFFFF5A5F),
                                     onPrimary: Colors.white,
                                   ),
                                   onPressed: () {},
@@ -606,7 +605,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         'Entrar',
                                         style: TextStyle(
                                             fontSize: 16,
-                                            color: Color(0xFF0095F6)),
+                                            color: Color(0xFFFF5A5F)),
                                       )),
                                 ],
                               )),
