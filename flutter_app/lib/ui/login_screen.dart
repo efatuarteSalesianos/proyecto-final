@@ -42,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Container(
             height: MediaQuery.of(context).size.height,
-            color: const Color(0xFFE1E1E1),
+            color: const Color(0xFFFF5A5F),
             padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
             child: BlocConsumer<LoginBloc, LoginState>(
                 listenWhen: (context, state) {
@@ -191,7 +191,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(288, 50),
+                      fixedSize: const Size(250, 50),
                       primary: const Color(0xFFFF5A5F),
                       onPrimary: Colors.white,
                     ),

@@ -47,7 +47,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     PreferenceUtils.init();
     _dateController.text = "";
     super.initState();
-    ;
   }
 
   @override
@@ -80,7 +79,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return MaterialApp(
       home: Scaffold(
         body: Container(
-          decoration: const BoxDecoration(color: Color(0xFFE1E1E1)),
+          decoration: const BoxDecoration(color: Color(0xFFFF5A5F)),
           child: ListView(
             children: [
               Container(
@@ -545,7 +544,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 },
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(275, 50),
+                                    fixedSize: const Size(250, 50),
                                     primary: const Color(0xFFFF5A5F),
                                     onPrimary: Colors.white,
                                   ),
