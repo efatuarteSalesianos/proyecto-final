@@ -78,10 +78,10 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
               });
             },
             icon: pageIndex == 0
-                ? SvgPicture.asset('assets/images/icon/home_filled.svg',
+                ? SvgPicture.asset('assets/images/icons/home_filled.svg',
                     width: 23, semanticsLabel: 'Home Filled')
                 : SvgPicture.asset(
-                    'assets/images/icon/home.svg',
+                    'assets/images/icons/home.svg',
                     width: 23,
                     semanticsLabel: 'Home',
                     color: Colors.grey,
@@ -96,13 +96,13 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 1
                 ? SvgPicture.asset(
-                    'assets/images/icon/search.svg',
+                    'assets/images/icons/search.svg',
                     width: 23,
                     semanticsLabel: 'Search',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icon/search.svg',
+                    'assets/images/icons/search.svg',
                     width: 23,
                     semanticsLabel: 'Search',
                     color: Colors.grey,
@@ -117,13 +117,13 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 2
                 ? SvgPicture.asset(
-                    'assets/images/icon/reels.svg',
+                    'assets/images/icons/reels.svg',
                     width: 23,
                     semanticsLabel: 'Reels',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icon/reels.svg',
+                    'assets/images/icons/reels.svg',
                     width: 23,
                     semanticsLabel: 'Reels',
                     color: Colors.grey,
@@ -138,13 +138,13 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 3
                 ? SvgPicture.asset(
-                    'assets/images/icon/shop.svg',
+                    'assets/images/icons/shop.svg',
                     width: 23,
                     semanticsLabel: 'Shop',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icon/shop.svg',
+                    'assets/images/icons/shop.svg',
                     width: 23,
                     semanticsLabel: 'Shop',
                     color: Colors.grey,

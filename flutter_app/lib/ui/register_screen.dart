@@ -120,8 +120,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const EdgeInsets.symmetric(vertical: 15),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(275, 40),
-                                    primary: const Color(0xFF0095F6),
+                                    fixedSize: const Size(275, 50),
+                                    primary: const Color(0xFFFF5A5F),
                                     onPrimary: Colors.white,
                                   ),
                                   onPressed: () {
@@ -134,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     child: Row(
                                       children: [
                                         SvgPicture.asset(
-                                            'assets/images/icon/fb_white.svg',
+                                            'assets/images/icons/fb_white.svg',
                                             width: 28,
                                             semanticsLabel: 'Facebook'),
                                         const Padding(
@@ -545,8 +545,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 },
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(275, 40),
-                                    primary: const Color(0xFF0095F6),
+                                    fixedSize: const Size(275, 50),
+                                    primary: const Color(0xFFFF5A5F),
                                     onPrimary: Colors.white,
                                   ),
                                   onPressed: () {},
@@ -606,7 +606,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         'Entrar',
                                         style: TextStyle(
                                             fontSize: 16,
-                                            color: Color(0xFF0095F6)),
+                                            color: Color(0xFFFF5A5F)),
                                       )),
                                 ],
                               )),
