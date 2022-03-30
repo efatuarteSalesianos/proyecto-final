@@ -103,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 30),
                     child: SvgPicture.asset('assets/images/logo.svg',
-                        width: 200, semanticsLabel: 'Instagram Logo'),
+                        width: 200, semanticsLabel: 'MySalon Logo'),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30),

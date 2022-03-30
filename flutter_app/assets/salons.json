@@ -1,0 +1,139 @@
+{
+    "notifications": [{
+            "name": "emeelegg",
+            "profilePic": "https://randomuser.me/api/portraits/women/1.jpg",
+            "content": " le ha gustado tu reel. ",
+            "postImage": "https://randomuser.me/api/portraits/men/2.jpg",
+            "timeAgo": "20s",
+            "hasStory": true
+        },
+        {
+            "name": "AlvaroFRivas",
+            "profilePic": "https://randomuser.me/api/portraits/men/3.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "1m",
+            "hasStory": false
+        },
+        {
+            "name": "RolicD",
+            "profilePic": "https://randomuser.me/api/portraits/men/4.jpg",
+            "content": " le ha gustado tu publicación. ",
+            "postImage": "https://randomuser.me/api/portraits/men/5.jpg",
+            "timeAgo": "1m",
+            "hasStory": true
+        },
+        {
+            "name": "Crimaroca",
+            "profilePic": "https://randomuser.me/api/portraits/women/6.jpg",
+            "content": " le ha gustado tu publicación. ",
+            "postImage": "https://randomuser.me/api/portraits/men/7.jpg",
+            "timeAgo": "1m",
+            "hasStory": true
+        },
+        {
+            "name": "LuisJV93",
+            "profilePic": "https://randomuser.me/api/portraits/men/8.jpg",
+            "content": " le ha gustado tu reel. ",
+            "postImage": "https://randomuser.me/api/portraits/men/9.jpg",
+            "timeAgo": "2m",
+            "hasStory": false
+        },
+        {
+            "name": "rehagal11",
+            "profilePic": "https://randomuser.me/api/portraits/men/10.jpg",
+            "content": " le ha gustado tu publicación. ",
+            "postImage": "https://randomuser.me/api/portraits/men/11.jpg",
+            "timeAgo": "3m",
+            "hasStory": true
+        },
+        {
+            "name": "alo.oficial",
+            "profilePic": "https://randomuser.me/api/portraits/men/12.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "3m",
+            "hasStory": false
+        },
+        {
+            "name": "carlos.sainz55",
+            "profilePic": "https://randomuser.me/api/portraits/men/13.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "3m",
+            "hasStory": false
+        },
+        {
+            "name": "mariyisus97",
+            "profilePic": "https://randomuser.me/api/portraits/women/14.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "4m",
+            "hasStory": true
+        },
+        {
+            "name": "efatuarte",
+            "profilePic": "https://randomuser.me/api/portraits/men/15.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "4m",
+            "hasStory": false
+        },
+        {
+            "name": "taniadls",
+            "profilePic": "https://randomuser.me/api/portraits/men/16.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "4m",
+            "hasStory": false
+        },
+        {
+            "name": "navalcode",
+            "profilePic": "https://randomuser.me/api/portraits/men/17.jpg",
+            "content": " le ha gustado tu publicación. ",
+            "postImage": "https://randomuser.me/api/portraits/men/18.jpg",
+            "timeAgo": "3m",
+            "hasStory": true
+        },
+        {
+            "name": "elbocadillero",
+            "profilePic": "https://randomuser.me/api/portraits/men/19.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "3m",
+            "hasStory": false
+        },
+        {
+            "name": "thiago_barr1",
+            "profilePic": "https://randomuser.me/api/portraits/men/20.jpg",
+            "content": " le ha gustado tu publicación. ",
+            "postImage": "https://randomuser.me/api/portraits/men/21.jpg",
+            "timeAgo": "3m",
+            "hasStory": true
+        },
+        {
+            "name": "BWTAlpineF1Team",
+            "profilePic": "https://randomuser.me/api/portraits/men/22.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "3m",
+            "hasStory": false
+        },
+        {
+            "name": "JoseMLaraR_",
+            "profilePic": "https://randomuser.me/api/portraits/men/23.jpg",
+            "content": " le ha gustado tu publicación. ",
+            "postImage": "https://randomuser.me/api/portraits/men/24.jpg",
+            "timeAgo": "3m",
+            "hasStory": true
+        },
+        {
+            "name": "CristinaEB95",
+            "profilePic": "https://randomuser.me/api/portraits/women/25.jpg",
+            "content": " empezó a seguirte. ",
+            "postImage": "",
+            "timeAgo": "3m",
+            "hasStory": false
+        }
+    ]
+}
