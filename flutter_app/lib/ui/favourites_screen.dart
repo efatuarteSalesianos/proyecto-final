@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyHomeScreen());
+  runApp(const MyFavouritesScreen());
 }
 
-class MyHomeScreen extends StatelessWidget {
-  const MyHomeScreen({Key? key}) : super(key: key);
+class MyFavouritesScreen extends StatelessWidget {
+  const MyFavouritesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         // Remove the debug banner
         debugShowCheckedModeBanner: false,
-        title: 'MySalon',
+        title: 'Mis Favoritos',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomeScreen());
+        home: const FavouritesScreen());
   }
 }
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+class FavouritesScreen extends StatefulWidget {
+  const FavouritesScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _FavouritesScreenState createState() => _FavouritesScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _FavouritesScreenState extends State<FavouritesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,28 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
             pinned: true,
             snap: false,
             centerTitle: false,
-            title: const Text('MySalon'),
+            title: const Text('Mis Favoritos'),
             actions: [
               IconButton(
                 icon: const Icon(Icons.exit_to_app),
                 onPressed: () {},
               ),
             ],
-            bottom: AppBar(
-              title: Container(
-                width: double.infinity,
-                height: 40,
-                color: Colors.white,
-                child: const Center(
-                  child: TextField(
-                    decoration: InputDecoration(
-                        hintText: '¿Dónde quieres buscar?',
-                        prefixIcon: Icon(Icons.search),
-                        suffixIcon: Icon(Icons.map_outlined)),
-                  ),
-                ),
-              ),
-            ),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(

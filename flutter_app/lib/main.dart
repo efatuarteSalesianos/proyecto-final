@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/bookings_screen.dart';
+import 'package:flutter_app/ui/favourites_screen.dart';
 import 'package:flutter_app/ui/home_screen.dart';
 import 'package:flutter_app/ui/login_screen.dart';
+import 'package:flutter_app/ui/profile_screen.dart';
 import 'package:flutter_app/ui/register_screen.dart';
 import 'package:flutter_app/ui/splash_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
@@ -25,6 +28,9 @@ class MyApp extends StatelessWidget {
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const RegisterScreen(),
         '/home': (context) => const HomeScreen(),
+        '/favourites': (context) => const FavouritesScreen(),
+        '/bookings': (context) => const BookingsScreen(),
+        '/profile': (context) => const ProfileScreen(),
         '/menu': (context) => const BottomNavbarWidget(),
       },
     );

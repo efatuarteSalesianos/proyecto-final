@@ -1,4 +1,7 @@
+import 'package:flutter_app/ui/bookings_screen.dart';
+import 'package:flutter_app/ui/favourites_screen.dart';
 import 'package:flutter_app/ui/home_screen.dart';
+import 'package:flutter_app/ui/profile_screen.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter/material.dart';
 
@@ -46,10 +49,10 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
 
   final pages = [
     const HomeScreen(),
+    const FavouritesScreen(),
     const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+    const BookingsScreen(),
+    const ProfileScreen(),
   ];
 
   @override
