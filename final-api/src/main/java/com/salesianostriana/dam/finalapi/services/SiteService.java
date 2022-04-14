@@ -32,10 +32,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     private final List<String> imagesTypes = new ArrayList<>(Arrays.asList("image/jpeg", "image/png", "image/jpg"));
     private final List<String> videoTypes = new ArrayList<>(Arrays.asList("video/mp4", "video/avi", "video/mkv"));
     private final AWSS3Service awsS3Service;
-    private final UserService userService;
     private final SiteDtoConverter siteDtoConverter;
-    private final SiteRepository siteRepository;
-    private final UserRepository userRepository;
     private final LikeRepository likeRepository;
 
     public Site createSite(CreateSiteDto createSiteDto, MultipartFile file, User user) {
@@ -54,7 +51,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new FileNotSupportedException("File type not supported");
         }
         Site site = Site.builder()
-                .title(createSiteDto.getTitle())
+                .name(createSiteDto.getName())
                 .description(createSiteDto.getDescription())
                 .originalFile(originalFileUrl)
                 .scaledFile(scaledFileUrl)
@@ -71,12 +68,12 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
             Site site = siteOptional.get();
             //Delete old files
-            awsS3Service.deleteObjetct(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
-            awsS3Service.deleteObjetct(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
+            awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
+            awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
 
-            site.setTitle(createSiteDto.getTitle());
+            site.setName(createSiteDto.getName());
             site.setDescription(createSiteDto.getDescription());
-            site.setDirection(createSiteDto.getDirection());
+            site.setAddress(createSiteDto.getAddress());
             site.setCity(createSiteDto.getCity());
             site.setPostalCode(createSiteDto.getPostalCode());
             site.setEmail(createSiteDto.getEmail());
@@ -112,8 +109,8 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
             if (user.getRol().equals(Rol.ADMIN)) {
                 //Delete old files
-                awsS3Service.deleteObjetct(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
-                awsS3Service.deleteObjetct(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
+                awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
+                awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
                 delete(site);
                 return true;
             } else {
