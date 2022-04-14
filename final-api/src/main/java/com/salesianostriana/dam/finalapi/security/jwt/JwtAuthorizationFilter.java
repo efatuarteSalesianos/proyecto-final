@@ -1,7 +1,9 @@
 package com.salesianostriana.dam.finalapi.security.jwt;
 
-import com.salesianostriana.dam.finalapi.users.models.UserEntity;
-import com.salesianostriana.dam.finalapi.users.services.UserEntityService;
+
+import com.salesianostriana.dam.finalapi.errors.exceptions.UnauthorizeException;
+import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -24,54 +26,46 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
-    private final UserEntityService userService;
+    private final UserService userService;
     private final JwtProvider jwtProvider;
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
-        // 1. Obtener el token de la petición (request)
-        String token = getJwtFromRequest(request);
-
-        // 2. Validar token
-        try {
-        if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
-
-            UUID userId = jwtProvider.getUserIdFromJwt(token);
-
-            Optional<UserEntity> userEntity = userService.findById(userId);
-
-            if (userEntity.isPresent()) {
-                UserEntity user = userEntity.get();
-                UsernamePasswordAuthenticationToken authentication =
-                new UsernamePasswordAuthenticationToken(
-                        user,
-                        user.getRol().name(),
-                        user.getAuthorities()
-                );
-                authentication.setDetails(new WebAuthenticationDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        }
-
-        } catch (Exception ex) {
-            // Informar en el log
-            log.info("No se ha podido establecer el contexto de seguridad (" + ex.getMessage() + ")");
-        }
-
-        filterChain.doFilter(request, response);
-        // 2.1 Si es válido, autenticamos al usuario
-        // 2.2 Si no es válido, lanzamos una excepcion
-    }
-
     private String getJwtFromRequest(HttpServletRequest request) {
-        // Authorization: Bearer header.payload.signature
+
         String bearerToken = request.getHeader(JwtProvider.TOKEN_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtProvider.TOKEN_PREFIX)) {
             return bearerToken.substring(JwtProvider.TOKEN_PREFIX.length());
         }
         return null;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String token = getJwtFromRequest(request);
+        try {
+            if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
+
+                UUID userId = jwtProvider.getUserIdFromJwt(token);
+
+                Optional<User> userOptional = userService.findById(userId);
+
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(
+                                    user,
+                                    user.getRol().name(),
+                                    user.getAuthorities()
+                            );
+                    authenticationToken.setDetails(new WebAuthenticationDetails(request));
+
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                }
+            }
+
+        } catch (Exception ex) {
+            throw new UnauthorizeException("Could not set user authentication in security context");
+        }
+        filterChain.doFilter(request, response);
     }
 
 }
