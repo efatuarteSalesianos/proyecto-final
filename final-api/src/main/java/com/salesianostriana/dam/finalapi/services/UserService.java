@@ -139,7 +139,7 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
             throw new StorageException("The provided file does not match any of the allowed file types, please ensure image type is jpg, jpeg or png.");
         }else {
             User userPresent = userOptional.get();
-            awsS3Service.deleteObjetct(userPresent.getAvatar().substring(userPresent.getAvatar().lastIndexOf("/")+1));
+            awsS3Service.deleteObject(userPresent.getAvatar().substring(userPresent.getAvatar().lastIndexOf("/")+1));
             String fileUrl = awsS3Service.storeCompressed(file);
 
             user.setUsername(newUser.getUsername());

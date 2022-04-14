@@ -1,6 +1,7 @@
-package com.salesianostriana.dam.finalapi.validation.username;
+package com.salesianostriana.dam.finalapi.validation.simple.validators;
 
 import com.salesianostriana.dam.finalapi.repositories.UserRepository;
+import com.salesianostriana.dam.finalapi.validation.simple.anotations.UniqueUsername;
 import lombok.AllArgsConstructor;
 
 import javax.validation.ConstraintValidator;

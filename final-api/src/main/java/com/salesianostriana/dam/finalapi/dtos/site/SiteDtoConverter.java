@@ -11,9 +11,9 @@ public class SiteDtoConverter {
     public GetSiteDto toGetSiteDto(Site site) {
         return GetSiteDto.builder()
                 .id(site.getId())
-                .title(site.getTitle())
+                .name(site.getName())
                 .description(site.getDescription())
-                .direction(site.getDirection())
+                .address(site.getAddress())
                 .city(site.getCity())
                 .postalCode(site.getPostalCode())
                 .email(site.getEmail())

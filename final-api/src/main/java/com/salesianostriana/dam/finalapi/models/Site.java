@@ -16,9 +16,9 @@ public class Site {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private String name;
     private String description;
-    private String direction;
+    private String address;
     private String city;
     private String postalCode;
     private String email;

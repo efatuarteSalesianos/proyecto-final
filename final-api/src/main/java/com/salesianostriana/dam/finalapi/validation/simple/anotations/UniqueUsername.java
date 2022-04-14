@@ -1,4 +1,6 @@
-package com.salesianostriana.dam.finalapi.validation.username;
+package com.salesianostriana.dam.finalapi.validation.simple.anotations;
+
+import com.salesianostriana.dam.finalapi.validation.simple.validators.UniqueUsernameValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
