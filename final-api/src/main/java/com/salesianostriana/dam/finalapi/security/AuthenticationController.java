@@ -1,14 +1,9 @@
 package com.salesianostriana.dam.finalapi.security;
 
-import com.salesianostriana.dam.finalapi.security.dto.JwtUserConverter;
+import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.security.dto.JwtUserResponse;
 import com.salesianostriana.dam.finalapi.security.dto.LoginDto;
 import com.salesianostriana.dam.finalapi.security.jwt.JwtProvider;
-import com.salesianostriana.dam.finalapi.users.models.UserEntity;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,44 +18,36 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 public class AuthenticationController {
-
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
-    private final JwtUserConverter jwtUserConverter;
 
-    @Operation(summary = "Se loguea un usuario")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "El usuario inicia sesión correctamente",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = UserEntity.class))}),
-            @ApiResponse(responseCode = "400",
-                    description = "Hay un error en los datos",
-                    content = @Content),
-            @ApiResponse(responseCode = "403",
-                    description = "Acceso denegado",
-                    content = @Content)
-    })
-    @PostMapping("/auth/login")
+    @PostMapping("auth/login")
     public ResponseEntity<?> login(@RequestBody LoginDto loginDto) {
 
         Authentication authentication =
                 authenticationManager.authenticate(
-                   new UsernamePasswordAuthenticationToken(
-                           loginDto.getNickname(),
-                           loginDto.getPassword()
-                   )
-                );
+                        new UsernamePasswordAuthenticationToken(
+                                loginDto.getUsername(),
+                                loginDto.getPassword()
 
+                        )
+                );
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String jwt = jwtProvider.generateToken(authentication);
 
-        UserEntity user = (UserEntity) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(jwtUserConverter.convertUserToJwtUserResponse(user, jwt));
+                .body(convertUserToJwtUserResponse(user, jwt));
     }
 
-
+    private JwtUserResponse convertUserToJwtUserResponse(User user, String jwt) {
+        return JwtUserResponse.builder()
+                .username(user.getUsername())
+                .avatar(user.getAvatar())
+                .rol(user.getRol().name())
+                .token(jwt)
+                .build();
+    }
 }

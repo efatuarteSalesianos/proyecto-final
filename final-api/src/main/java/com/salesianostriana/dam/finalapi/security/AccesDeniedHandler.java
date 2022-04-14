@@ -1,10 +1,10 @@
-package com.salesianostriana.dam.finalapi.security.jwt;
+package com.salesianostriana.dam.finalapi.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -15,16 +15,16 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
+public class AccesDeniedHandler implements AccessDeniedHandler {
     private final ObjectMapper mapper;
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.setContentType("application/json");
 
-        Map<String, String> message = Map.of("message", authException.getMessage());
+        Map<String, String> message =
+                Map.of("message", accessDeniedException.getMessage());
 
         String strjson = mapper.writeValueAsString(message);
 
