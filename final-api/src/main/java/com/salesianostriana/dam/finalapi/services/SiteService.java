@@ -11,10 +11,9 @@ import com.salesianostriana.dam.finalapi.errors.exceptions.UnauthorizeException;
 import com.salesianostriana.dam.finalapi.models.Like;
 import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.Site;
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.LikeRepository;
 import com.salesianostriana.dam.finalapi.repositories.SiteRepository;
-import com.salesianostriana.dam.finalapi.repositories.UserRepository;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     private final SiteDtoConverter siteDtoConverter;
     private final LikeRepository likeRepository;
 
-    public Site createSite(CreateSiteDto createSiteDto, MultipartFile file, User user) {
+    public Site createSite(CreateSiteDto createSiteDto, MultipartFile file, UserEntity userEntity) {
         String originalFileUrl = "";
         String scaledFileUrl = "";
         //Check if file is image or video and save it
@@ -102,12 +101,12 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public boolean deleteSite(Long siteId, User user) {
+    public boolean deleteSite(Long siteId, UserEntity userEntity) {
         Optional<Site> siteOptional = findById(siteId);
         try {
             Site site = siteOptional.get();
 
-            if (user.getRol().equals(Rol.ADMIN)) {
+            if (userEntity.getRol().equals(Rol.ADMIN)) {
                 //Delete old files
                 awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
                 awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
@@ -152,18 +151,18 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
 
     //add like
-    public Site addLike(Long siteId, User user) {
+    public Site addLike(Long siteId, UserEntity userEntity) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         } else {
-            Optional<Like> likeOptional = likeRepository.findFirstBySiteIdAndUserId(siteId,user.getId());
+            Optional<Like> likeOptional = likeRepository.findFirstBySiteIdAndUserEntityId(siteId, userEntity.getId());
             if(likeOptional.isPresent()){
                 throw new UnauthorizeException("You can't like the same site twice");
             }
             Like like = Like.builder()
                     .site(site.get())
-                    .user(user)
+                    .userEntity(userEntity)
                     .build();
 
             site.get().getLikes().add(like);
@@ -172,13 +171,13 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     }
 
     //delete like
-    public Site deleteLike(Long siteId, User user) {
+    public Site deleteLike(Long siteId, UserEntity userEntity) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         } else {
-            site.get().getLikes().removeIf(like -> like.getUser().getId().equals(user.getId()));
-            likeRepository.deleteLike(siteId, user.getId());
+            site.get().getLikes().removeIf(like -> like.getUserEntity().getId().equals(userEntity.getId()));
+            likeRepository.deleteLike(siteId, userEntity.getId());
             return save(site.get());
         }
     }

@@ -16,26 +16,26 @@ public class Like {
     private LikePK id = new LikePK();
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("user_id")
-    @JoinColumn(name = "user_id")
-    private User user;
+    @MapsId("user_entity_id")
+    @JoinColumn(name = "user_entity_id")
+    private UserEntity userEntity;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @MapsId("site_id")
     @JoinColumn(name = "site_id")
     private Site site;
 
-    public void addLikeToUser(User user) {
+    public void addLikeToUser(UserEntity userEntity) {
 
-        if (user.getLikes() == null) {
-            user.setLikes(new ArrayList<>());
-            user.getLikes().add(this);
+        if (userEntity.getLikes() == null) {
+            userEntity.setLikes(new ArrayList<>());
+            userEntity.getLikes().add(this);
         }
     }
 
-    public void removeLikeFromUser(User user) {
-        if (user.getLikes() != null) {
-            user.getLikes().remove(this);
+    public void removeLikeFromUser(UserEntity userEntity) {
+        if (userEntity.getLikes() != null) {
+            userEntity.getLikes().remove(this);
         }
     }
 

@@ -4,7 +4,7 @@ import com.salesianostriana.dam.finalapi.dtos.user.CreateUserDto;
 import com.salesianostriana.dam.finalapi.dtos.user.GetUserDto;
 import com.salesianostriana.dam.finalapi.dtos.user.UserDtoConverter;
 import com.salesianostriana.dam.finalapi.dtos.user.UserNameAvailabilityDto;
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -43,30 +43,30 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<GetUserDto>> getAllUsers(@AuthenticationPrincipal User user){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers(user).stream().map(userDtoConverter::toGetUserDto).collect(java.util.stream.Collectors.toList()));
+    public ResponseEntity<List<GetUserDto>> getAllUsers(@AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers(userEntity).stream().map(userDtoConverter::toGetUserDto).collect(java.util.stream.Collectors.toList()));
     }
 
     @PutMapping("/users/{username}/admin")
-    public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username,@AuthenticationPrincipal User user){
-        return ResponseEntity.status(HttpStatus.OK).body(userDtoConverter.toGetUserDto(userService.convertToAdmin(user,username)));
+    public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username,@AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.OK).body(userDtoConverter.toGetUserDto(userService.convertToAdmin(userEntity,username)));
     }
 
     @GetMapping("/me")
-    public ResponseEntity<GetUserDto> getAuthenticatedUser(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(userService.getAuthenticatedUser(user));
+    public ResponseEntity<GetUserDto> getAuthenticatedUser(@AuthenticationPrincipal UserEntity userEntity) {
+        return ResponseEntity.ok(userService.getAuthenticatedUser(userEntity));
     }
 
     @GetMapping("/profile/{username}")
-    public ResponseEntity<GetUserDto> getUserProfileById(@PathVariable String username,@AuthenticationPrincipal User user){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfileByUsername(username,user));
+    public ResponseEntity<GetUserDto> getUserProfileById(@PathVariable String username,@AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfileByUsername(username, userEntity));
     }
 
     @PutMapping("/profile/me")
     public ResponseEntity<GetUserDto> editMyProfile (@Valid @RequestPart CreateUserDto newUser,
                                                      @RequestPart MultipartFile file,
-                                                     @AuthenticationPrincipal User user){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.editMyProfile(newUser,file,user));
+                                                     @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.editMyProfile(newUser,file, userEntity));
     }
 
     @GetMapping("/usernameavailable/{username}")

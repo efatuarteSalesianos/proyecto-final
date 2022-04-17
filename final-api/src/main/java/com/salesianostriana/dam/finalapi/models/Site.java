@@ -34,13 +34,13 @@ public class Site {
     @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
     private List<Like> likes = new ArrayList<>();
 
-    @Builder.Default
-    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
-    private List<Appointment> appointments = new ArrayList<>();
-
-    @Builder.Default
-    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
-    private List<Comment> comments = new ArrayList<>();
+//    @Builder.Default
+//    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
+//    private List<Appointment> appointments = new ArrayList<>();
+//
+//    @Builder.Default
+//    @OneToMany(mappedBy = "site", cascade = CascadeType.ALL)
+//    private List<Comment> comments = new ArrayList<>();
 
     @PreRemove
     public void preRemove() {
@@ -49,13 +49,13 @@ public class Site {
         }
     }
 
-    //add appointment to site
-    public void addAppointmennt(Appointment appointment) {
-        this.appointments.add(appointment);
-    }
-
-    //add comment to site
-    public void addComment(Comment comment) {
-        this.comments.add(comment);
-    }
+//    //add appointment to site
+//    public void addAppointmennt(Appointment appointment) {
+//        this.appointments.add(appointment);
+//    }
+//
+//    //add comment to site
+//    public void addComment(Comment comment) {
+//        this.comments.add(comment);
+//    }
 }

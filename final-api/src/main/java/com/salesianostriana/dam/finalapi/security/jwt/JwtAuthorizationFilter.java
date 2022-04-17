@@ -2,7 +2,7 @@ package com.salesianostriana.dam.finalapi.security.jwt;
 
 
 import com.salesianostriana.dam.finalapi.errors.exceptions.UnauthorizeException;
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
@@ -46,15 +46,15 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
                 UUID userId = jwtProvider.getUserIdFromJwt(token);
 
-                Optional<User> userOptional = userService.findById(userId);
+                Optional<UserEntity> userOptional = userService.findById(userId);
 
                 if (userOptional.isPresent()) {
-                    User user = userOptional.get();
+                    UserEntity userEntity = userOptional.get();
                     UsernamePasswordAuthenticationToken authenticationToken =
                             new UsernamePasswordAuthenticationToken(
-                                    user,
-                                    user.getRol().name(),
-                                    user.getAuthorities()
+                                    userEntity,
+                                    userEntity.getRol().name(),
+                                    userEntity.getAuthorities()
                             );
                     authenticationToken.setDetails(new WebAuthenticationDetails(request));
 
@@ -63,7 +63,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
             }
 
         } catch (Exception ex) {
-            throw new UnauthorizeException("Could not set user authentication in security context");
+            throw new UnauthorizeException("Could not set userEntity authentication in security context");
         }
         filterChain.doFilter(request, response);
     }
