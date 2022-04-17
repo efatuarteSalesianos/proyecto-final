@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.finalapi.security;
 
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.security.dto.JwtUserResponse;
 import com.salesianostriana.dam.finalapi.security.dto.LoginDto;
 import com.salesianostriana.dam.finalapi.security.jwt.JwtProvider;
@@ -36,17 +36,17 @@ public class AuthenticationController {
 
         String jwt = jwtProvider.generateToken(authentication);
 
-        User user = (User) authentication.getPrincipal();
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(convertUserToJwtUserResponse(user, jwt));
+                .body(convertUserToJwtUserResponse(userEntity, jwt));
     }
 
-    private JwtUserResponse convertUserToJwtUserResponse(User user, String jwt) {
+    private JwtUserResponse convertUserToJwtUserResponse(UserEntity userEntity, String jwt) {
         return JwtUserResponse.builder()
-                .username(user.getUsername())
-                .avatar(user.getAvatar())
-                .rol(user.getRol().name())
+                .username(userEntity.getUsername())
+                .avatar(userEntity.getAvatar())
+                .rol(userEntity.getRol().name())
                 .token(jwt)
                 .build();
     }

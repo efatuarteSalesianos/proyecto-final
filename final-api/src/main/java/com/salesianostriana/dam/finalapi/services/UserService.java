@@ -10,7 +10,7 @@ import com.salesianostriana.dam.finalapi.errors.exceptions.PasswordMissMatchExce
 import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
 import com.salesianostriana.dam.finalapi.errors.exceptions.UnauthorizeException;
 import com.salesianostriana.dam.finalapi.models.Rol;
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.UserRepository;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +25,7 @@ import java.util.*;
 
 @Service("userDetailsService")
 @RequiredArgsConstructor
-public class UserService extends BaseService<User, UUID, UserRepository> implements UserDetailsService {
+public class UserService extends BaseService<UserEntity, UUID, UserRepository> implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserDtoConverter userDtoConverter;
@@ -39,11 +39,11 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
                 .orElseThrow(() -> new UsernameNotFoundException(username + " no encontrado"));
     }
 
-    public User saveUser(CreateUserDto newUser, MultipartFile file) {
+    public UserEntity saveUser(CreateUserDto newUser, MultipartFile file) {
         String fileUrl = awsS3Service.storeCompressed(file);
 
         if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
-            User user = User.builder()
+            UserEntity userEntity = UserEntity.builder()
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
@@ -51,17 +51,17 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
                     .rol(Rol.USER)
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .build();
-            return save(user);
+            return save(userEntity);
         } else {
             throw new PasswordMissMatchException();
         }
     }
 
-    public User saveAdmin(CreateUserDto newUser, MultipartFile file) {
+    public UserEntity saveAdmin(CreateUserDto newUser, MultipartFile file) {
         String fileUrl = awsS3Service.storeCompressed(file);
 
         if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
-            User user = User.builder()
+            UserEntity userEntity = UserEntity.builder()
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
@@ -70,20 +70,20 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
                     .phone(newUser.getPhone())
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .build();
-            return save(user);
+            return save(userEntity);
         } else {
             throw new PasswordMissMatchException();
         }
     }
 
     // convertToAdmin
-    public User convertToAdmin(User user, String username) {
-        Optional <User> userOptional = userRepository.findFirstByUsername(username);
+    public UserEntity convertToAdmin(UserEntity userEntity, String username) {
+        Optional <UserEntity> userOptional = userRepository.findFirstByUsername(username);
         if (userOptional.isEmpty()) {
-            throw new EntityNotFoundException("User not found");
+            throw new EntityNotFoundException("UserEntity not found");
         }
-        if (user.getRol() == Rol.ADMIN) {
-            User newAdmin = userOptional.get();
+        if (userEntity.getRol() == Rol.ADMIN) {
+            UserEntity newAdmin = userOptional.get();
 
             newAdmin.setRol(Rol.ADMIN);
             return save(newAdmin);
@@ -92,29 +92,29 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
         }
     }
 
-    public List<User> getAllUsers(User user){
-        List<User> userOptional = userRepository.findAll();
-        if(userOptional.isEmpty()){ throw new EntityNotFoundException("There are no users to show"); }
-        if(user.getRol().equals(Rol.ADMIN)){
+    public List<UserEntity> getAllUsers(UserEntity userEntity){
+        List<UserEntity> userEntityOptional = userRepository.findAll();
+        if(userEntityOptional.isEmpty()){ throw new EntityNotFoundException("There are no users to show"); }
+        if(userEntity.getRol().equals(Rol.ADMIN)){
             return userRepository.findAll();
         }else{
             throw new UnauthorizeException("Only admins can see all users");
         }
     }
 
-    public GetUserDto getAuthenticatedUser(User user) {
-        if (user == null) {
-            throw new EntityNotFoundException("User not found");
+    public GetUserDto getAuthenticatedUser(UserEntity userEntity) {
+        if (userEntity == null) {
+            throw new EntityNotFoundException("UserEntity not found");
         } else
-            return userDtoConverter.toGetUserDto(user);
+            return userDtoConverter.toGetUserDto(userEntity);
     }
 
-    public GetUserDto getUserProfileByUsername(String username, User userPrincipal) {
-        Optional<User> user = userRepository.findFirstByUsername(username);
+    public GetUserDto getUserProfileByUsername(String username, UserEntity userEntityPrincipal) {
+        Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
-            throw new EntityNotFoundException("No user matches the provided username");
+            throw new EntityNotFoundException("No userEntity matches the provided username");
         }else{
-            if(user.get().getId().equals(userPrincipal.getId())){
+            if(user.get().getId().equals(userEntityPrincipal.getId())){
                 return userDtoConverter.toGetUserDto(user.get());
             }
             return userDtoConverter.toGetUserDto(user.get());
@@ -122,7 +122,7 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
     }
 
     public UserNameAvailabilityDto checkUsernameAvailability(String username){
-        Optional<User> user = userRepository.findFirstByUsername(username);
+        Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
             return new UserNameAvailabilityDto(username,true);
         }else{
@@ -130,26 +130,26 @@ public class UserService extends BaseService<User, UUID, UserRepository> impleme
         }
     }
 
-    public GetUserDto editMyProfile (CreateUserDto newUser, MultipartFile file, User user){
-        Optional<User> userOptional = findById(user.getId());
+    public GetUserDto editMyProfile (CreateUserDto newUser, MultipartFile file, UserEntity userEntity){
+        Optional<UserEntity> userOptional = findById(userEntity.getId());
 
         if(userOptional.isEmpty()){
-            throw new EntityNotFoundException("No user matches the actual user");
+            throw new EntityNotFoundException("No userEntity matches the actual userEntity");
         }else if (file == null || !imagesTypes.contains(file.getContentType())){
             throw new StorageException("The provided file does not match any of the allowed file types, please ensure image type is jpg, jpeg or png.");
         }else {
-            User userPresent = userOptional.get();
-            awsS3Service.deleteObject(userPresent.getAvatar().substring(userPresent.getAvatar().lastIndexOf("/")+1));
+            UserEntity userEntityPresent = userOptional.get();
+            awsS3Service.deleteObject(userEntityPresent.getAvatar().substring(userEntityPresent.getAvatar().lastIndexOf("/")+1));
             String fileUrl = awsS3Service.storeCompressed(file);
 
-            user.setUsername(newUser.getUsername());
-            user.setAvatar(fileUrl);
-            user.setBirthDate(newUser.getBirthDate());
-            user.setEmail(newUser.getEmail());
-            user.setPhone(newUser.getPhone());
-            user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            userEntity.setUsername(newUser.getUsername());
+            userEntity.setAvatar(fileUrl);
+            userEntity.setBirthDate(newUser.getBirthDate());
+            userEntity.setEmail(newUser.getEmail());
+            userEntity.setPhone(newUser.getPhone());
+            userEntity.setPassword(passwordEncoder.encode(newUser.getPassword()));
 
-            return userDtoConverter.toGetUserDto(save(user));
+            return userDtoConverter.toGetUserDto(save(userEntity));
         }
     }
 }

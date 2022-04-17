@@ -11,7 +11,7 @@ import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.SiteConstruct;
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -31,7 +31,7 @@ public class StorageService {
         this.rootLocation = Paths.get(properties.getLocation());
     }
 
-    @SiteConstruct
+    @PostConstruct
     public void init() {
         try {
             Files.createDirectories(rootLocation);

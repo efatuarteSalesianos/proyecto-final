@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.finalapi.security.jwt;
 
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.SiteConstruct;
+import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -22,7 +22,7 @@ public class JwtProvider {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    @Value("${jwt.secret:unsecretoquenadiemasdeberiaconocer}")
+    @Value("${jwt.secret:elsecretodelaapiestaenlamasamaslarga}")
     private String jwtSecret;
 
     @Value("${jwt.duration:86400}")
@@ -31,7 +31,7 @@ public class JwtProvider {
     private JwtParser parser;
 
     //Esto sirve para inicializar el parser, de lo contrario quedaría como null
-    @SiteConstruct
+    @PostConstruct
     public void init() {
         parser = Jwts.parserBuilder()
                 .setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
@@ -41,7 +41,7 @@ public class JwtProvider {
     //Método para construir el token jwt
     public String generateToken(Authentication authentication) {
 
-        User user = (User) authentication.getPrincipal();
+        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
 
         Date tokenExpirationDate = Date
                 .from(LocalDateTime
@@ -52,11 +52,11 @@ public class JwtProvider {
 
         return Jwts.builder()
                 .setHeaderParam("typ", TOKEN_TYPE)
-                .setSubject(user.getId().toString())
+                .setSubject(userEntity.getId().toString())
                 .setIssuedAt(tokenExpirationDate)
-                .claim("username", user.getUsername())
-                .claim("avatar", user.getAvatar())
-                .claim("role", user.getRol().name())
+                .claim("username", userEntity.getUsername())
+                .claim("avatar", userEntity.getAvatar())
+                .claim("role", userEntity.getRol().name())
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .compact();
 

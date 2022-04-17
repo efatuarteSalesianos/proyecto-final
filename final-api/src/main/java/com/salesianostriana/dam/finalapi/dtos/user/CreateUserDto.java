@@ -27,21 +27,21 @@ import java.util.Date;
 })
 public class CreateUserDto {
 
-    @NotBlank(message = "{user.full_name.blank}")
+    @NotBlank(message = "{userEntity.full_name.blank}")
     private String full_name;
-    @UniqueUsername(message = "{user.username.unique}")
-    @NotBlank(message = "{user.username.blank}")
+    @UniqueUsername(message = "{userEntity.username.unique}")
+    @NotBlank(message = "{userEntity.username.blank}")
     private String username;
-    @NotBlank(message = "{user.email.blank}")
-    @Email(message = "{user.email.email}")
+    @NotBlank(message = "{userEntity.email.blank}")
+    @Email(message = "{userEntity.email.email}")
     private String email;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    @NotBlank(message = "{user.birthDate.blank}")
+    @NotBlank(message = "{userEntity.birthDate.blank}")
     private Date birthDate;
-    @NotBlank(message = "{user.phone.blank}")
-    @Size(min = 9, max = 9, message = "{user.phone.size}")
+    @NotBlank(message = "{userEntity.phone.blank}")
+    @Size(min = 9, max = 9, message = "{userEntity.phone.size}")
     private String phone;
-    @NotBlank(message = "{user.password.blank}")
+    @NotBlank(message = "{userEntity.password.blank}")
     private String password;
     private String password2;
 }

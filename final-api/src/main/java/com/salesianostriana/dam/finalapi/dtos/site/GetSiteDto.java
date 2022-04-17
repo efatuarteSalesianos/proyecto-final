@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.finalapi.dtos.site;
 
-import com.salesianostriana.dam.finalapi.models.Comment;
 import lombok.*;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class GetSiteDto {
     private String email;
     private String web;
     private String phone;
-    private List<Comment> comments;
+//    private List<Comment> comments;
     private int total_comments;
     private double rate;
     private String OriginalFileUrl;

@@ -3,7 +3,7 @@ package com.salesianostriana.dam.finalapi.controllers;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
-import com.salesianostriana.dam.finalapi.models.User;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.SiteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,38 +35,38 @@ public class SiteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GetSiteDto> getSingleSite(@PathVariable Long id, @AuthenticationPrincipal User user){
+    public ResponseEntity<GetSiteDto> getSingleSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.getSingleSite(id)));
     }
 
     @PostMapping("/")
     public ResponseEntity<GetSiteDto> createSite(@Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
-                                                 @AuthenticationPrincipal User user) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file, user)));
+                                                 @AuthenticationPrincipal UserEntity userEntity) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file, userEntity)));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<GetSiteDto> createSite(@PathVariable Long id, @Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
-                                                 @AuthenticationPrincipal User user) {
+                                                 @AuthenticationPrincipal UserEntity userEntity) {
         return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.editSite(id, newSite, file)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSite(@PathVariable Long id, @AuthenticationPrincipal User user) {
-        return siteService.deleteSite(id, user) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
+    public ResponseEntity<Void> deleteSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity) {
+        return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
 
     }
 
     @PostMapping("/like/{id}")
-    public ResponseEntity<GetSiteDto> addLike (@PathVariable Long id, @AuthenticationPrincipal User user){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.addLike(id,user)));
+    public ResponseEntity<GetSiteDto> addLike (@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.addLike(id, userEntity)));
     }
 
     @DeleteMapping("/like/{id}")
-    public ResponseEntity<GetSiteDto> deleteLike (@PathVariable Long id, @AuthenticationPrincipal User user){
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(id,user)));
+    public ResponseEntity<GetSiteDto> deleteLike (@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(id, userEntity)));
     }
 
 
