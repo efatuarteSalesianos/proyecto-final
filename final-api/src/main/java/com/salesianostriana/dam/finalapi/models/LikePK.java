@@ -14,7 +14,7 @@ import java.util.UUID;
 @NoArgsConstructor @AllArgsConstructor
 public class LikePK implements Serializable {
 
-    private UUID user_entity_id;
+    private UUID cliente_id;
     private Long site_id;
 
 }

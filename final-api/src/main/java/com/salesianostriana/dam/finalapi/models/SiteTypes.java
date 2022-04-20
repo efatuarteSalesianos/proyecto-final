@@ -1,7 +1,10 @@
 package com.salesianostriana.dam.finalapi.models;
 
 public enum SiteTypes {
-    PELUQUERIA("PELUQUERIA"), BARBERIA("BARBERIA"), CENTRO_ESTETICA("CENTRO_ESTETICA"), SALON_BELLEZA("SALON_BELLEZA");
+    PELUQUERIA("PELUQUERIA"),
+    BARBERIA("BARBERIA"),
+    CENTRO_ESTETICA("CENTRO_ESTETICA"),
+    SALON_BELLEZA("SALON_BELLEZA");
 
     private String value;
 

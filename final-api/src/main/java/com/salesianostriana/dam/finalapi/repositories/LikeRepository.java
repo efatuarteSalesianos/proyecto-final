@@ -14,9 +14,9 @@ public interface LikeRepository extends JpaRepository<Like, LikePK> {
 
     @Modifying
     @Transactional
-    @Query(value = "DELETE FROM site_likes WHERE site_id = :site AND user_entity_id = :user_entity", nativeQuery = true)
-    void deleteLike(Long site, UUID user_entity);
+    @Query(value = "DELETE FROM site_likes WHERE site_id = :site AND cliente_id = :cliente_id", nativeQuery = true)
+    void deleteLike(Long site, UUID cliente_id);
 
-    Optional<Like> findFirstBySiteIdAndUserEntityId(Long siteId, UUID userId);
+    Optional<Like> findFirstBySiteIdAndClienteId(Long siteId, UUID userId);
 
 }

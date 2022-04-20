@@ -1,15 +1,16 @@
 package com.salesianostriana.dam.finalapi.dtos.site;
 
 import com.salesianostriana.dam.finalapi.models.Site;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class SiteDtoConverter {
     public GetSiteDto toGetSiteDto(Site site) {
         return GetSiteDto.builder()
-                .id(site.getId())
                 .name(site.getName())
                 .description(site.getDescription())
                 .address(site.getAddress())
@@ -21,7 +22,7 @@ public class SiteDtoConverter {
 //                .comments(site.getComments())
 //                .total_comments((site.getComments().size()))
 //                .rate(average_rate(site.getComments()))
-                .OriginalFileUrl(site.getOriginalFile())
+                .originalFileUrl(site.getOriginalFile())
                 .scaledFileUrl(site.getScaledFile())
                 .likes(site.getLikes().size())
                 .likes(site.getLikes().size())

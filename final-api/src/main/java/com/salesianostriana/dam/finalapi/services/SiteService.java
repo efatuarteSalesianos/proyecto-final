@@ -151,18 +151,18 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
 
     //add like
-    public Site addLike(Long siteId, UserEntity userEntity) {
+    public Site addLike(Long siteId, UserEntity cliente) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         } else {
-            Optional<Like> likeOptional = likeRepository.findFirstBySiteIdAndUserEntityId(siteId, userEntity.getId());
+            Optional<Like> likeOptional = likeRepository.findFirstBySiteIdAndClienteId(siteId, cliente.getId());
             if(likeOptional.isPresent()){
                 throw new UnauthorizeException("You can't like the same site twice");
             }
             Like like = Like.builder()
                     .site(site.get())
-                    .userEntity(userEntity)
+                    .cliente(cliente)
                     .build();
 
             site.get().getLikes().add(like);
@@ -176,7 +176,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         } else {
-            site.get().getLikes().removeIf(like -> like.getUserEntity().getId().equals(userEntity.getId()));
+            site.get().getLikes().removeIf(like -> like.getCliente().getId().equals(userEntity.getId()));
             likeRepository.deleteLike(siteId, userEntity.getId());
             return save(site.get());
         }

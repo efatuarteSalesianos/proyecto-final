@@ -48,7 +48,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
                     .birthDate(newUser.getBirthDate())
-                    .rol(Rol.USER)
+                    .rol(Rol.CLIENTE)
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .build();
             return save(userEntity);
@@ -66,6 +66,25 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
                     .rol(Rol.ADMIN)
+                    .birthDate(newUser.getBirthDate())
+                    .phone(newUser.getPhone())
+                    .password(passwordEncoder.encode(newUser.getPassword()))
+                    .build();
+            return save(userEntity);
+        } else {
+            throw new PasswordMissMatchException();
+        }
+    }
+
+    public UserEntity savePropietario(CreateUserDto newUser, MultipartFile file) {
+        String fileUrl = awsS3Service.storeCompressed(file);
+
+        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+            UserEntity userEntity = UserEntity.builder()
+                    .username(newUser.getUsername())
+                    .email(newUser.getEmail())
+                    .avatar(fileUrl)
+                    .rol(Rol.PROPIETARIO)
                     .birthDate(newUser.getBirthDate())
                     .phone(newUser.getPhone())
                     .password(passwordEncoder.encode(newUser.getPassword()))
@@ -100,6 +119,10 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         }else{
             throw new UnauthorizeException("Only admins can see all users");
         }
+    }
+
+    public List<UserEntity> findByRol(Rol rol) {
+        return userRepository.findUserEntityByRol(rol);
     }
 
     public GetUserDto getAuthenticatedUser(UserEntity userEntity) {
