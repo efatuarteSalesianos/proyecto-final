@@ -4,8 +4,16 @@ import com.salesianostriana.dam.finalapi.dtos.user.CreateUserDto;
 import com.salesianostriana.dam.finalapi.dtos.user.GetUserDto;
 import com.salesianostriana.dam.finalapi.dtos.user.UserDtoConverter;
 import com.salesianostriana.dam.finalapi.dtos.user.UserNameAvailabilityDto;
+import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +29,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @Validated
+@Tag(name="Usuarios", description = "Clase controladora de la seguridad de los usuarios")
 public class UserController {
     private final UserService userService;
     private final UserDtoConverter userDtoConverter;
@@ -39,6 +48,14 @@ public class UserController {
                                                @RequestPart("file") MultipartFile file) {
 
             return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(userService.saveAdmin(newUser, file)));
+
+    }
+
+    @PostMapping("/auth/register/propietario")
+    public ResponseEntity<GetUserDto> newPropietario(@Valid @RequestPart("newUser") CreateUserDto newUser,
+                                               @RequestPart("file") MultipartFile file) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(userService.savePropietario(newUser, file)));
 
     }
 

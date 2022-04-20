@@ -1,7 +1,7 @@
 package com.salesianostriana.dam.finalapi.models;
 
 public enum Rol {
-    ADMIN("ADMIN"), USER("USER");
+    ADMIN("ADMIN"), CLIENTE("CLIENTE"), PROPIETARIO("PROPIETARIO"), ;
 
     private String value;
 

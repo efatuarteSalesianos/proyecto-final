@@ -35,12 +35,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 
-    @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -53,21 +47,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/auth/register").anonymous()
-                .antMatchers("/auth/register/admin").anonymous()
-                .antMatchers("/auth/login").anonymous()
+                .antMatchers(HttpMethod.POST, "/auth/register/PROPIETARIO").anonymous()
+                .antMatchers(HttpMethod.POST, "/auth/login").anonymous()
+                .antMatchers(HttpMethod.POST, "/auth/register/ADMIN").hasRole("ADMIN")
                 .antMatchers("/usernameavailable/**").anonymous()
-                .antMatchers("/site/").hasRole("USER")
-                .antMatchers(HttpMethod.GET,"/site/public").hasAnyRole("USER","ADMIN")
-                .antMatchers(HttpMethod.GET,"follow/list").anonymous() //TODO: Change to USER or ADMIN
+                .antMatchers(HttpMethod.GET, "/propietario/").anonymous()
+                .antMatchers(HttpMethod.GET, "/propietario/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
+                .antMatchers(HttpMethod.DELETE, "/propietario/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
+                .antMatchers(HttpMethod.POST, "/site/").hasRole("PROPIETARIO")
+                .antMatchers(HttpMethod.GET, "/site/").anonymous()
+                .antMatchers(HttpMethod.GET, "/site/{id}").anonymous()
+                .antMatchers(HttpMethod.PUT, "/site/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
+                .antMatchers(HttpMethod.DELETE, "/site/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
                 .anyRequest().authenticated();
 
-        http.exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler);
-
-        http.headers().frameOptions().disable();
-
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+
+        // Para dar acceso a h2
+        http.headers().frameOptions().disable();
+    }
+
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
     }
 }

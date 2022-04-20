@@ -8,7 +8,6 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class GetSiteDto {
-    private Long id;
     private String name;
     private String description;
     private String address;
@@ -20,7 +19,7 @@ public class GetSiteDto {
 //    private List<Comment> comments;
     private int total_comments;
     private double rate;
-    private String OriginalFileUrl;
+    private String originalFileUrl;
     private String scaledFileUrl;
     private int likes;
     private boolean liked;

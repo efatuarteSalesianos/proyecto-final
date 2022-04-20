@@ -30,11 +30,14 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
+    @OneToMany(mappedBy = "propietario", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private List<Site> negocios = new ArrayList<>();
+
 //    @OneToMany(mappedBy = "user_entity", cascade = CascadeType.ALL)
 //    private List<Comment> comments = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private List<Like> likes = new ArrayList<>();
 
     @Override

@@ -9,9 +9,9 @@ import java.util.Date;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class GetUserDto {
+    private String full_name;
     private String username;
     private String email;
-    private boolean privateAccount;
     private String avatar;
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
