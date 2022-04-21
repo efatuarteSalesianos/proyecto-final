@@ -93,6 +93,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.white,
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation: 10,
                         child: Container(
                           padding: const EdgeInsets.all(30),
                           child: Column(
@@ -104,10 +108,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 child: SvgPicture.asset(
                                     'assets/images/logo.svg',
                                     width: 200,
-                                    semanticsLabel: 'Instagram Logo'),
+                                    semanticsLabel: 'MySalon Logo'),
                               ),
                               const Text(
-                                'Regístrate para ver fotos y vídeos de tus amigos.',
+                                'Regístrate para acceder a miles de nuestros servicios de belleza en España .',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
@@ -201,7 +205,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: TextFormField(
                                   controller: _nameController,
-                                  keyboardType: TextInputType.emailAddress,
                                   style: const TextStyle(
                                     fontSize: 18,
                                     color: Colors.black,
@@ -231,9 +234,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   onSaved: (String? value) {},
                                   validator: (String? value) {
-                                    return (value == null ||
-                                            !value.contains('@'))
-                                        ? 'El nombre no es válido'
+                                    return (value == null)
+                                        ? 'Debe indicar su nombre completo'
                                         : null;
                                   },
                                 ),
@@ -284,6 +286,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 padding:
                                     const EdgeInsets.symmetric(horizontal: 10),
                                 child: TextFormField(
+                                  maxLength: 9,
                                   controller: _phoneController,
                                   keyboardType: TextInputType.emailAddress,
                                   style: const TextStyle(
@@ -315,8 +318,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                   onSaved: (String? value) {},
                                   validator: (String? value) {
-                                    return (value == null ||
-                                            !value.contains('@'))
+                                    return (value == null)
                                         ? 'El teléfono no es válido'
                                         : null;
                                   },
@@ -413,7 +415,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           _dateController.text = formattedDate;
                                         });
                                       } else {
-                                        print("Date is not selected");
+                                        print("Debe seleccionar una fecha");
                                       }
                                     },
                                     validator: (value) {
@@ -503,27 +505,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   },
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 10, vertical: 10),
-                                child: Row(
-                                  children: [
-                                    const Text(
-                                        '¿Desea hacer su cuenta privada?',
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: Color(0xFF00376B))),
-                                    Checkbox(
-                                      value: _isPrivate,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _isPrivate = !_isPrivate;
-                                        });
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
                               GestureDetector(
                                 onTap: () {
                                   if (_formKey.currentState!.validate()) {
@@ -572,10 +553,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ],
                           ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 10,
                       ),
                     ),
                     SizedBox(
@@ -585,6 +562,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         color: Colors.white,
                         semanticContainer: true,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        elevation: 10,
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           child: TextButton(
@@ -610,10 +591,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ],
                               )),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        elevation: 10,
                       ),
                     ),
                   ],

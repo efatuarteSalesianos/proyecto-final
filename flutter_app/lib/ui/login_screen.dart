@@ -94,6 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.white,
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 10,
             child: Form(
               key: _formKey,
               child: Column(
@@ -280,10 +284,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            elevation: 10,
           ),
         ),
         SizedBox(
@@ -293,6 +293,10 @@ class _LoginScreenState extends State<LoginScreen> {
             color: Colors.white,
             semanticContainer: true,
             clipBehavior: Clip.antiAliasWithSaveLayer,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 10,
             child: Container(
               padding: const EdgeInsets.all(20),
               child: TextButton(
@@ -316,10 +320,6 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   )),
             ),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            elevation: 10,
           ),
         ),
       ],
