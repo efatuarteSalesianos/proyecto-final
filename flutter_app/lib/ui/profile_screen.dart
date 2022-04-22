@@ -70,7 +70,7 @@ class _MyProfileScreenState extends State<ProfileScreen>
               child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                 IconButton(
                   icon: SvgPicture.asset('assets/images/icon/add.svg',
-                      width: 28, semanticsLabel: 'Add Post'),
+                      width: 28, semanticsLabel: 'Add Site'),
                   onPressed: () {},
                 ),
                 IconButton(

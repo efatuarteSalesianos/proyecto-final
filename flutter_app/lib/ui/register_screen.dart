@@ -43,7 +43,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
-  void initState() async {
+  void initState() {
     PreferenceUtils.init();
     _dateController.text = "";
     super.initState();
