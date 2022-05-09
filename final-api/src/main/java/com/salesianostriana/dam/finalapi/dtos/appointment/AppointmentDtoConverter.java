@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class AppointmentDtoConverter {
 
-    public com.salesianostriana.dam.finalapi.dtos.appointment.GetCommentDto toGetAppointmentDto(Appointment appointment) {
-        return com.salesianostriana.dam.finalapi.dtos.appointment.GetCommentDto.builder()
+    public GetAppointmentDto toGetAppointmentDto(Appointment appointment) {
+        return GetAppointmentDto.builder()
                 .cliente(appointment.getCliente().getFull_name())
                 .site(appointment.getSite().getName())
                 .date(appointment.getDate())

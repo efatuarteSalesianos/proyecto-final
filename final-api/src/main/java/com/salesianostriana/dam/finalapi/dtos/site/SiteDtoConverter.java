@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.dtos.site;
 
+import com.salesianostriana.dam.finalapi.dtos.comment.CommentDtoConverter;
 import com.salesianostriana.dam.finalapi.models.Comment;
 import com.salesianostriana.dam.finalapi.models.Site;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,8 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class SiteDtoConverter {
+
+    private final CommentDtoConverter commentDtoConverter;
     public GetSiteDto toGetSiteDto(Site site) {
         return GetSiteDto.builder()
                 .name(site.getName())
@@ -20,7 +23,7 @@ public class SiteDtoConverter {
                 .email(site.getEmail())
                 .web(site.getWeb())
                 .phone(site.getPhone())
-                .comments(site.getComments())
+                .comments(site.getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(java.util.stream.Collectors.toList()))
                 .total_comments((site.getComments().size()))
                 .rate(average_rate(site.getComments()))
                 .originalFileUrl(site.getOriginalFile())

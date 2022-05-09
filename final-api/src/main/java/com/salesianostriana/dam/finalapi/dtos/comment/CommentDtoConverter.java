@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.finalapi.dtos.comment;
 
-import com.salesianostriana.dam.finalapi.models.Appointment;
 import com.salesianostriana.dam.finalapi.models.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
