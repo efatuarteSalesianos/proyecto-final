@@ -1,5 +1,9 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
+import com.salesianostriana.dam.finalapi.dtos.appointment.CreateAppointmentDto;
+import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
+import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
+import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
@@ -54,9 +58,8 @@ public class SiteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity) {
+    public ResponseEntity<?> deleteSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity) {
         return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
-
     }
 
     @PostMapping("/like/{id}")
@@ -69,7 +72,69 @@ public class SiteController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(id, userEntity)));
     }
 
+    //add comment
+    @PostMapping("{id}/comment/")
+    public ResponseEntity<GetCommentDto> addComment (@PathVariable Long id, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addComment(id, userEntity, file, newComment));
+    }
 
+    //list all comments
+    @GetMapping("{id}/comment/")
+    public ResponseEntity<List<GetCommentDto>> getAllComments (@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllComments(id));
+    }
 
+    //show a single comment by site id and comment id
+    @GetMapping("{id}/comment/{commentId}")
+    public ResponseEntity<GetCommentDto> getSingleComment (@PathVariable Long id, @PathVariable Long commentId){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getComment(id, commentId));
+    }
 
+    //edit a single comment by site id and comment id
+    @PutMapping("{id}/comment/{commentId}")
+    public ResponseEntity<GetCommentDto> editComment (@PathVariable Long id, @PathVariable Long commentId, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.editComment(id, commentId, userEntity, file, newComment));
+    }
+
+    //delete a single comment by site id and comment id
+//    @DeleteMapping("{id}/comment/{commentId}")
+//    public ResponseEntity<?> deleteComment (@PathVariable Long id, @PathVariable Long commentId, @AuthenticationPrincipal UserEntity userEntity){
+//        return siteService.deleteComment(id, userEntity, commentId);
+//    }
+
+    //add appointment to site by site id
+    @PostMapping("{id}/appointment/")
+    public ResponseEntity<GetAppointmentDto> addAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
+    }
+
+    //list all appointments by site id
+    @GetMapping("{id}/appointment/")
+    public ResponseEntity<List<GetAppointmentDto>> getAllAppointments (@PathVariable Long id){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllAppointments(id));
+    }
+
+    //show a single appointment by site id and appointment id
+    @GetMapping("{id}/appointment/{appointmentId}")
+    public ResponseEntity<GetAppointmentDto> getSingleAppointment (@PathVariable Long id, @PathVariable Long appointmentId){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getAppointment(id, appointmentId));
+    }
+
+    //edit a single appointment by site id and appointment id
+    @PutMapping("{id}/appointment/{appointmentId}")
+    public ResponseEntity<GetAppointmentDto> editAppointment (@PathVariable Long id, @PathVariable Long appointmentId, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.editAppointment(id, appointmentId, userEntity, newAppointment));
+    }
+
+    //delete a single appointment by site id and appointment id
+//    @DeleteMapping("{id}/appointment/{appointmentId}")
+//    public ResponseEntity<?> deleteAppointment (@PathVariable Long id, @PathVariable Long appointmentId, @AuthenticationPrincipal UserEntity userEntity){
+//        return siteService.deleteAppointment(id, userEntity, appointmentId);
+//    }
+
+    //check if appointment time is available
+    @PostMapping("{id}/appointment/check")
+    public ResponseEntity<Boolean> checkAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.isAppointmentTimeAvailable(id, newAppointment));
+    }
 }

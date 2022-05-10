@@ -29,7 +29,6 @@ public class SiteDtoConverter {
                 .originalFileUrl(site.getOriginalFile())
                 .scaledFileUrl(site.getScaledFile())
                 .likes(site.getLikes().size())
-                .likes(site.getLikes().size())
                 .build();
     }
 
