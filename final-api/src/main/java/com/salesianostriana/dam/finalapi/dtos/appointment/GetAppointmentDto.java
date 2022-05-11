@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.dtos.appointment;
 
+import com.salesianostriana.dam.finalapi.models.StatusType;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,4 +14,5 @@ public class GetAppointmentDto {
     private String site;
     private LocalDateTime date;
     private String description;
+    private StatusType status;
 }

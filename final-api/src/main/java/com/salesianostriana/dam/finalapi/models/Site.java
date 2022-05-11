@@ -1,13 +1,13 @@
 package com.salesianostriana.dam.finalapi.models;
 
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.util.*;
+
+import static java.time.DayOfWeek.*;
 
 @Entity
 @Table(name = "site")
@@ -17,19 +17,8 @@ import java.util.UUID;
 public class Site {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(
-            name = "UUID",
-            strategy = "org.hibernate.id.UUIDGenerator",
-            parameters = {
-                    @Parameter(
-                            name = "uuid_gen_strategy_class",
-                            value = "org.hibernate.id.uuid.CustomVersionOneStrategy"
-                    )
-            }
-    )
-    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    private UUID id;
+    @GeneratedValue
+    private Long id;
 
     private String name;
     private String description;
@@ -39,6 +28,10 @@ public class Site {
     private String email;
     private String phone;
     private String web;
+    Set<DayOfWeek> daysOpen = new HashSet<>(Arrays.asList(
+            MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY));
+    private LocalDateTime openingHour;
+    private LocalDateTime closingHour;
     private String originalFile;
     private String scaledFile;
 

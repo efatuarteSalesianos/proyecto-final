@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +24,7 @@ public class SiteDtoConverter {
                 .email(site.getEmail())
                 .web(site.getWeb())
                 .phone(site.getPhone())
-                .comments(site.getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(java.util.stream.Collectors.toList()))
+                .comments(site.getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(Collectors.toList()))
                 .total_comments((site.getComments().size()))
                 .rate(average_rate(site.getComments()))
                 .originalFileUrl(site.getOriginalFile())
