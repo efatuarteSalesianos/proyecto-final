@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.dtos.site;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -7,6 +8,7 @@ import javax.persistence.Lob;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -33,4 +35,8 @@ public class CreateSiteDto {
     private String phone;
     @URL(message = "{site.url.url}")
     private String web;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalDateTime openingHour;
+    @JsonFormat(pattern = "HH:mm")
+    private LocalDateTime closingHour;
 }

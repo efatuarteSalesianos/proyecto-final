@@ -14,6 +14,7 @@ public class AppointmentDtoConverter {
                 .site(appointment.getSite().getName())
                 .date(appointment.getDate())
                 .description(appointment.getDescription())
+                .status(appointment.getStatus())
                 .build();
     }
 }

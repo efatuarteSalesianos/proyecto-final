@@ -18,7 +18,7 @@ public class Appointment implements Serializable {
 
     @Builder.Default
     @EmbeddedId
-    private LikePK id = new LikePK();
+    private AppointmentPK id = new AppointmentPK();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("cliente_id")
@@ -35,5 +35,7 @@ public class Appointment implements Serializable {
 
     private LocalDateTime date;
     private String description;
-    private String status;
+
+    @Enumerated(EnumType.STRING)
+    private StatusType status;
 }

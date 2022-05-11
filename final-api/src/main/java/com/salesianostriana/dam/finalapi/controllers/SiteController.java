@@ -8,6 +8,7 @@ import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
+import com.salesianostriana.dam.finalapi.repositories.SiteRepository;
 import com.salesianostriana.dam.finalapi.services.SiteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -28,9 +29,31 @@ public class SiteController {
     private final SiteService siteService;
     private final SiteDtoConverter siteDtoConverter;
 
+    private final SiteRepository siteRepository;
+
     @GetMapping("/")
     public ResponseEntity<List<GetSiteDto>> getAllSites(){
         return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllSites());
+    }
+
+    @GetMapping(value = "/", params = {"name"})
+    public ResponseEntity<List<GetSiteDto>> getAllSitesByNameContaining(@RequestParam(defaultValue = "") String search){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getSitesByName(search));
+    }
+
+    @GetMapping(value = "/", params = {"city"})
+    public ResponseEntity<List<GetSiteDto>> getAllSitesByCity(@RequestParam(defaultValue = "") String city){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllSitesByCity(city));
+    }
+
+    @GetMapping(value = "/", params = {"postalCode"})
+    public ResponseEntity<List<GetSiteDto>> getSitesByPostalCode(@RequestParam(defaultValue = "") String postalCode){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllSitesByPostalCode(postalCode));
+    }
+
+    @GetMapping(value = "/", params = {"rate"})
+    public ResponseEntity<List<GetSiteDto>> getSitesByRateGreaterThan(@RequestParam(defaultValue = "3.0") Double rate){
+        return ResponseEntity.status(HttpStatus.OK).body(siteRepository.findByRateGreaterThan(rate));
     }
 
     @GetMapping("/{type}")
@@ -75,7 +98,7 @@ public class SiteController {
     //add comment
     @PostMapping("{id}/comment/")
     public ResponseEntity<GetCommentDto> addComment (@PathVariable Long id, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addComment(id, userEntity, file, newComment));
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addComment(id, newComment, userEntity, file));
     }
 
     //list all comments
@@ -103,10 +126,10 @@ public class SiteController {
 //    }
 
     //add appointment to site by site id
-    @PostMapping("{id}/appointment/")
-    public ResponseEntity<GetAppointmentDto> addAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
-    }
+//    @PostMapping("{id}/appointment/")
+//    public ResponseEntity<GetAppointmentDto> addAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
+//        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
+//    }
 
     //list all appointments by site id
     @GetMapping("{id}/appointment/")

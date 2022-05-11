@@ -18,7 +18,7 @@ public class Comment implements Serializable {
 
     @Builder.Default
     @EmbeddedId
-    private LikePK id = new LikePK();
+    private CommentPK id = new CommentPK();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("cliente_id")
