@@ -222,7 +222,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Column(children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      padding: const EdgeInsets.symmetric(vertical: 15.0),
                       child: Row(children: [
                         Expanded(
                           child: Container(
@@ -251,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ]),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 30),
+                      padding: const EdgeInsets.only(bottom: 20),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -307,7 +307,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       const Text(
                         '¿No tienes una cuenta?',
                         style:
-                            TextStyle(fontSize: 16, color: Color(0xFF262626)),
+                            TextStyle(fontSize: 15, color: Color(0xFF262626)),
                       ),
                       TextButton(
                           onPressed: () =>
