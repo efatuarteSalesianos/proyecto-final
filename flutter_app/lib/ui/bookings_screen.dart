@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/login_screen.dart';
+import 'package:flutter_app/utils/shared_preferences.dart';
 
 void main() {
   runApp(const MyBookingsScreen());
@@ -38,11 +40,19 @@ class _BookingsScreenState extends State<BookingsScreen> {
             snap: false,
             centerTitle: false,
             title: const Text('Mis Reservas'),
+            shadowColor: const Color(0xFFFF5A5F),
+            backgroundColor: const Color(0xFFFF5A5F),
+            foregroundColor: const Color(0xFFFFFFFF),
             actions: [
               IconButton(
-                icon: const Icon(Icons.exit_to_app),
-                onPressed: () {},
-              ),
+                  icon: const Icon(Icons.exit_to_app),
+                  onPressed: () => {
+                        PreferenceUtils.clear(),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()))
+                      }),
             ],
           ),
           SliverList(

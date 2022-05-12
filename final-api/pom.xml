@@ -12,7 +12,7 @@
 	<artifactId>final-api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>final-api</name>
-	<description>API para proyecto final de 2 DAM</description>
+	<description>API para el proyecto final de 2 DAM</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -69,6 +69,12 @@
 			<version>0.11.2</version>
 			<scope>runtime</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>1.12.196</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.tika</groupId>
 			<artifactId>tika-core</artifactId>
@@ -88,9 +94,13 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
-			<version>1.6.6</version>
+			<version>1.6.7</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.3.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>
