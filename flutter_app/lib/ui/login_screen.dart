@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(310, 60),
+                      fixedSize: const Size(255, 55),
                       primary: const Color(0xFFFF5A5F),
                       onPrimary: Colors.white,
                     ),
@@ -299,8 +299,8 @@ class _LoginScreenState extends State<LoginScreen> {
             elevation: 10,
             child: Container(
               padding: const EdgeInsets.all(20),
-              child: TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/register'),
+              child: GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/register'),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
