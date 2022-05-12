@@ -30,8 +30,8 @@ public class Site {
     private String web;
     Set<DayOfWeek> daysOpen = new HashSet<>(Arrays.asList(
             MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY));
-    private LocalDateTime openingHour;
-    private LocalDateTime closingHour;
+    private int openingHour;
+    private int closingHour;
     private String originalFile;
     private String scaledFile;
 

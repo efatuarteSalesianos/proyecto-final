@@ -278,17 +278,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
-        List<GetCommentDto> comments = new ArrayList<>();
-        site.get().getComments().forEach(comment -> {
-            GetCommentDto commentDto = GetCommentDto.builder()
-                    .cliente(comment.getCliente().getFull_name())
-                    .site(comment.getSite().getName())
-                    .title(comment.getTitle())
-                    .description(comment.getDescription())
-                    .image(comment.getScaledFile())
-                    .build();
-        });
-        return comments;
+        return site.get().getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(Collectors.toList());
     }
 
     public GetCommentDto getComment(Long siteId, Long commentId) {
@@ -367,30 +357,27 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         save(site.get());
     }
 
-//    public GetAppointmentDto addAppointment(Long siteId, UserEntity userEntity, CreateAppointmentDto createAppointmentDto) {
-//        Optional<Site> site = findById(siteId);
-//        if (site.isEmpty()) {
-//            throw new EntityNotFoundException("No site matches the provided id");
-//        }
-//        LocalDateTime appointmentHour = LocalDateTime.of(createAppointmentDto.getDate().getHour(), createAppointmentDto.getDate().getMinute());
-//        LocalDateTime openingHour = LocalDateTime.of(site.get().getOpeningHour().getHour(), site.get().getOpeningHour().getMinute());
-//        LocalDateTime closingHour = LocalDateTime.of(site.get().getClosingHour().getHour(), site.get().getClosingHour().getMinute());
-//        if (!site.get().getDaysOpen().contains(appointmentHour.getDayOfWeek())) {
-//            throw new AppointmentNotAvailableException("The appointment date is not available");
-//        }
-//        if (appointmentHour.isBefore(openingHour) || appointmentHour.isAfter(closingHour)) {
-//            throw new AppointmentNotAvailableException("The appointment hour is not available");
-//        }
-//        Appointment appointment = Appointment.builder()
-//                .cliente(userEntity)
-//                .site(site.get())
-//                .date(appointmentHour)
-//                .description(createAppointmentDto.getDescription())
-//                .build();
-//        site.get().getAppointments().add(appointment);
-//        save(site.get());
-//        return appointmentDtoConverter.toGetAppointmentDto(appointment);
-//    }
+    public GetAppointmentDto addAppointment(Long siteId, UserEntity userEntity, CreateAppointmentDto createAppointmentDto) {
+        Optional<Site> site = findById(siteId);
+        if (site.isEmpty()) {
+            throw new EntityNotFoundException("No site matches the provided id");
+        }
+        if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
+            throw new AppointmentNotAvailableException("The appointment date is not available");
+        }
+        if (createAppointmentDto.getDate().getHour() < site.get().getOpeningHour() || createAppointmentDto.getDate().getHour() > site.get().getClosingHour()) {
+            throw new AppointmentNotAvailableException("The appointment hour is not available");
+        }
+        Appointment appointment = Appointment.builder()
+                .cliente(userEntity)
+                .site(site.get())
+                .date(createAppointmentDto.getDate())
+                .description(createAppointmentDto.getDescription())
+                .build();
+        site.get().getAppointments().add(appointment);
+        save(site.get());
+        return appointmentDtoConverter.toGetAppointmentDto(appointment);
+    }
 
     public List<GetAppointmentDto> getAllAppointments(Long siteId) {
         Optional<Site> site = findById(siteId);
