@@ -99,15 +99,15 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 1
                 ? SvgPicture.asset(
-                    'assets/images/icons/search.svg',
+                    'assets/images/icons/reels.svg',
                     width: 23,
-                    semanticsLabel: 'Search',
+                    semanticsLabel: 'Favorites',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icons/search.svg',
+                    'assets/images/icons/reels.svg',
                     width: 23,
-                    semanticsLabel: 'Search',
+                    semanticsLabel: 'Favorites',
                     color: Colors.grey,
                   ),
           ),
@@ -120,15 +120,15 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 2
                 ? SvgPicture.asset(
-                    'assets/images/icons/reels.svg',
+                    'assets/images/icons/search.svg',
                     width: 23,
-                    semanticsLabel: 'Reels',
+                    semanticsLabel: 'Search',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icons/reels.svg',
+                    'assets/images/icons/search.svg',
                     width: 23,
-                    semanticsLabel: 'Reels',
+                    semanticsLabel: 'Search',
                     color: Colors.grey,
                   ),
           ),

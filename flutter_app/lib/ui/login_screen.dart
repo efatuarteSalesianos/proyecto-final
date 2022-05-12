@@ -195,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(250, 50),
+                      fixedSize: const Size(310, 60),
                       primary: const Color(0xFFFF5A5F),
                       onPrimary: Colors.white,
                     ),
@@ -216,7 +216,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       child: const Text(
                         'Iniciar Sesión',
-                        style: TextStyle(fontSize: 16),
+                        style: TextStyle(fontSize: 20),
                       ),
                     ),
                   ),
@@ -245,7 +245,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   left: 20.0, right: 10.0),
                               child: const Divider(
                                 color: Colors.black,
-                                height: 36,
+                                height: 30,
                               )),
                         ),
                       ]),

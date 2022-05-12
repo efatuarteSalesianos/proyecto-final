@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/login_screen.dart';
+import 'package:flutter_app/utils/shared_preferences.dart';
 
 void main() {
   runApp(const MyHomeScreen());
@@ -39,13 +41,22 @@ class _HomeScreenState extends State<HomeScreen> {
             snap: false,
             centerTitle: false,
             title: const Text('MySalon'),
+            shadowColor: const Color(0xFFFF5A5F),
+            backgroundColor: const Color(0xFFFF5A5F),
+            foregroundColor: const Color(0xFFFFFFFF),
             actions: [
               IconButton(
-                icon: const Icon(Icons.exit_to_app),
-                onPressed: () {},
-              ),
+                  icon: const Icon(Icons.exit_to_app),
+                  onPressed: () => {
+                        PreferenceUtils.clear(),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()))
+                      }),
             ],
             bottom: AppBar(
+              backgroundColor: const Color(0xFFFF5A5F),
               title: Container(
                 width: double.infinity,
                 height: 40,
