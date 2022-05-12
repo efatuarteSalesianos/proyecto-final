@@ -88,7 +88,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 1000,
+                      height: 1250,
                       child: Card(
                         color: Colors.white,
                         semanticContainer: true,
@@ -104,27 +104,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 5),
+                                padding: const EdgeInsets.only(bottom: 20),
                                 child: SvgPicture.asset(
                                     'assets/images/logo.svg',
                                     width: 200,
                                     semanticsLabel: 'MySalon Logo'),
                               ),
                               const Text(
-                                'Regístrate para acceder a miles de nuestros servicios de belleza en España .',
+                                'Regístrate para acceder a miles de nuestros servicios de belleza en España.',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     color: Color(0xFF8E8E8E)),
                               ),
                               Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 15),
+                                    const EdgeInsets.symmetric(vertical: 30),
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(275, 50),
-                                    primary: const Color(0xFFFF5A5F),
+                                    fixedSize: const Size(275, 55),
+                                    primary: const Color(0xFF385185),
                                     onPrimary: Colors.white,
                                   ),
                                   onPressed: () {
@@ -141,10 +141,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             width: 28,
                                             semanticsLabel: 'Facebook'),
                                         const Padding(
-                                          padding: EdgeInsets.only(left: 5),
+                                          padding: EdgeInsets.all(5),
                                           child: Text(
                                               'Iniciar sesión con Facebook',
-                                              style: TextStyle(fontSize: 16)),
+                                              style: TextStyle(fontSize: 15)),
                                         ),
                                       ],
                                     ),
@@ -178,7 +178,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ]),
                               Padding(
-                                  padding: const EdgeInsets.only(bottom: 10),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
                                   child: InkWell(
                                       onTap: () {
                                         BlocProvider.of<ImagePickBloc>(context)
@@ -201,8 +202,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               ),
                                             ))),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
                                 child: TextFormField(
                                   controller: _nameController,
                                   style: const TextStyle(
@@ -236,90 +237,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   validator: (String? value) {
                                     return (value == null)
                                         ? 'Debe indicar su nombre completo'
-                                        : null;
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: TextFormField(
-                                  controller: _emailController,
-                                  keyboardType: TextInputType.emailAddress,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.all(10),
-                                    filled: true,
-                                    fillColor: const Color(0xFFFAFAFA),
-                                    hintText: "Correo electrónico",
-                                    hintStyle: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    focusColor: const Color(0xFFFFFFFF),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Color(0xFFF7F7F7), width: 1.0),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.grey, width: 2.0),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                  ),
-                                  onSaved: (String? value) {},
-                                  validator: (String? value) {
-                                    return (value == null ||
-                                            !value.contains('@'))
-                                        ? 'El email no es válido'
-                                        : null;
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: TextFormField(
-                                  maxLength: 9,
-                                  controller: _phoneController,
-                                  keyboardType: TextInputType.emailAddress,
-                                  style: const TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                  decoration: InputDecoration(
-                                    contentPadding: const EdgeInsets.all(10),
-                                    filled: true,
-                                    fillColor: const Color(0xFFFAFAFA),
-                                    hintText: "Teléfono",
-                                    hintStyle: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 13,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                    focusColor: const Color(0xFFFFFFFF),
-                                    border: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Color(0xFFF7F7F7), width: 1.0),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.grey, width: 2.0),
-                                      borderRadius: BorderRadius.circular(6.0),
-                                    ),
-                                  ),
-                                  onSaved: (String? value) {},
-                                  validator: (String? value) {
-                                    return (value == null)
-                                        ? 'El teléfono no es válido'
                                         : null;
                                   },
                                 ),
@@ -365,8 +282,93 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: TextFormField(
+                                  controller: _emailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  decoration: InputDecoration(
+                                    contentPadding: const EdgeInsets.all(10),
+                                    filled: true,
+                                    fillColor: const Color(0xFFFAFAFA),
+                                    hintText: "Correo electrónico",
+                                    hintStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    focusColor: const Color(0xFFFFFFFF),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFF7F7F7), width: 1.0),
+                                      borderRadius: BorderRadius.circular(6.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 2.0),
+                                      borderRadius: BorderRadius.circular(6.0),
+                                    ),
+                                  ),
+                                  onSaved: (String? value) {},
+                                  validator: (String? value) {
+                                    return (value == null ||
+                                            !value.contains('@'))
+                                        ? 'El email no es válido'
+                                        : null;
+                                  },
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
+                                child: TextFormField(
+                                  maxLength: 9,
+                                  controller: _phoneController,
+                                  keyboardType: TextInputType.phone,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                  decoration: InputDecoration(
+                                    counterText: "",
+                                    contentPadding: const EdgeInsets.all(10),
+                                    filled: true,
+                                    fillColor: const Color(0xFFFAFAFA),
+                                    hintText: "Teléfono",
+                                    hintStyle: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 13,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                    focusColor: const Color(0xFFFFFFFF),
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Color(0xFFF7F7F7), width: 1.0),
+                                      borderRadius: BorderRadius.circular(6.0),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.grey, width: 2.0),
+                                      borderRadius: BorderRadius.circular(6.0),
+                                    ),
+                                  ),
+                                  onSaved: (String? value) {},
+                                  validator: (String? value) {
+                                    return (value == null)
+                                        ? 'El teléfono no es válido'
+                                        : null;
+                                  },
+                                ),
+                              ),
+                              Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                      horizontal: 10, vertical: 10),
                                   child: TextFormField(
                                     readOnly: true,
                                     controller: _dateController,
@@ -466,8 +468,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 10),
                                 child: TextFormField(
                                   obscureText: true,
                                   style: const TextStyle(
@@ -505,37 +507,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   },
                                 ),
                               ),
-                              GestureDetector(
-                                onTap: () {
-                                  if (_formKey.currentState!.validate()) {
-                                    final registerDto = RegisterDto(
-                                        name: _nameController.text,
-                                        email: _emailController.text,
-                                        phone: _phoneController.text,
-                                        birthDate: _dateController.text,
-                                        username: _usernameController.text,
-                                        password: _passwordController.text,
-                                        password2:
-                                            _confirmPasswordController.text);
-                                    BlocProvider.of<RegisterBloc>(context).add(
-                                        DoRegisterEvent(
-                                            registerDto, avatarPath));
-                                    Navigator.pushNamed(context, '/login');
-                                  }
-                                },
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    fixedSize: const Size(250, 50),
-                                    primary: const Color(0xFFFF5A5F),
-                                    onPrimary: Colors.white,
-                                  ),
-                                  onPressed: () {},
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
                                   child: GestureDetector(
-                                    child: const Text('Siguiente',
-                                        style: TextStyle(fontSize: 16)),
-                                  ),
-                                ),
-                              ),
+                                    onTap: () {
+                                      if (_formKey.currentState!.validate()) {
+                                        final registerDto = RegisterDto(
+                                            name: _nameController.text,
+                                            email: _emailController.text,
+                                            phone: _phoneController.text,
+                                            birthDate: _dateController.text,
+                                            username: _usernameController.text,
+                                            password: _passwordController.text,
+                                            password2:
+                                                _confirmPasswordController
+                                                    .text);
+                                        BlocProvider.of<RegisterBloc>(context)
+                                            .add(DoRegisterEvent(
+                                                registerDto, avatarPath));
+                                        Navigator.pushNamed(context, '/login');
+                                      }
+                                    },
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        fixedSize: const Size(250, 50),
+                                        primary: const Color(0xFFFF5A5F),
+                                        onPrimary: Colors.white,
+                                      ),
+                                      onPressed: () {},
+                                      child: GestureDetector(
+                                        child: const Text('Siguiente',
+                                            style: TextStyle(fontSize: 16)),
+                                      ),
+                                    ),
+                                  )),
                               const Padding(
                                 padding: EdgeInsets.only(top: 20),
                                 child: Text(
@@ -547,7 +553,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ' Política de cookies.',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
-                                      fontSize: 13, color: Color(0xFF8E8E8E)),
+                                      fontSize: 14, color: Color(0xFF8E8E8E)),
                                 ),
                               )
                             ],
@@ -567,7 +573,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         elevation: 10,
                         child: Container(
-                          padding: const EdgeInsets.all(20),
+                          padding: const EdgeInsets.all(0),
                           child: TextButton(
                               onPressed: () =>
                                   Navigator.pushNamed(context, '/register'),
@@ -575,7 +581,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    '¿Tienes una cuenta?',
+                                    '¿Ya tienes una cuenta?',
                                     style: TextStyle(
                                         fontSize: 16, color: Color(0xFF262626)),
                                   ),
