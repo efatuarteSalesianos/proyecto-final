@@ -35,8 +35,6 @@ public class CreateSiteDto {
     private String phone;
     @URL(message = "{site.url.url}")
     private String web;
-    @JsonFormat(pattern = "HH:mm")
-    private LocalDateTime openingHour;
-    @JsonFormat(pattern = "HH:mm")
-    private LocalDateTime closingHour;
+    private int openingHour;
+    private int closingHour;
 }

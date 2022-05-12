@@ -126,10 +126,10 @@ public class SiteController {
 //    }
 
     //add appointment to site by site id
-//    @PostMapping("{id}/appointment/")
-//    public ResponseEntity<GetAppointmentDto> addAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
-//        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
-//    }
+    @PostMapping("{id}/appointment/")
+    public ResponseEntity<GetAppointmentDto> addAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
+    }
 
     //list all appointments by site id
     @GetMapping("{id}/appointment/")
