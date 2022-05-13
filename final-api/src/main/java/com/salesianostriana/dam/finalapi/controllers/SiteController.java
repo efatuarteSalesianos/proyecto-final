@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -210,7 +211,7 @@ public class SiteController {
 
     //check if appointment time is available
     @PostMapping("{id}/appointment/check")
-    public ResponseEntity<Boolean> checkAppointment (@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment){
-        return ResponseEntity.status(HttpStatus.OK).body(siteService.isAppointmentTimeAvailable(id, newAppointment));
+    public ResponseEntity<Boolean> checkAppointment (@PathVariable Long id, @Valid @RequestBody LocalDateTime appointmentTime){
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.isAppointmentTimeAvailable(id, appointmentTime));
     }
 }

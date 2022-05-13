@@ -381,7 +381,6 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         } else {
             throw new AppointmentNotAvailableException("The appointment time is not available");
         }
-
     }
 
     public List<GetAppointmentDto> getAllAppointments(Long siteId) {
