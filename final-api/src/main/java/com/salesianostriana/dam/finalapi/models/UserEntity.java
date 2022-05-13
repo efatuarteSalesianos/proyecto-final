@@ -41,15 +41,21 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
+    @Builder.Default
     @OneToMany(mappedBy = "propietario", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private List<Site> negocios = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user_entity", cascade = CascadeType.ALL)
-//    private List<Comment> comments = new ArrayList<>();
+    @Builder.Default
+    @OneToMany(mappedBy = "user_entity", cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
 
     @Builder.Default
     @OneToMany(mappedBy = "cliente", orphanRemoval = true, cascade = CascadeType.REMOVE)
     private List<Like> likes = new ArrayList<>();
+
+    @Builder.Default
+    @OneToMany(mappedBy = "cliente", orphanRemoval = true, cascade = CascadeType.REMOVE)
+    private List<Appointment> appointments = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

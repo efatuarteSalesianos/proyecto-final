@@ -281,7 +281,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         return site.get().getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(Collectors.toList());
     }
 
-    public GetCommentDto getComment(Long siteId, Long commentId) {
+    public GetCommentDto getComment(Long siteId, CommentPK commentId) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
@@ -299,9 +299,9 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
                 .build();
     }
 
-    public GetCommentDto editComment(Long siteId, Long commentId, UserEntity cliente, MultipartFile file, CreateCommentDto comment) {
+    public GetCommentDto editComment(Long siteId, CommentPK commentId, UserEntity cliente, MultipartFile file, CreateCommentDto comment) {
         Optional<Site> site = findById(siteId);
-        Optional<Comment> commentOptional = commentRepository.findById(commentId);
+        Optional<Comment> commentOptional = commentRepository.existsById(commentId);
         String originalFileUrl;
         String scaledFileUrl;
         //Check if file is image or video and save it
@@ -337,9 +337,9 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public void deleteComment(Long siteId, UserEntity userEntity, Long commentId) {
+    public void deleteComment(Long siteId, UserEntity userEntity, CommentPK commentId) {
         Optional<Site> site = findById(siteId);
-        Optional<Comment> comment = commentRepository.findById(commentId);
+        Optional<Comment> comment = commentRepository.existsById(commentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
@@ -387,9 +387,9 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         return site.get().getAppointments().stream().map(appointmentDtoConverter::toGetAppointmentDto).collect(Collectors.toList());
     }
 
-    public GetAppointmentDto getAppointment(Long siteId, Long appointmentId) {
+    public GetAppointmentDto getAppointment(Long siteId, AppointmentPK appointmentId) {
         Optional<Site> site = findById(siteId);
-        Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
+        Optional<Appointment> appointment = appointmentRepository.existById(appointmentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
@@ -402,9 +402,9 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         return appointmentDtoConverter.toGetAppointmentDto(appointment.get());
     }
 
-    public GetAppointmentDto editAppointment(Long siteId, Long appointmentId, UserEntity userEntity, CreateAppointmentDto appointment) {
+    public GetAppointmentDto editAppointment(Long siteId, AppointmentPK appointmentId, UserEntity userEntity, CreateAppointmentDto appointment) {
         Optional<Site> site = findById(siteId);
-        Optional<Appointment> appointmentEntity = appointmentRepository.findById(appointmentId);
+        Optional<Appointment> appointmentEntity = appointmentRepository.existById(appointmentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
@@ -423,9 +423,9 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         return appointmentDtoConverter.toGetAppointmentDto(appointmentEntity.get());
     }
 
-    public void deleteAppointment(Long siteId, UserEntity userEntity, Long appointmentId) {
+    public void deleteAppointment(Long siteId, UserEntity userEntity, AppointmentPK appointmentId) {
         Optional<Site> site = findById(siteId);
-        Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
+        Optional<Appointment> appointment = appointmentRepository.existById(appointmentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }

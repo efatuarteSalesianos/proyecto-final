@@ -7,6 +7,9 @@ import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
+import com.salesianostriana.dam.finalapi.models.AppointmentPK;
+import com.salesianostriana.dam.finalapi.models.CommentPK;
+import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.SiteRepository;
 import com.salesianostriana.dam.finalapi.services.SiteService;
@@ -109,21 +112,46 @@ public class SiteController {
 
     //show a single comment by site id and comment id
     @GetMapping("{id}/comment/{commentId}")
-    public ResponseEntity<GetCommentDto> getSingleComment (@PathVariable Long id, @PathVariable Long commentId){
+    public ResponseEntity<GetCommentDto> getSingleComment (@PathVariable Long id, @PathVariable CommentPK commentId){
         return ResponseEntity.status(HttpStatus.OK).body(siteService.getComment(id, commentId));
     }
 
     //edit a single comment by site id and comment id
     @PutMapping("{id}/comment/{commentId}")
-    public ResponseEntity<GetCommentDto> editComment (@PathVariable Long id, @PathVariable Long commentId, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
-        return ResponseEntity.status(HttpStatus.OK).body(siteService.editComment(id, commentId, userEntity, file, newComment));
+    public ResponseEntity<GetCommentDto> editComment (@PathVariable Long id, @PathVariable CommentPK commentId, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
+        if(userEntity.getRol().equals(Rol.ADMIN) || userEntity.getComments().stream().anyMatch(comment -> comment.getId().equals(commentId))) {
+            if (siteService.findById(id).isEmpty()) {
+                return ResponseEntity
+                        .notFound()
+                        .build();
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).body(siteService.editComment(id, commentId, userEntity, file, newComment));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     //delete a single comment by site id and comment id
-//    @DeleteMapping("{id}/comment/{commentId}")
-//    public ResponseEntity<?> deleteComment (@PathVariable Long id, @PathVariable Long commentId, @AuthenticationPrincipal UserEntity userEntity){
-//        return siteService.deleteComment(id, userEntity, commentId);
-//    }
+    @DeleteMapping("{id}/comment/{commentId}")
+    public ResponseEntity<?> deleteComment (@PathVariable Long id, @PathVariable CommentPK commentId, @AuthenticationPrincipal UserEntity userEntity){
+        if(userEntity.getRol().equals(Rol.ADMIN) || userEntity.getComments().stream().anyMatch(comment -> comment.getId().equals(commentId))) {
+            if(siteService.findById(id).isEmpty()) {
+                return ResponseEntity
+                        .notFound()
+                        .build();
+            }
+            else {
+                siteService.deleteComment(id, userEntity, commentId);
+                return ResponseEntity
+                        .noContent()
+                        .build();
+            }
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
 
     //add appointment to site by site id
     @PostMapping("{id}/appointment/")
@@ -139,21 +167,46 @@ public class SiteController {
 
     //show a single appointment by site id and appointment id
     @GetMapping("{id}/appointment/{appointmentId}")
-    public ResponseEntity<GetAppointmentDto> getSingleAppointment (@PathVariable Long id, @PathVariable Long appointmentId){
+    public ResponseEntity<GetAppointmentDto> getSingleAppointment (@PathVariable Long id, @PathVariable AppointmentPK appointmentId){
         return ResponseEntity.status(HttpStatus.OK).body(siteService.getAppointment(id, appointmentId));
     }
 
     //edit a single appointment by site id and appointment id
     @PutMapping("{id}/appointment/{appointmentId}")
-    public ResponseEntity<GetAppointmentDto> editAppointment (@PathVariable Long id, @PathVariable Long appointmentId, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(siteService.editAppointment(id, appointmentId, userEntity, newAppointment));
+    public ResponseEntity<GetAppointmentDto> editAppointment (@PathVariable Long id, @PathVariable AppointmentPK appointmentId, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity) {
+        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getAppointments().stream().anyMatch(appointment -> appointment.getId().equals(appointmentId))) {
+            if (siteService.findById(id).isEmpty()) {
+                return ResponseEntity
+                        .notFound()
+                        .build();
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).body(siteService.editAppointment(id, appointmentId, userEntity, newAppointment));
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     //delete a single appointment by site id and appointment id
-//    @DeleteMapping("{id}/appointment/{appointmentId}")
-//    public ResponseEntity<?> deleteAppointment (@PathVariable Long id, @PathVariable Long appointmentId, @AuthenticationPrincipal UserEntity userEntity){
-//        return siteService.deleteAppointment(id, userEntity, appointmentId);
-//    }
+    @DeleteMapping("{id}/appointment/{appointmentId}")
+    public ResponseEntity<?> deleteAppointment (@PathVariable Long id, @PathVariable AppointmentPK appointmentId, @AuthenticationPrincipal UserEntity userEntity){
+        if(userEntity.getRol().equals(Rol.ADMIN) || userEntity.getAppointments().stream().anyMatch(appointment -> appointment.getId().equals(appointmentId))) {
+            if(siteService.findById(id).isEmpty()) {
+                return ResponseEntity
+                        .notFound()
+                        .build();
+            }
+            else {
+                siteService.deleteAppointment(id, userEntity, appointmentId);
+                return ResponseEntity
+                        .noContent()
+                        .build();
+            }
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+    }
 
     //check if appointment time is available
     @PostMapping("{id}/appointment/check")
