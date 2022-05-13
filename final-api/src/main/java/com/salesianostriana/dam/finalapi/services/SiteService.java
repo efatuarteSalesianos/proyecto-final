@@ -368,15 +368,20 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         if (createAppointmentDto.getDate().getHour() < site.get().getOpeningHour() || createAppointmentDto.getDate().getHour() > site.get().getClosingHour()) {
             throw new AppointmentNotAvailableException("The appointment hour is not available");
         }
-        Appointment appointment = Appointment.builder()
-                .cliente(userEntity)
-                .site(site.get())
-                .date(createAppointmentDto.getDate())
-                .description(createAppointmentDto.getDescription())
-                .build();
-        site.get().getAppointments().add(appointment);
-        save(site.get());
-        return appointmentDtoConverter.toGetAppointmentDto(appointment);
+        if(isAppointmentTimeAvailable(site.get().getId(), createAppointmentDto.getDate())) {
+            Appointment appointment = Appointment.builder()
+                    .cliente(userEntity)
+                    .site(site.get())
+                    .date(createAppointmentDto.getDate())
+                    .description(createAppointmentDto.getDescription())
+                    .build();
+            site.get().getAppointments().add(appointment);
+            save(site.get());
+            return appointmentDtoConverter.toGetAppointmentDto(appointment);
+        } else {
+            throw new AppointmentNotAvailableException("The appointment time is not available");
+        }
+
     }
 
     public List<GetAppointmentDto> getAllAppointments(Long siteId) {
@@ -442,14 +447,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         save(site.get());
     }
 
-    public boolean isAppointmentTimeAvailable(Long siteId, CreateAppointmentDto appointment) {
+    public boolean isAppointmentTimeAvailable(Long siteId, LocalDateTime appointmentDate) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
         List<Appointment> appointments = site.get().getAppointments();
         for (Appointment a : appointments) {
-            if (a.getDate().equals(appointment.getDate())) {
+            if (a.getDate().equals(appointmentDate)) {
                 return false;
             }
         }
