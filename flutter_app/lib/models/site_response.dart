@@ -1,50 +1,70 @@
 class SiteResponse {
   late int id;
-  late String title;
+  late String name;
   late String description;
-  late bool privatePost;
+  late String address;
+  late String city;
+  late String postalCode;
+  late String email;
+  late String phone;
+  late String web;
+  late DateTime openingHour;
+  late DateTime closingHour;
+  late double rate;
   late String scaledFileUrl;
   late int likes;
-  late bool liked;
-  late String userId;
-  late String username;
   late String originalFileUrl;
 
   SiteResponse({
     required this.id,
-    required this.title,
+    required this.name,
     required this.description,
-    required this.privatePost,
+    required this.address,
+    required this.city,
+    required this.postalCode,
+    required this.email,
+    required this.phone,
+    required this.web,
+    required this.openingHour,
+    required this.closingHour,
+    required this.rate,
     required this.scaledFileUrl,
     required this.likes,
-    required this.liked,
-    required this.userId,
-    required this.username,
     required this.originalFileUrl,
   });
   SiteResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toInt();
-    title = json['title'].toString();
+    name = json['name'].toString();
     description = json['description'].toString();
-    privatePost = json['privatePost'];
+    address = json['address'].toString();
+    city = json['city'].toString();
+    postalCode = json['postalCode'].toString();
+    email = json['email'].toString();
+    phone = json['phone'].toString();
+    web = json['web'].toString();
+    openingHour = json['openingHour'];
+    closingHour = json['closingHour'];
+    rate = json['rate'];
     scaledFileUrl = json['scaledFileUrl'].toString();
     likes = json['likes'].toInt();
-    liked = json['liked'];
-    userId = json['userId'].toString();
-    username = json['username'].toString();
     originalFileUrl = json['originalFileUrl'].toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
-    data['title'] = title;
+    data['name'] = name;
     data['description'] = description;
-    data['privatePost'] = privatePost;
+    data['address'] = address;
+    data['city'] = city;
+    data['postalCode'] = postalCode;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['web'] = web;
+    data['openingHour'] = openingHour;
+    data['closingHour'] = closingHour;
+    data['rate'] = rate;
     data['scaledFileUrl'] = scaledFileUrl;
     data['likes'] = likes;
-    data['liked'] = liked;
-    data['userId'] = userId;
-    data['username'] = username;
     data['originalFileUrl'] = originalFileUrl;
     return data;
   }
