@@ -14,7 +14,7 @@ class MyProfileScreen extends StatelessWidget {
     return MaterialApp(
         // Remove the debug banner
         debugShowCheckedModeBanner: false,
-        title: 'Mis Favoritos',
+        title: 'Mi Perfil',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
