@@ -1,6 +1,5 @@
 package com.salesianostriana.dam.finalapi.repositories;
 
-import com.salesianostriana.dam.finalapi.models.Appointment;
 import com.salesianostriana.dam.finalapi.models.Comment;
 import com.salesianostriana.dam.finalapi.models.CommentPK;
 import org.springframework.data.jpa.repository.JpaRepository;

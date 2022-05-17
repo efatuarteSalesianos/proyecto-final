@@ -50,7 +50,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth/register/PROPIETARIO").anonymous()
                 .antMatchers(HttpMethod.POST, "/auth/login").anonymous()
                 .antMatchers(HttpMethod.POST, "/auth/register/ADMIN").hasRole("ADMIN")
-                .antMatchers("/usernameavailable/**").anonymous()
                 .antMatchers(HttpMethod.GET, "/propietario/").anonymous()
                 .antMatchers(HttpMethod.GET, "/propietario/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
                 .antMatchers(HttpMethod.DELETE, "/propietario/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
@@ -59,6 +58,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/site/{id}").anonymous()
                 .antMatchers(HttpMethod.PUT, "/site/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
                 .antMatchers(HttpMethod.DELETE, "/site/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
+                .antMatchers(HttpMethod.GET, "/site/{id}/comment").anonymous()
+                .antMatchers(HttpMethod.GET, "/site/{id}/comment/{commentId}").anonymous()
+                .antMatchers(HttpMethod.POST, "/site/{id}/comment").anonymous()
+                .antMatchers(HttpMethod.PUT, "/site/{id}/comment/{commentId}").anonymous()
+                .antMatchers(HttpMethod.DELETE, "/site/{id}/comment/{commentId}").anonymous()
+                .antMatchers(HttpMethod.GET, "/site/{id}/appointment/").anonymous()
+                .antMatchers(HttpMethod.GET, "/site/{id}/appointment/{appointmentId}").anonymous()
+                .antMatchers(HttpMethod.POST, "/site/{id}/appointment").anonymous()
+                .antMatchers(HttpMethod.PUT, "/site/{id}/appointment/{appointmentId}").anonymous()
+                .antMatchers(HttpMethod.DELETE, "/site/{id}/appointment/{appointmentId}").anonymous()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

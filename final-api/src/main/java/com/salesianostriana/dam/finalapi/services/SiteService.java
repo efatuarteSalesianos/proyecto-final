@@ -152,16 +152,6 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public List<GetSiteDto> getAllSitesByType(String type) {
-        List<Site> sitesByType = siteRepository.findByType(type);
-
-        if (sitesByType.isEmpty()) {
-            throw new FileNotFoundException("There are not sites of this type available");
-        } else {
-            return sitesByType.stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList());
-        }
-    }
-
     public List<GetSiteDto> getAllSitesByPostalCode(String postalCode) {
         List<Site> sitesByPostalCode = siteRepository.findByPostalCode(postalCode);
 
@@ -363,9 +353,9 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new EntityNotFoundException("No site matches the provided id");
         }
         if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
-            throw new AppointmentNotAvailableException("The appointment date is not available");
+            throw new AppointmentNotAvailableException("The appointment day is not available");
         }
-        if (createAppointmentDto.getDate().getHour() < site.get().getOpeningHour() || createAppointmentDto.getDate().getHour() > site.get().getClosingHour()) {
+        if (site.get().getOpeningHour().isAfter(createAppointmentDto.getDate().toLocalTime()) || site.get().getClosingHour().isBefore(createAppointmentDto.getDate().toLocalTime())) {
             throw new AppointmentNotAvailableException("The appointment hour is not available");
         }
         if(isAppointmentTimeAvailable(site.get().getId(), createAppointmentDto.getDate())) {
