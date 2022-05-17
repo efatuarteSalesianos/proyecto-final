@@ -2,6 +2,7 @@ package com.salesianostriana.dam.finalapi.repositories;
 
 import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
 import com.salesianostriana.dam.finalapi.models.Appointment;
+import com.salesianostriana.dam.finalapi.models.AppointmentPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,6 +12,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+
+    //exist by appointmentPK
+    Optional<Appointment> existById(AppointmentPK appointmentPK);
+
+    //delete by appointmentPK
+    void deleteById(AppointmentPK appointmentPK);
 
     // Listar todos los appointments de un usuario por su id
     @Query("""

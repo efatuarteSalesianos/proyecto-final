@@ -17,6 +17,7 @@ public class CreateAppointmentDto {
     @FutureDate(message = "{appointment.date.futureDate}")
     private LocalDateTime date;
 
+    @Builder.Default
     StatusType status = StatusType.ESPERA;
 
     @Lob

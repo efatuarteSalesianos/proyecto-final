@@ -60,18 +60,60 @@ class _BookingsScreenState extends State<BookingsScreen> {
               (BuildContext context, int index) {
                 return Card(
                   margin: const EdgeInsets.all(10),
-                  child: Container(
-                    color: Colors.blue[100 * (index % 9 + 1)],
-                    height: 100,
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Item $index",
-                      style: const TextStyle(fontSize: 30),
-                    ),
-                  ),
+                  child: SizedBox(
+                      height: 150,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: const Image(
+                              width: 150,
+                              image: NetworkImage(
+                                  'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 15.0),
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Flexible(
+                                      child: Text(
+                                    'Mayte del Valle',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.bold),
+                                  )),
+                                  Flexible(
+                                      child: Text(
+                                    'C. San Jacinto, 68',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(fontSize: 19),
+                                  )),
+                                  Flexible(
+                                      child: Text(
+                                    '638 92 49 30',
+                                    maxLines: 1,
+                                    softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(fontSize: 19),
+                                  )),
+                                ]),
+                          )
+                        ],
+                      )),
                 );
               },
-              childCount: 1000, // 1000 list items
+              childCount: 20, // 50 list items
             ),
           ),
         ],

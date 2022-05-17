@@ -15,5 +15,6 @@ public class GetPropietarioDto {
     private UUID id;
     private String full_name, phone, email, avatar;
     private int num_negocios;
+    @Builder.Default
     private List<GetSiteDto> negocios = new ArrayList<>();
 }

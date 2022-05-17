@@ -99,13 +99,13 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 1
                 ? SvgPicture.asset(
-                    'assets/images/icons/reels.svg',
+                    'assets/images/icons/heart.svg',
                     width: 23,
                     semanticsLabel: 'Favorites',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icons/reels.svg',
+                    'assets/images/icons/heart.svg',
                     width: 23,
                     semanticsLabel: 'Favorites',
                     color: Colors.grey,

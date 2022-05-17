@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +23,6 @@ public class AWSS3Service {
 
     private final String bucketName = "mysalon";
 
-    private final String fileUrl = "https://mysalonapi.s3.eu-west-3.amazonaws.com/";
-
     private String storeByteArray(byte[] image, String filename, String contentType, long size) throws IOException {
         try (InputStream inputStream = new ByteArrayInputStream(image)) {
             ObjectMetadata metadata = new ObjectMetadata();
@@ -31,12 +30,13 @@ public class AWSS3Service {
             metadata.setContentType(contentType);
             PutObjectRequest request = new PutObjectRequest(bucketName, filename, inputStream, metadata);
             s3client.putObject(request);
+            String fileUrl = "https://mysalonapi.s3.eu-west-3.amazonaws.com/";
             return fileUrl + filename;
         }
     }
 
     public String store(MultipartFile file) {
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String newFilename = "";
         try {
             if (file.isEmpty())
@@ -58,7 +58,7 @@ public class AWSS3Service {
 
     public String storeCompressed(MultipartFile file) {
         byte[] scaled = ImageCompressor.compressAvatar(file);
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String newFilename = "";
         try {
             if (file.isEmpty())
@@ -79,7 +79,7 @@ public class AWSS3Service {
 
     public String storeCompressedSite(MultipartFile file) {
         byte[] scaled = ImageCompressor.compressSiteImg(file);
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String newFilename = "";
         try {
             if (file.isEmpty())
@@ -100,7 +100,7 @@ public class AWSS3Service {
 
     public String storeCompressedSiteVideo(MultipartFile file) {
         byte[] scaled = ImageCompressor.compressSiteVideo(file);
-        String filename = StringUtils.cleanPath(file.getOriginalFilename());
+        String filename = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         String newFilename = "";
         try {
             if (file.isEmpty())
@@ -119,11 +119,10 @@ public class AWSS3Service {
         }
     }
 
-    public boolean deleteObject(String key) {
+    public void deleteObject(String key) {
         //You can get the object's key from the object's URL.
         try {
             s3client.deleteObject(bucketName, key);
-            return true;
         } catch (AmazonServiceException e) {
             throw new StorageException("Failed to delete file " + key, e);
         }

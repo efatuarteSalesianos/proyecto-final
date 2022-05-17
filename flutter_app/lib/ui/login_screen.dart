@@ -89,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 460,
+          height: 520,
           child: Card(
             color: Colors.white,
             semanticContainer: true,
@@ -152,7 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 30, vertical: 10),
+                        horizontal: 30, vertical: 15),
                     child: TextFormField(
                         controller: passwordController,
                         obscureText: true,
@@ -193,36 +193,39 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         )),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: const Size(250, 50),
-                      primary: const Color(0xFFFF5A5F),
-                      onPrimary: Colors.white,
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BottomNavbarScreen()));
-                    },
-                    child: GestureDetector(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {
-                          final loginDto = LoginDto(
-                              username: usernameController.text,
-                              password: passwordController.text);
+                  Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(255, 50),
+                          primary: const Color(0xFFFF5A5F),
+                          onPrimary: Colors.white,
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                                  const BottomNavbarScreen()));
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            if (_formKey.currentState!.validate()) {
+                              final loginDto = LoginDto(
+                                  username: usernameController.text,
+                                  password: passwordController.text);
 
-                          BlocProvider.of<LoginBloc>(context)
-                              .add(DoLoginEvent(loginDto));
-                        }
-                      },
-                      child: const Text(
-                        'Iniciar Sesión',
-                        style: TextStyle(fontSize: 16),
-                      ),
-                    ),
-                  ),
+                              BlocProvider.of<LoginBloc>(context)
+                                  .add(DoLoginEvent(loginDto));
+                            }
+                          },
+                          child: const Text(
+                            'Iniciar Sesión',
+                            style: TextStyle(fontSize: 20),
+                          ),
+                        ),
+                      )),
                   Column(children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15.0),
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Row(children: [
                         Expanded(
                           child: Container(
@@ -245,13 +248,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   left: 20.0, right: 10.0),
                               child: const Divider(
                                 color: Colors.black,
-                                height: 36,
+                                height: 30,
                               )),
                         ),
                       ]),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 20),
+                      padding: const EdgeInsets.only(bottom: 15),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -299,8 +302,8 @@ class _LoginScreenState extends State<LoginScreen> {
             elevation: 10,
             child: Container(
               padding: const EdgeInsets.all(20),
-              child: TextButton(
-                  onPressed: () => Navigator.pushNamed(context, '/register'),
+              child: GestureDetector(
+                  onTap: () => Navigator.pushNamed(context, '/register'),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

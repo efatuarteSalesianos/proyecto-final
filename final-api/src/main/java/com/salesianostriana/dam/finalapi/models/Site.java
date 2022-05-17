@@ -4,7 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 import static java.time.DayOfWeek.*;
@@ -28,10 +28,11 @@ public class Site {
     private String email;
     private String phone;
     private String web;
+    @Builder.Default
     Set<DayOfWeek> daysOpen = new HashSet<>(Arrays.asList(
             MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY));
-    private int openingHour;
-    private int closingHour;
+    private LocalTime openingHour;
+    private LocalTime closingHour;
     private String originalFile;
     private String scaledFile;
 
