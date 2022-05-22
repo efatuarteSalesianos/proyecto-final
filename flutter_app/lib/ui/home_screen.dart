@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/login_screen.dart';
+import 'package:flutter_app/ui/site_detail_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(const MyHomeScreen());
@@ -75,59 +77,71 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return Card(
-                  margin: const EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 150,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: const Image(
-                              width: 150,
-                              image: NetworkImage(
-                                  'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Flexible(
-                                      child: Text(
-                                    'Mayte del Valle',
-                                    maxLines: 1,
-                                    softWrap: true,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                  Flexible(
-                                      child: Text(
-                                    'C. San Jacinto, 68',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(fontSize: 19),
-                                  )),
-                                  Flexible(
-                                      child: Text(
-                                    '638 92 49 30',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(fontSize: 19),
-                                  )),
-                                ]),
-                          )
-                        ],
-                      )),
+                return GestureDetector(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const SiteDetailScreen()));
+                    },
+                    child: Card(
+                      margin: const EdgeInsets.all(10),
+                      child: SizedBox(
+                          height: 150,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(20),
+                                child: const Image(
+                                  width: 150,
+                                  image: NetworkImage(
+                                      'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0),
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: const [
+                                      Flexible(
+                                          child: Text(
+                                        'Mayte del Valle',
+                                        maxLines: 1,
+                                        softWrap: true,
+                                        overflow: TextOverflow.fade,
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                      Flexible(
+                                          child: Text(
+                                        'C. San Jacinto, 68',
+                                        maxLines: 1,
+                                        softWrap: false,
+                                        overflow: TextOverflow.fade,
+                                        style: TextStyle(fontSize: 16),
+                                      )),
+                                      Flexible(
+                                        child: Text(
+                                          '638 92 49 30',
+                                          maxLines: 1,
+                                          softWrap: false,
+                                          overflow: TextOverflow.fade,
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black),
+                                        ),
+                                      )
+                                    ]),
+                              )
+                            ],
+                          )),
+                    ),
+                  ),
                 );
               },
               childCount: 20, // 50 list items
