@@ -40,60 +40,81 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
         backgroundColor: const Color(0xFFFF5A5F),
         title: const Text('Site Details'),
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ClipRRect(
-              child: Image(
-                width: MediaQuery.of(context).size.width,
-                image: const NetworkImage(
-                    'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
-              ),
-            ),
-            Flexible(
-                child: Row(
-              children: [
-                TextButton(
-                    onPressed: () => launch(
-                        'https://www.google.com/maps/search/?api=1&query=Mayte+del+Valle+Calle+san+Jacinto+68+Sevilla'),
-                    child: const Text(
-                      'C. San Jacinto, 68',
-                      maxLines: 1,
-                      softWrap: false,
-                      overflow: TextOverflow.fade,
-                      style: TextStyle(fontSize: 16),
-                    )),
-                SvgPicture.asset('assets/images/icons/maps.svg',
-                    width: 30, semanticsLabel: 'Google Maps')
-              ],
-            )),
-            const Flexible(
-                child: Text(
-              'Mayte del Valle',
-              maxLines: 1,
-              softWrap: true,
-              overflow: TextOverflow.fade,
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            )),
-            Flexible(
-                child: Row(children: [
-              GestureDetector(
-                onTap: () {
-                  openwhatsapp("+34638924930");
-                },
-                child: const Text(
-                  '638 92 49 30',
-                  maxLines: 1,
-                  softWrap: false,
-                  overflow: TextOverflow.fade,
-                  style: TextStyle(fontSize: 18, color: Colors.black),
+      body: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                child: Image(
+                  width: MediaQuery.of(context).size.width,
+                  image: const NetworkImage(
+                      'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
                 ),
               ),
-              SvgPicture.asset('assets/images/icons/whatsapp.svg',
-                  width: 30, semanticsLabel: 'Whatsapp')
-            ])),
-          ]),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                child: Text(
+                  'Peluquería Mayte del Valle',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 10.0),
+                      child: Text('Tu Peluquería en Sevilla',
+                          style: TextStyle(
+                              fontSize: 21, fontWeight: FontWeight.bold)),
+                    ),
+                    Text(
+                      'En el Salón de Peluquería y Belleza MdV estamos especializados en asesorarte para el cuidado integral de tu imagen. Somos capaces de sacar lo más bello que hay en ti, a través de tu propia imagen sin dejar de ser tú misma.',
+                      style: TextStyle(fontSize: 17),
+                      textAlign: TextAlign.justify,
+                    ),
+                    Text(
+                      'En el mundo de la imagen desde 1986, Mayte del Valle abrió su primer salón de peluquería en Sevilla, su ciudad natal. Desde entonces se ha dedicado a este arte, en continuo reciclaje, asistiendo anualmente a diversos ateliers, seminarios y cursos, evaluando nuevas tendencias en el mundo de la moda en ciudades como París, Londres o Milán.',
+                      style: TextStyle(fontSize: 17),
+                      textAlign: TextAlign.justify,
+                    )
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                      onPressed: () => launch(
+                          'https://www.google.com/maps/search/?api=1&query=Mayte+del+Valle+Calle+san+Jacinto+68+Sevilla'),
+                      child: const Text(
+                        'C. San Jacinto, 68',
+                        maxLines: 1,
+                        softWrap: false,
+                        overflow: TextOverflow.fade,
+                        style: TextStyle(fontSize: 18),
+                      )),
+                  SvgPicture.asset('assets/images/icons/maps.svg',
+                      width: 30, semanticsLabel: 'Google Maps')
+                ],
+              ),
+              Row(
+                children: [
+                  FloatingActionButton(
+                    elevation: 50,
+                    backgroundColor: const Color(0xFF25D366),
+                    child: SvgPicture.asset('assets/images/icons/whatsapp.svg',
+                        width: 50, semanticsLabel: 'Whatsapp'),
+                    onPressed: () {
+                      openwhatsapp("+34638924930");
+                    },
+                  ),
+                ],
+              ),
+            ]),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 
