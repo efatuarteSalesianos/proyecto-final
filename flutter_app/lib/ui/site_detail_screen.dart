@@ -38,7 +38,7 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFFFF5A5F),
-        title: const Text('Site Details'),
+        title: const Text('Peluquería Mayte del Valle'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -50,13 +50,6 @@ class _SiteDetailScreenState extends State<SiteDetailScreen> {
                 width: MediaQuery.of(context).size.width,
                 image: const NetworkImage(
                     'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.0),
-              child: Text(
-                'Peluquería Mayte del Valle',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
               ),
             ),
             Padding(

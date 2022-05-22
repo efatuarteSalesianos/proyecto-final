@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
+import 'package:flutter_app/widgets/profile_menu_widget.dart';
+import 'package:flutter_app/widgets/profile_pic_widget.dart';
 
 void main() {
   runApp(const MyProfileScreen());
@@ -57,65 +59,43 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ],
           ),
           SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Card(
-                  margin: const EdgeInsets.all(10),
-                  child: SizedBox(
-                      height: 150,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
-                            child: const Image(
-                              width: 150,
-                              image: NetworkImage(
-                                  'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 15.0),
-                            child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  Flexible(
-                                      child: Text(
-                                    'Mayte del Valle',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.bold),
-                                  )),
-                                  Flexible(
-                                      child: Text(
-                                    'C. San Jacinto, 68',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(fontSize: 19),
-                                  )),
-                                  Flexible(
-                                      child: Text(
-                                    '638 92 49 30',
-                                    maxLines: 1,
-                                    softWrap: false,
-                                    overflow: TextOverflow.fade,
-                                    style: TextStyle(fontSize: 19),
-                                  )),
-                                ]),
-                          )
-                        ],
-                      )),
-                );
-              },
-              childCount: 20, // 50 list items
-            ),
+            delegate:
+                SliverChildBuilderDelegate((BuildContext context, int index) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(vertical: 20),
+                child: Column(
+                  children: [
+                    ProfilePicWidget(),
+                    SizedBox(height: 20),
+                    ProfileMenuWidget(
+                      text: "Mi Cuenta",
+                      icon: "assets/images/icons/profile.svg",
+                      press: () => {},
+                    ),
+                    ProfileMenuWidget(
+                      text: "Notificaciones",
+                      icon: "assets/images/icons/notification.svg",
+                      press: () {},
+                    ),
+                    ProfileMenuWidget(
+                      text: "Ajustes",
+                      icon: "assets/images/icons/settings.svg",
+                      press: () {},
+                    ),
+                    ProfileMenuWidget(
+                      text: "Centro de Ayuda",
+                      icon: "assets/images/icons/question.svg",
+                      press: () {},
+                    ),
+                    ProfileMenuWidget(
+                      text: "Salir",
+                      icon: "assets/images/icons/exit.svg",
+                      press: () {},
+                    ),
+                  ],
+                ),
+              );
+            }, childCount: 1),
           ),
         ],
       ),

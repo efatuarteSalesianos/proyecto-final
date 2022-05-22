@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/image_pick/image_pick_bloc.dart';
 import 'package:flutter_app/blocs/register/register_bloc.dart';
 import 'package:flutter_app/models/register_dto.dart';
+import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/bottom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -572,8 +573,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                       fontSize: 16, color: Color(0xFF262626)),
                                 ),
                                 TextButton(
-                                    onPressed: () =>
-                                        Navigator.pushNamed(context, '/login'),
+                                    onPressed: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const LoginScreen())),
                                     child: const Text(
                                       'Entrar',
                                       style: TextStyle(

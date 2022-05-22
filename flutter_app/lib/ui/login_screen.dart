@@ -3,6 +3,7 @@ import 'package:flutter_app/blocs/login/login_bloc.dart';
 import 'package:flutter_app/models/login_dto.dart';
 import 'package:flutter_app/repositories/login/login_repository.dart';
 import 'package:flutter_app/repositories/login/login_repository_impl.dart';
+import 'package:flutter_app/ui/register_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/bottom_navbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -302,26 +303,25 @@ class _LoginScreenState extends State<LoginScreen> {
             elevation: 10,
             child: Container(
               padding: const EdgeInsets.all(20),
-              child: GestureDetector(
-                  onTap: () => Navigator.pushNamed(context, '/register'),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        '¿No tienes una cuenta?',
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    '¿No tienes una cuenta?',
+                    style: TextStyle(fontSize: 15, color: Color(0xFF262626)),
+                  ),
+                  TextButton(
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterScreen())),
+                      child: const Text(
+                        'Regístrate',
                         style:
-                            TextStyle(fontSize: 15, color: Color(0xFF262626)),
-                      ),
-                      TextButton(
-                          onPressed: () =>
-                              Navigator.pushNamed(context, '/register'),
-                          child: const Text(
-                            'Regístrate',
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xFFFF5A5F)),
-                          )),
-                    ],
-                  )),
+                            TextStyle(fontSize: 16, color: Color(0xFFFF5A5F)),
+                      )),
+                ],
+              ),
             ),
           ),
         ),
