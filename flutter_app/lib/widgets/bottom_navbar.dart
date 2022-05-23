@@ -50,7 +50,6 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
   final pages = [
     const HomeScreen(),
     const FavouritesScreen(),
-    const HomeScreen(),
     const BookingsScreen(),
     const ProfileScreen(),
   ];
@@ -66,7 +65,7 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
 
   Container buildMyNavBar(BuildContext context) {
     return Container(
-      height: 65,
+      height: 60,
       decoration: const BoxDecoration(
         color: Colors.white,
       ),
@@ -120,15 +119,15 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
             },
             icon: pageIndex == 2
                 ? SvgPicture.asset(
-                    'assets/images/icons/search.svg',
+                    'assets/images/icons/shop.svg',
                     width: 23,
-                    semanticsLabel: 'Search',
+                    semanticsLabel: 'Shop',
                     color: Colors.black,
                   )
                 : SvgPicture.asset(
-                    'assets/images/icons/search.svg',
+                    'assets/images/icons/shop.svg',
                     width: 23,
-                    semanticsLabel: 'Search',
+                    semanticsLabel: 'Shop',
                     color: Colors.grey,
                   ),
           ),
@@ -140,27 +139,6 @@ class _BottomNavbarScreenState extends State<BottomNavbarScreen> {
               });
             },
             icon: pageIndex == 3
-                ? SvgPicture.asset(
-                    'assets/images/icons/shop.svg',
-                    width: 23,
-                    semanticsLabel: 'Shop',
-                    color: Colors.black,
-                  )
-                : SvgPicture.asset(
-                    'assets/images/icons/shop.svg',
-                    width: 23,
-                    semanticsLabel: 'Shop',
-                    color: Colors.grey,
-                  ),
-          ),
-          IconButton(
-            enableFeedback: false,
-            onPressed: () {
-              setState(() {
-                pageIndex = 4;
-              });
-            },
-            icon: pageIndex == 4
                 ? Container(
                     height: 32,
                     width: 32,

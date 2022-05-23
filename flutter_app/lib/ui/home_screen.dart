@@ -10,23 +10,9 @@ import 'package:flutter_app/widgets/site_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void main() {
-  runApp(const MyHomeScreen());
-}
-
-class MyHomeScreen extends StatelessWidget {
-  const MyHomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        // Remove the debug banner
-        debugShowCheckedModeBanner: false,
-        title: 'MySalon',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const HomeScreen());
-  }
+  runApp(const MaterialApp(
+    debugShowCheckedModeBanner: false,
+  ));
 }
 
 class HomeScreen extends StatefulWidget {
@@ -59,9 +45,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Expanded(
         child: ListView.builder(
+          scrollDirection: Axis.vertical,
           itemCount: sites.length,
-          itemBuilder: (BuildContext ctx, int index) {
-            return SiteCard(site: sites[index], onCardClick: () {});
+          itemBuilder: (context, index) {
+            return SiteCard(site: sites[index]);
           },
         ),
       )
