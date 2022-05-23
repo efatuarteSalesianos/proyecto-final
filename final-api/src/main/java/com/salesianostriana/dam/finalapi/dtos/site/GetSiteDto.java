@@ -24,4 +24,5 @@ public class GetSiteDto {
     private String scaledFileUrl;
     private int likes;
     private boolean liked;
+    private String type;
 }

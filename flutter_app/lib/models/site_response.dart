@@ -14,6 +14,7 @@ class SiteResponse {
   late String scaledFileUrl;
   late int likes;
   late String originalFileUrl;
+  late String type;
 
   SiteResponse({
     required this.id,
@@ -31,6 +32,7 @@ class SiteResponse {
     required this.scaledFileUrl,
     required this.likes,
     required this.originalFileUrl,
+    required this.type,
   });
   SiteResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'].toInt();
@@ -48,6 +50,7 @@ class SiteResponse {
     scaledFileUrl = json['scaledFileUrl'].toString();
     likes = json['likes'].toInt();
     originalFileUrl = json['originalFileUrl'].toString();
+    type = json['type'].toString();
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
@@ -66,6 +69,7 @@ class SiteResponse {
     data['scaledFileUrl'] = scaledFileUrl;
     data['likes'] = likes;
     data['originalFileUrl'] = originalFileUrl;
+    data['type'] = type;
     return data;
   }
 }
