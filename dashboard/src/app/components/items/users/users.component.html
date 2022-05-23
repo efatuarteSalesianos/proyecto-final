@@ -1,0 +1,62 @@
+<div class="main" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+    <mat-form-field appearance="standard">
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
+    </mat-form-field>
+
+    <div class="table-container" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="avatar">
+                <th mat-header-cell *matHeaderCellDef> Avatar </th>
+                <td mat-cell *matCellDef="let element"><img src={{element.avatar}} /></td>
+            </ng-container>
+
+            <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef> Usuario </th>
+                <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="birthDate">
+                <th mat-header-cell *matHeaderCellDef> Fecha de Nacimiento </th>
+                <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="followers">
+                <th mat-header-cell *matHeaderCellDef> Seguidores </th>
+                <td mat-cell *matCellDef="let element"> {{element.followers}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="privateAccount">
+                <th mat-header-cell *matHeaderCellDef> ¿Cuenta Pública? </th>
+                <td mat-cell *matCellDef="let element"> {{element.privateAccount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="rol">
+                <th mat-header-cell *matHeaderCellDef> Rol </th>
+                <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Acciones </th>
+                <td mat-cell *matCellDef="let element">
+                    <button (click)="confirmAdminDialog(element.username, element.rol)" mat-icon-button matTooltip="Click to Give Admin" class="iconbutton" color="accent">
+                  <mat-icon aria-label="Give Admin">verified_user</mat-icon>
+                </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4">No se encuentran resultados para la búsqueda: "{{input.value}}"</td>
+            </tr>
+        </table>
+    </div>
+</div>

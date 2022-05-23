@@ -1,0 +1,40 @@
+#sect1 {
+    width: 100%;
+    height: 100%;
+    background-image: url("../../../../assets/images/gradient.png");
+    background-size: cover;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+    background-color: lightgray !important;
+    border-radius: 5px;
+}
+
+@font-face {
+    font-family: Instagram;
+    src: local("Instagram"), url(../../../../assets/fonts/insta_font_bold.otf) format("truetype");
+}
+
+mat-card {
+    width: 30%;
+}
+
+.logo {
+    padding: 10% 0%;
+    font-family: Instagram;
+    font-size: 60px;
+    text-align: center
+}
+
+mat-form-field {
+    padding: 0% 25%;
+}
+
+button {
+    margin: 2% 25% 10% 25%;
+    width: 50%;
+}
+
+mat-checkbox {
+    padding: 1% 25% 3% 25%;
+}
