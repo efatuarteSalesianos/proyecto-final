@@ -1,0 +1,63 @@
+<div id="sect1" class="container">
+    <div fxFlexFill fxLayout="column" fxLayoutAlign="center center">
+        <mat-card>
+
+            <h1 class="logo">
+                Miarmagram
+            </h1>
+            <form [formGroup]="registerForm" fxLayout="column">
+                <mat-form-field appearance="fill" fxFlex="60">
+                    <mat-label>Nombre de usuario</mat-label>
+                    <input matInput placeholder="Usuario" name="username" formControlName="username" required>
+                </mat-form-field>
+                <div *ngIf="registerForm.controls['username'].dirty || registerForm.controls['username']?.touched" class="alert alert-danger">
+                    <div *ngIf="registerForm.get('username')?.hasError('required')">
+                        Debe introducir un nombre de usuario.
+                    </div>
+                </div>
+
+                <mat-form-field appearance="fill" fxFlex="60">
+                    <mat-label>Email</mat-label>
+                    <input matInput placeholder="Correo Electrónico" name="email" formControlName="email" required>
+                </mat-form-field>
+                <div *ngIf="registerForm.controls['email'].dirty || registerForm.controls['email']?.touched" class="alert alert-danger">
+                    <div *ngIf="registerForm.get('email')?.hasError('required')">
+                        Debe introducir introducir su email.
+                    </div>
+                    <div *ngIf="registerForm.get('email')?.hasError('email')">
+                        Debe introducir un email válido.
+                    </div>
+                </div>
+
+                <mat-form-field appearance="fill" fxFlex="60">
+                    <mat-label>Contraseña</mat-label>
+                    <input matInput placeholder="Contraseña" name="password" formControlName="password" required>
+                </mat-form-field>
+                <div *ngIf="registerForm.controls['password'].dirty || registerForm.controls['password']?.touched" class="alert alert-danger">
+                    <div *ngIf="registerForm.get('password')?.hasError('required')">
+                        Debe introducir una contraseña.
+                    </div>
+                    <div *ngIf="registerForm.get('password')?.hasError('minlength')">
+                        Debe introducir una contraseña más larga.
+                    </div>
+                </div>
+
+                <mat-form-field appearance="fill" fxFlex="60">
+                    <mat-label>Confirmar contraseña</mat-label>
+                    <input matInput placeholder="Confirmar contraseña" name="password2" formControlName="password2" required>
+                </mat-form-field>
+                <div *ngIf="registerForm.controls['password2'].dirty || registerForm.controls['password2']?.touched" class="alert alert-danger">
+                    <div *ngIf="registerForm.get('password2')?.hasError('required')">
+                        Debe introducir una contraseña.
+                    </div>
+                    <div *ngIf="registerForm.get('password2')?.hasError('minlength')">
+                        Debe introducir una contraseña más larga.
+                    </div>
+                </div>
+
+                <mat-checkbox class="example-margin">¿Quiere hacer su cuenta privada?</mat-checkbox>
+
+                <button mat-raised-button color="primary" (click)="register()">Registrar</button>
+            </form>
+        </mat-card>
+    </div>

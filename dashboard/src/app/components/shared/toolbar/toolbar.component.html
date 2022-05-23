@@ -1,0 +1,9 @@
+<mat-toolbar color="white">
+    <span class="logo">Miarmagram</span>
+    <span class="example-spacer"></span>
+    <p class="username">{{getUsername()}}</p>
+    <img src={{getAvatar()}} />
+    <button mat-icon-button class="example-icon" (click)="logout()" aria-label="Example icon-button with share icon">
+<mat-icon>logout</mat-icon>
+</button>
+</mat-toolbar>

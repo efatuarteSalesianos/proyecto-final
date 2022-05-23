@@ -1,0 +1,16 @@
+table {
+    width: 90%;
+}
+
+.mat-form-field {
+    font-size: 15px;
+    width: 25%;
+}
+
+img {
+    margin-top: 3%;
+    object-fit: cover;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+}
