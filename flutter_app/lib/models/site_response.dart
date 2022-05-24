@@ -8,8 +8,6 @@ class SiteResponse {
   late String email;
   late String phone;
   late String web;
-  late DateTime openingHour;
-  late DateTime closingHour;
   late double rate;
   late String scaledFileUrl;
   late int likes;
@@ -26,8 +24,6 @@ class SiteResponse {
     required this.email,
     required this.phone,
     required this.web,
-    required this.openingHour,
-    required this.closingHour,
     required this.rate,
     required this.scaledFileUrl,
     required this.likes,
@@ -35,7 +31,7 @@ class SiteResponse {
     required this.type,
   });
   SiteResponse.fromJson(Map<String, dynamic> json) {
-    id = json['id'].toInt();
+    id = json['id'];
     name = json['name'].toString();
     description = json['description'].toString();
     address = json['address'].toString();
@@ -44,8 +40,6 @@ class SiteResponse {
     email = json['email'].toString();
     phone = json['phone'].toString();
     web = json['web'].toString();
-    openingHour = json['openingHour'];
-    closingHour = json['closingHour'];
     rate = json['rate'];
     scaledFileUrl = json['scaledFileUrl'].toString();
     likes = json['likes'].toInt();
@@ -63,8 +57,6 @@ class SiteResponse {
     data['email'] = email;
     data['phone'] = phone;
     data['web'] = web;
-    data['openingHour'] = openingHour;
-    data['closingHour'] = closingHour;
     data['rate'] = rate;
     data['scaledFileUrl'] = scaledFileUrl;
     data['likes'] = likes;

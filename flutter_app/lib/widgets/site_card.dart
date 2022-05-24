@@ -33,7 +33,7 @@ class SiteCard extends StatelessWidget {
                         begin: Alignment.bottomCenter,
                         end: Alignment.topCenter,
                         colors: [
-                          Colors.black.withOpacity(0.7),
+                          Colors.black.withOpacity(0.8),
                           Colors.transparent
                         ]))),
           ),
