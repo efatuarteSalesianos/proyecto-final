@@ -30,7 +30,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
     private UUID id;
 
-    private String full_name;
+    private String fullName;
     private String username;
     private String email;
     private Date birthDate;

@@ -18,7 +18,7 @@ class MyProfileScreen extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Mi Perfil',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.red,
         ),
         home: const ProfileScreen());
   }

@@ -88,7 +88,7 @@ public class SiteController {
     }
 
     @GetMapping("/{propietarioId}")
-    public ResponseEntity<List<GetListSiteDto>> getAllSitesByType(@PathVariable Long propietarioId){
+    public ResponseEntity<List<GetListSiteDto>> getAllSitesByPropietario(@PathVariable Long propietarioId){
         List<GetListSiteDto> sites = siteRepository.findByPropietarioId(propietarioId);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();

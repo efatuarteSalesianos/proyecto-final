@@ -16,14 +16,14 @@ class RegisterDto {
   late final String password2;
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['name'] = name;
-    _data['email'] = email;
-    _data['phone'] = phone;
-    _data['birthDate'] = birthDate;
-    _data['username'] = username;
-    _data['password'] = password;
-    _data['password2'] = password2;
-    return _data;
+    final data = <String, dynamic>{};
+    data['name'] = name;
+    data['email'] = email;
+    data['phone'] = phone;
+    data['birthDate'] = birthDate;
+    data['username'] = username;
+    data['password'] = password;
+    data['password2'] = password2;
+    return data;
   }
 }

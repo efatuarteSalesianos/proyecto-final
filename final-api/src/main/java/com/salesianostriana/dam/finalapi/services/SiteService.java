@@ -296,7 +296,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new EntityNotFoundException("No comment matches the provided id");
         }
         return GetCommentDto.builder()
-                .cliente(comment.get().getCliente().getFull_name())
+                .cliente(comment.get().getCliente().getFullName())
                 .site(comment.get().getSite().getName())
                 .title(comment.get().getTitle())
                 .description(comment.get().getDescription())

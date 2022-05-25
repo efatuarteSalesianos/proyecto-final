@@ -16,6 +16,7 @@ public class SiteDtoConverter {
     private final CommentDtoConverter commentDtoConverter;
     public GetSiteDto toGetSiteDto(Site site) {
         return GetSiteDto.builder()
+                .id(site.getId())
                 .name(site.getName())
                 .description(site.getDescription())
                 .address(site.getAddress())
@@ -25,24 +26,25 @@ public class SiteDtoConverter {
                 .web(site.getWeb())
                 .phone(site.getPhone())
                 .comments(site.getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(Collectors.toList()))
-                .total_comments((site.getComments().size()))
+                .totalComments((site.getComments().size()))
                 .rate(average_rate(site.getComments()))
                 .originalFileUrl(site.getOriginalFile())
                 .scaledFileUrl(site.getScaledFile())
                 .likes(site.getLikes().size())
                 .liked(site.isLiked())
                 .type(site.getType().getValue())
-                .propietario(site.getPropietario().getFull_name())
+                .propietario(site.getPropietario().getFullName())
                 .build();
     }
 
     public GetListSiteDto toGetListSiteDto(Site site) {
         return GetListSiteDto.builder()
+                .id(site.getId())
                 .name(site.getName())
                 .address(site.getAddress())
                 .city(site.getCity())
                 .postalCode(site.getPostalCode())
-                .total_comments((site.getComments().size()))
+                .totalComments((site.getComments().size()))
                 .rate(average_rate(site.getComments()))
                 .scaledFileUrl(site.getScaledFile())
                 .liked(site.isLiked())

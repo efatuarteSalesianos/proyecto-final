@@ -9,7 +9,7 @@ import java.util.Date;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class GetUserDto {
-    private String full_name;
+    private String fullName;
     private String username;
     private String email;
     private String avatar;
@@ -17,5 +17,4 @@ public class GetUserDto {
     private Date birthDate;
     private String phone;
     private String rol;
-    private int followers;
 }

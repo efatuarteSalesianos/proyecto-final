@@ -1,67 +1,49 @@
+import 'dart:ffi';
+
 class SiteResponse {
-  late int id;
+  late Long id;
   late String name;
-  late String description;
   late String address;
   late String city;
   late String postalCode;
-  late String email;
-  late String phone;
-  late String web;
+  late int totalComments;
   late double rate;
   late String scaledFileUrl;
-  late int likes;
-  late String originalFileUrl;
-  late String type;
+  late bool liked;
 
   SiteResponse({
     required this.id,
     required this.name,
-    required this.description,
     required this.address,
     required this.city,
     required this.postalCode,
-    required this.email,
-    required this.phone,
-    required this.web,
+    required this.totalComments,
     required this.rate,
     required this.scaledFileUrl,
-    required this.likes,
-    required this.originalFileUrl,
-    required this.type,
+    required this.liked,
   });
   SiteResponse.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'].toString();
-    description = json['description'].toString();
     address = json['address'].toString();
     city = json['city'].toString();
     postalCode = json['postalCode'].toString();
-    email = json['email'].toString();
-    phone = json['phone'].toString();
-    web = json['web'].toString();
+    totalComments = json['totalComments'].toInt();
     rate = json['rate'];
     scaledFileUrl = json['scaledFileUrl'].toString();
-    likes = json['likes'].toInt();
-    originalFileUrl = json['originalFileUrl'].toString();
-    type = json['type'].toString();
+    liked = json['liked'];
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    data['description'] = description;
     data['address'] = address;
     data['city'] = city;
     data['postalCode'] = postalCode;
-    data['email'] = email;
-    data['phone'] = phone;
-    data['web'] = web;
+    data['totalComments'] = totalComments;
     data['rate'] = rate;
     data['scaledFileUrl'] = scaledFileUrl;
-    data['likes'] = likes;
-    data['originalFileUrl'] = originalFileUrl;
-    data['type'] = type;
+    data['liked'] = liked;
     return data;
   }
 }

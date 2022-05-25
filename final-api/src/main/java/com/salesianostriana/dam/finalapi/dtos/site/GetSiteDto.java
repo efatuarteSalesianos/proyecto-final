@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Builder
 public class GetSiteDto {
+    private Long id;
     private String name;
     private String description;
     private String address;
@@ -20,7 +21,7 @@ public class GetSiteDto {
     private String web;
     private String phone;
     private List<GetCommentDto> comments;
-    private int total_comments;
+    private int totalComments;
     private double rate;
     private String originalFileUrl;
     private String scaledFileUrl;

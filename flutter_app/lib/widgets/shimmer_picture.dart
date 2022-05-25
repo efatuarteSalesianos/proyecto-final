@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ShimmerPostsList extends StatelessWidget {
-  const ShimmerPostsList({Key? key}) : super(key: key);
+class ShimmerListCard extends StatelessWidget {
+  const ShimmerListCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

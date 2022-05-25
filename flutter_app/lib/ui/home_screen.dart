@@ -25,65 +25,65 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<dynamic> sites = [];
-  List<dynamic> siteTypes = [];
-
-  Future<void> readJson() async {
-    final String response = await rootBundle.loadString('assets/sites.json');
-    final data = await json.decode(response);
-
-    final String responseTypes =
-        await rootBundle.loadString('assets/site_types.json');
-    final dataTypes = await json.decode(responseTypes);
-
-    setState(() {
-      sites = data['sites'].map((data) => SiteResponse.fromJson(data)).toList();
-      siteTypes = data['siteTypes']
-          .map((dataTypes) => SiteTypeResponse.fromJson(dataTypes))
-          .toList();
-    });
-  }
-
   @override
-  void initState() {
-    super.initState();
-    readJson();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: const Color(0xFFFF5A5F),
+        backgroundColor: const Color(0xFFFF5A5F),
+        foregroundColor: const Color(0xFFFFFFFF),
+        title: Text('MySalon'),
+        actions: [
+          // Navigate to the Search Screen
+          IconButton(
+              onPressed: () => Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (_) => SearchPage())),
+              icon: Icon(Icons.search))
+        ],
+      ),
+    );
   }
+}
+
+// Search Page
+class SearchPage extends StatelessWidget {
+  const SearchPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ListView(children: [
-      Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 50,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: siteTypes.length,
-                itemBuilder: (context, index) {
-                  return SiteTypeChipWidget(siteType: siteTypes[index]);
-                },
+    return Scaffold(
+      appBar: AppBar(
+          shadowColor: const Color(0xFFFF5A5F),
+          backgroundColor: const Color(0xFFFF5A5F),
+          foregroundColor: const Color(0xFFFFFFFF),
+          // The search area here
+          title: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: BoxDecoration(
+                color: Colors.white, borderRadius: BorderRadius.circular(5)),
+            child: Center(
+              child: TextField(
+                decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      icon: Icon(Icons.clear),
+                      onPressed: () {
+                        /* Clear the search field */
+                      },
+                    ),
+                    hintText: '¿Dónde quieres buscar?',
+                    border: InputBorder.none),
               ),
             ),
-          ),
+          )),
+      body: ListView(
+        children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: ListView.builder(
-              scrollDirection: Axis.vertical,
-              itemCount: sites.length,
-              itemBuilder: (context, index) {
-                return SiteCard(
-                  site: sites[index],
-                );
-              },
-            ),
-          ),
+              height: MediaQuery.of(context).size.height,
+              child: const SiteCard()),
         ],
-      )
-    ]);
+      ),
+    );
   }
 }

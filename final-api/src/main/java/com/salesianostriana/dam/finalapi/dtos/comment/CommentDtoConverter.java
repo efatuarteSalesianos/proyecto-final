@@ -10,7 +10,7 @@ public class CommentDtoConverter {
 
     public GetCommentDto toGetCommentDto(Comment comment) {
         return GetCommentDto.builder()
-                .cliente(comment.getCliente().getFull_name())
+                .cliente(comment.getCliente().getFullName())
                 .site(comment.getSite().getName())
                 .title(comment.getTitle())
                 .description(comment.getDescription())

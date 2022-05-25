@@ -61,7 +61,6 @@ dependencies:
   toggle_switch: ^2.0.1
   like_button: ^2.0.4
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

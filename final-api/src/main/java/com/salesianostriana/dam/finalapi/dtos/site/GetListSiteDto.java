@@ -11,11 +11,12 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class GetListSiteDto {
+    private Long id;
     private String name;
     private String address;
     private String city;
     private String postalCode;
-    private int total_comments;
+    private int totalComments;
     private double rate;
     private String scaledFileUrl;
     private boolean liked;

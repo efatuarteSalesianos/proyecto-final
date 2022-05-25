@@ -28,8 +28,8 @@ import java.util.Date;
 })
 public class CreateUserDto {
 
-    @NotBlank(message = "{userEntity.full_name.blank}")
-    private String full_name;
+    @NotBlank(message = "{userEntity.fullName.blank}")
+    private String fullName;
 
     @UniqueUsername(message = "{userEntity.username.unique}")
     @NotBlank(message = "{userEntity.username.blank}")
