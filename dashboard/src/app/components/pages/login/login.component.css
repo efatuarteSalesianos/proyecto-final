@@ -10,8 +10,8 @@
 }
 
 @font-face {
-    font-family: Instagram;
-    src: local("Instagram"), url(../../../../assets/fonts/insta_font_bold.otf) format("truetype");
+    font-family: MySalon;
+    src: local("MySalon"), url(../../../../assets/fonts/my_salon.ttf) format("truetype");
 }
 
 mat-card {
@@ -21,8 +21,8 @@ mat-card {
 .logo {
     color: #2C2C2C;
     padding: 10% 0%;
-    font-family: Instagram;
-    font-size: 60px;
+    font-family: MySalon;
+    font-size: 90px;
     text-align: center
 }
 

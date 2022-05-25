@@ -44,15 +44,15 @@ a:visited {
 }
 
 @font-face {
-    font-family: Instagram;
-    src: local("Instagram"), url(../../../../assets/fonts/insta_font_bold.otf) format("truetype");
+    font-family: MySalon;
+    src: local("MySalon"), url(../../../../assets/fonts/my_salon.ttf) format("truetype");
 }
 
 .logo {
     color: white;
     padding: 0% 2%;
-    font-family: Instagram;
-    font-size: 33px;
+    font-family: MySalon;
+    font-size: 40px;
     text-align: center
 }
 
