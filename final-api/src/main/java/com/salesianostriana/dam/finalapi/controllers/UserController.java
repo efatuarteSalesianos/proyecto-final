@@ -30,7 +30,7 @@ public class UserController {
         if(!file.isEmpty() || newUser!=null)
             return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(userService.saveUser(newUser, file)));
         else
-            throw new MultipartException("Te provided multipart file must not be null");
+            throw new MultipartException("The provided multipart file must not be null");
     }
 
     @PostMapping("/auth/register/admin")

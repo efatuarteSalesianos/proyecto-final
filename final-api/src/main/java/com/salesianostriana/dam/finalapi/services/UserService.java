@@ -39,7 +39,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public UserEntity saveUser(CreateUserDto newUser, MultipartFile file) {
         String fileUrl = awsS3Service.storeCompressed(file);
 
-        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+        if (newUser.getPassword().contentEquals(newUser.getVerifyPassword())) {
             UserEntity userEntity = UserEntity.builder()
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
@@ -57,7 +57,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public UserEntity saveAdmin(CreateUserDto newUser, MultipartFile file) {
         String fileUrl = awsS3Service.storeCompressed(file);
 
-        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+        if (newUser.getPassword().contentEquals(newUser.getVerifyPassword())) {
             UserEntity userEntity = UserEntity.builder()
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
@@ -76,7 +76,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public UserEntity savePropietario(CreateUserDto newUser, MultipartFile file) {
         String fileUrl = awsS3Service.storeCompressed(file);
 
-        if (newUser.getPassword().contentEquals(newUser.getPassword2())) {
+        if (newUser.getPassword().contentEquals(newUser.getVerifyPassword())) {
             UserEntity userEntity = UserEntity.builder()
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())

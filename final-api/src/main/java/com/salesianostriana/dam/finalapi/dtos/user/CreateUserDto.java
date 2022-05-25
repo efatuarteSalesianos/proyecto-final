@@ -38,10 +38,10 @@ public class CreateUserDto {
     @NotBlank(message = "{userEntity.email.blank}")
     @Email(message = "{userEntity.email.email}")
     private String email;
+    private String verifyEmail;
 
     @Past(message = "{userEntity.birthday.past}")
     @JsonFormat(pattern = "dd-MM-yyyy")
-    @NotBlank(message = "{userEntity.birthDate.blank}")
     private Date birthDate;
 
     @NotBlank(message = "{userEntity.phone.blank}")
@@ -50,5 +50,5 @@ public class CreateUserDto {
 
     @NotBlank(message = "{userEntity.password.blank}")
     private String password;
-    private String password2;
+    private String verifyPassword;
 }
