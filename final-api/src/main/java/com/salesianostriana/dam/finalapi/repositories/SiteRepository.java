@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.repositories;
 
+import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.models.Site;
 import com.salesianostriana.dam.finalapi.models.SiteTypes;
@@ -11,41 +12,36 @@ import java.util.List;
 
 public interface SiteRepository extends JpaRepository<Site, Long> {
 
-    // Buscar todos los sitios que tengan un nombre que contenga el texto que se le pasa
     List<Site> findByNameContaining(String name);
 
-    // Buscar todos los sitios que tengan un determinado codigo postal
     List<Site> findByPostalCode(String postalCode);
 
-    // Buscar todos los sitios que tengan una determinada ciudad
     List<Site> findByCity(String city);
 
-    // Filtrar aquellos sitios que tengan un rate mayor que el que se le pasa como parametro
     @Query("""
-            select new com.salesianostriana.dam.dtos.site.GetSiteDto(
-                s.id, s.name, s.address, s.city, s.rate, s.scaledFile
+            select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
+                s.name, s.address, s.city, s.postalCode, s.totalComments, s.rate, s.scaledFileUrl, s.liked
             )
             from Site s
             where s.rate >= :rate
             """)
-    List<GetSiteDto> findByRateGreaterThan(@Param("rate") Double rate);
+    List<GetListSiteDto> findByRateGreaterThan(@Param("rate") Double rate);
 
     @Query("""
-            select new com.salesianostriana.dam.dtos.site.GetSiteDto(
-                s.id, s.name, s.address, s.city, s.rate, s.scaledFile
+            select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
+                s.name, s.address, s.city, s.postalCode, s.totalComments, s.rate, s.scaledFileUrl, s.liked
             )
             from Site s
-            where s.type >= :type
+            where s.type = :type
             """)
-    List<GetSiteDto> findByType(@Param("type") SiteTypes type);
+    List<GetListSiteDto> findByType(@Param("type") SiteTypes type);
 
-    // Find all sites which propietario is the same that we pass as parameter
     @Query("""
-            select new com.salesianostriana.dam.dtos.site.GetSiteDto(
-                s.id, s.name, s.address, s.city, s.rate, s.scaledFile
+            select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
+                s.name, s.address, s.city, s.postalCode, s.totalComments, s.rate, s.scaledFileUrl, s.liked
             )
             from Site s
             where s.propietario.id = :id
             """)
-    List<GetSiteDto> findByPropietarioId(@Param("id") Long id);
+    List<GetListSiteDto> findByPropietarioId(@Param("id") Long id);
 }

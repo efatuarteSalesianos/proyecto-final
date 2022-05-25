@@ -8,9 +8,7 @@ import java.util.Optional;
 
 public interface CommentRepository extends JpaRepository<Comment, Long> {
 
-    //exist by commentPK
     Optional<Comment> existsById(CommentPK commentPK);
 
-    //delete comment by commentPK
     void deleteById(CommentPK commentPK);
 }

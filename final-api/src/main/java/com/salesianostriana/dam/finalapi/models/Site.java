@@ -29,14 +29,12 @@ public class Site {
     private String phone;
     private String web;
     @Builder.Default
-    @ElementCollection(targetClass = DayOfWeek.class)
-    private Set<DayOfWeek> daysOfWeek = new HashSet<>();
-    Set<DayOfWeek> daysOpen = new HashSet<>(Arrays.asList(
-            MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY));
+    private EnumSet<DayOfWeek> daysOpen = EnumSet.of(MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY);
     private LocalTime openingHour;
     private LocalTime closingHour;
     private String originalFile;
     private String scaledFile;
+    private boolean liked;
 
     @Enumerated(EnumType.STRING)
     private SiteTypes type;

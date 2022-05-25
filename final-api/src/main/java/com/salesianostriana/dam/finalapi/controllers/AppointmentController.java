@@ -1,9 +1,13 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
 import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
+import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
+import com.salesianostriana.dam.finalapi.repositories.AppointmentRepository;
 import com.salesianostriana.dam.finalapi.services.AppointmentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +24,8 @@ import java.util.UUID;
 @RequestMapping("/appointment")
 public class AppointmentController {
 
+    private final AppointmentRepository appointmentRepository;
+
     private final AppointmentService appointmentService;
 
     @GetMapping("/me")
@@ -31,4 +37,8 @@ public class AppointmentController {
     public List<GetAppointmentDto> citasCliente(@PathVariable UUID id) {
         return appointmentService.listAppointmentsOfUser(id);
     }
-}
+
+    @GetMapping("/{id}/cliente/{clienteId}")
+    public ResponseEntity<GetAppointmentDto> getAppointment(@PathVariable Long appointmentId, @PathVariable UUID clienteId) {
+        return ResponseEntity.ok(appointmentService.getAppointmentByIdAndClienteId(appointmentId, clienteId));
+    }}

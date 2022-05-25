@@ -30,8 +30,22 @@ public class SiteDtoConverter {
                 .originalFileUrl(site.getOriginalFile())
                 .scaledFileUrl(site.getScaledFile())
                 .likes(site.getLikes().size())
+                .liked(site.isLiked())
                 .type(site.getType().getValue())
                 .propietario(site.getPropietario().getFull_name())
+                .build();
+    }
+
+    public GetListSiteDto toGetListSiteDto(Site site) {
+        return GetListSiteDto.builder()
+                .name(site.getName())
+                .address(site.getAddress())
+                .city(site.getCity())
+                .postalCode(site.getPostalCode())
+                .total_comments((site.getComments().size()))
+                .rate(average_rate(site.getComments()))
+                .scaledFileUrl(site.getScaledFile())
+                .liked(site.isLiked())
                 .build();
     }
 

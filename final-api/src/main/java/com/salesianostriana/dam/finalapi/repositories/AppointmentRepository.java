@@ -11,28 +11,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
+public interface AppointmentRepository extends JpaRepository<Appointment, AppointmentPK> {
 
-    //exist by appointmentPK
-    Optional<Appointment> existById(AppointmentPK appointmentPK);
-
-    //delete by appointmentPK
-    void deleteById(AppointmentPK appointmentPK);
-
-    // Listar todos los appointments de un usuario por su id
     @Query("""
-            select new com.salesianostriana.dam.dtos.appointment.GetAppointmentDto(
-                a.id, a.site, a.date, a.description, a.status)
+            select new com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto(
+                a.cliente, a.site, a.date, a.description, a.status
             )
             from Appointment a
             where a.cliente.id = :clienteId
             """)
     List<GetAppointmentDto> findByClienteId(@Param("clienteId") UUID clienteId);
 
-    // Mostrar la informacion de un appointment por su id de un cliente por su id
     @Query("""
-            select new com.salesianostriana.dam.dtos.appointment.GetAppointmentDto(
-                a.id, a.site, a.date, a.description, a.status)
+            select new com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto(
+                a.cliente, a.site, a.date, a.description, a.status
             )
             from Appointment a
             where a.cliente.id = :clienteId and a.id = :appointmentId

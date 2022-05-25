@@ -5,6 +5,7 @@ import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
+import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
 import com.salesianostriana.dam.finalapi.models.*;
@@ -33,8 +34,8 @@ public class SiteController {
     private final SiteRepository siteRepository;
 
     @GetMapping("/")
-    public ResponseEntity<List<GetSiteDto>> getAllSites(){
-        List<GetSiteDto> sites = siteService.getAllSites();
+    public ResponseEntity<List<GetListSiteDto>> getAllSites(){
+        List<GetListSiteDto> sites = siteService.getAllSites();
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -42,8 +43,8 @@ public class SiteController {
     }
 
     @GetMapping(value = "/", params = {"name"})
-    public ResponseEntity<List<GetSiteDto>> getAllSitesByNameContaining(@RequestParam(defaultValue = "") String search){
-        List<GetSiteDto> sites = siteService.getSitesByName(search);
+    public ResponseEntity<List<GetListSiteDto>> getAllSitesByNameContaining(@RequestParam(defaultValue = "") String search){
+        List<GetListSiteDto> sites = siteService.getSitesByName(search);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -51,8 +52,8 @@ public class SiteController {
     }
 
     @GetMapping(value = "/", params = {"city"})
-    public ResponseEntity<List<GetSiteDto>> getAllSitesByCity(@RequestParam(defaultValue = "") String city){
-        List<GetSiteDto> sites = siteService.getAllSitesByCity(city);
+    public ResponseEntity<List<GetListSiteDto>> getAllSitesByCity(@RequestParam(defaultValue = "") String city){
+        List<GetListSiteDto> sites = siteService.getAllSitesByCity(city);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -60,8 +61,8 @@ public class SiteController {
     }
 
     @GetMapping(value = "/", params = {"postalCode"})
-    public ResponseEntity<List<GetSiteDto>> getSitesByPostalCode(@RequestParam(defaultValue = "") String postalCode){
-        List<GetSiteDto> sites = siteService.getAllSitesByPostalCode(postalCode);
+    public ResponseEntity<List<GetListSiteDto>> getSitesByPostalCode(@RequestParam(defaultValue = "") String postalCode){
+        List<GetListSiteDto> sites = siteService.getAllSitesByPostalCode(postalCode);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -69,8 +70,8 @@ public class SiteController {
     }
 
     @GetMapping(value = "/", params = {"rate"})
-    public ResponseEntity<List<GetSiteDto>> getSitesByRateGreaterThan(@RequestParam(defaultValue = "3.0") Double rate){
-        List<GetSiteDto> sites = siteRepository.findByRateGreaterThan(rate);
+    public ResponseEntity<List<GetListSiteDto>> getSitesByRateGreaterThan(@RequestParam(defaultValue = "3.0") Double rate){
+        List<GetListSiteDto> sites = siteRepository.findByRateGreaterThan(rate);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -78,8 +79,8 @@ public class SiteController {
     }
 
     @GetMapping("/{type}")
-    public ResponseEntity<List<GetSiteDto>> getAllSitesByType(@PathVariable SiteTypes type){
-        List<GetSiteDto> sites = siteRepository.findByType(type);
+    public ResponseEntity<List<GetListSiteDto>> getAllSitesByType(@PathVariable SiteTypes type){
+        List<GetListSiteDto> sites = siteRepository.findByType(type);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
@@ -87,8 +88,8 @@ public class SiteController {
     }
 
     @GetMapping("/{propietarioId}")
-    public ResponseEntity<List<GetSiteDto>> getAllSitesByType(@PathVariable Long propietarioId){
-        List<GetSiteDto> sites = siteRepository.findByPropietarioId(propietarioId);
+    public ResponseEntity<List<GetListSiteDto>> getAllSitesByType(@PathVariable Long propietarioId){
+        List<GetListSiteDto> sites = siteRepository.findByPropietarioId(propietarioId);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }

@@ -8,6 +8,7 @@ import com.salesianostriana.dam.finalapi.dtos.comment.CommentDtoConverter;
 import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
+import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
 import com.salesianostriana.dam.finalapi.errors.exceptions.*;
@@ -125,47 +126,47 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public List<GetSiteDto> getAllSites() {
+    public List<GetListSiteDto> getAllSites() {
         List<Site> sites = findAll().stream().toList();
 
         if (sites.isEmpty()) {
             throw new FileNotFoundException("There are not sites available");
         } else {
-            return sites.stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList());
+            return sites.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
     }
 
-    public List<GetSiteDto> getSitesByName(String name) {
+    public List<GetListSiteDto> getSitesByName(String name) {
         List<Site> sitesByName = siteRepository.findByNameContaining(name);
         if (sitesByName.isEmpty()) {
             throw new FileNotFoundException("There are not sites available");
         } else {
-            return sitesByName.stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList());
+            return sitesByName.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
     }
 
-    public List<GetSiteDto> getAllSitesByCity(String city) {
+    public List<GetListSiteDto> getAllSitesByCity(String city) {
         List<Site> sitesByCity = siteRepository.findByCity(city);
 
         if (sitesByCity.isEmpty()) {
             throw new FileNotFoundException("There are not sites in this city available");
         } else {
-            return sitesByCity.stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList());
+            return sitesByCity.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
     }
 
-    public List<GetSiteDto> getAllSitesByPostalCode(String postalCode) {
+    public List<GetListSiteDto> getAllSitesByPostalCode(String postalCode) {
         List<Site> sitesByPostalCode = siteRepository.findByPostalCode(postalCode);
 
         if (sitesByPostalCode.isEmpty()) {
             throw new FileNotFoundException("There are not sites with this postal code available");
         } else {
-            return sitesByPostalCode.stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList());
+            return sitesByPostalCode.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
     }
 
-    public List<GetSiteDto> getAllSitesByPropietario(Long id) {
-        List<GetSiteDto> sitesByUserEntity = siteRepository.findByPropietarioId(id);
+    public List<GetListSiteDto> getAllSitesByPropietario(Long id) {
+        List<GetListSiteDto> sitesByUserEntity = siteRepository.findByPropietarioId(id);
 
         if (sitesByUserEntity.isEmpty()) {
             throw new FileNotFoundException("There are not sites with this userEntity id available");
@@ -217,6 +218,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
                     .build();
 
             site.get().getLikes().add(like);
+            site.get().setLiked(true);
             return save(site.get());
         }
     }
@@ -227,6 +229,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new EntityNotFoundException("No site matches the provided id");
         } else {
             site.get().getLikes().removeIf(like -> like.getCliente().getId().equals(userEntity.getId()));
+            site.get().setLiked(false);
             likeRepository.deleteLike(siteId, userEntity.getId());
             return save(site.get());
         }
@@ -403,7 +406,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
     public GetAppointmentDto getAppointment(Long siteId, AppointmentPK appointmentId) {
         Optional<Site> site = findById(siteId);
-        Optional<Appointment> appointment = appointmentRepository.existById(appointmentId);
+        Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
@@ -418,7 +421,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
     public GetAppointmentDto editAppointment(Long siteId, AppointmentPK appointmentId, UserEntity userEntity, CreateAppointmentDto appointment) {
         Optional<Site> site = findById(siteId);
-        Optional<Appointment> appointmentEntity = appointmentRepository.existById(appointmentId);
+        Optional<Appointment> appointmentEntity = appointmentRepository.findById(appointmentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
@@ -439,7 +442,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
     public void deleteAppointment(Long siteId, UserEntity userEntity, AppointmentPK appointmentId) {
         Optional<Site> site = findById(siteId);
-        Optional<Appointment> appointment = appointmentRepository.existById(appointmentId);
+        Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
