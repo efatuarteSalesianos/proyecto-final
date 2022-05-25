@@ -1,7 +1,7 @@
-import { environment } from './../../environments/environment.prod';
+import { environment } from '../../environments/environment.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PostResponse } from '../models/interfaces/post.interface';
+import { SiteResponse } from '../models/interfaces/site.interface';
 import { Observable } from 'rxjs';
 
 const DEFAULT_HEADERS = {
@@ -14,17 +14,17 @@ const DEFAULT_HEADERS = {
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
+export class SiteService {
 
   constructor(private http: HttpClient) { }
 
-  listarPosts(): Observable<PostResponse[]> {
-    let requestUrl = `${environment.API_BASE_URL}/post/public`;
-    return this.http.get<PostResponse[]>(requestUrl, DEFAULT_HEADERS);
+  getAllSites(): Observable<SiteResponse[]> {
+    let requestUrl = `${environment.API_BASE_URL}/site/`;
+    return this.http.get<SiteResponse[]>(requestUrl, DEFAULT_HEADERS);
   }
 
-  deletePost(id: number) {
-    let requestUrl = `${environment.API_BASE_URL}/post/${id}`;
+  deleteSite(id: number) {
+    let requestUrl = `${environment.API_BASE_URL}/site/${id}`;
     return this.http.delete(requestUrl, DEFAULT_HEADERS);
   }
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent, data: {title: 'Iniciar Sesión'}},
   { path: 'register', component: RegisterComponent, data: {title: 'Regístrate'}},
   { path: 'home', component: HomeComponent, data: {title: 'Dashboard'}},
-  { path: 'posts', component: HomeComponent, data: {title: 'Dashboard Posts'}},
+  { path: 'posts', component: HomeComponent, data: {title: 'Dashboard Sites'}},
   { path: '',   redirectTo: '/welcome', pathMatch: 'full'},
   { path: '**', component: PageNotFoundComponent },
 ];
