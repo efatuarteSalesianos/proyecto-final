@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
-import com.salesianostriana.dam.finalapi.dtos.user.CreateUserDto;
-import com.salesianostriana.dam.finalapi.dtos.user.GetUserDto;
-import com.salesianostriana.dam.finalapi.dtos.user.UserDtoConverter;
-import com.salesianostriana.dam.finalapi.dtos.user.UserNameAvailabilityDto;
+import com.salesianostriana.dam.finalapi.dtos.user.*;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -70,6 +67,11 @@ public class UserController {
     @GetMapping("/profile/{username}")
     public ResponseEntity<GetUserDto> getUserProfileById(@PathVariable String username,@AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfileByUsername(username, userEntity));
+    }
+
+    @GetMapping("/profile/propietario/{username}")
+    public ResponseEntity<GetPropietarioDto> getPropietarioProfileById(@PathVariable String username, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getPropietarioProfileByUsername(username, userEntity));
     }
 
     @PutMapping("/profile/me")

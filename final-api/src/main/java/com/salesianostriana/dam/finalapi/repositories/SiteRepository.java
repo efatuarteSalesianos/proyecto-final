@@ -38,4 +38,14 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
             where s.type >= :type
             """)
     List<GetSiteDto> findByType(@Param("type") SiteTypes type);
+
+    // Find all sites which propietario is the same that we pass as parameter
+    @Query("""
+            select new com.salesianostriana.dam.dtos.site.GetSiteDto(
+                s.id, s.name, s.address, s.city, s.rate, s.scaledFile
+            )
+            from Site s
+            where s.propietario.id = :id
+            """)
+    List<GetSiteDto> findByPropietarioId(@Param("id") Long id);
 }

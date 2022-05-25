@@ -1,5 +1,5 @@
 {
-    "sites": [{
+    "bookings": [{
             "id": 1,
             "name": "Peluquería Roylo's",
             "description": "Site 1 description",

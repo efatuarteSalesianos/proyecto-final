@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/site_response.dart';
+import 'package:flutter_app/widgets/rating_bar_widget.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:like_button/like_button.dart';
 
 class SiteCard extends StatelessWidget {
   final SiteResponse? site;
@@ -9,8 +12,8 @@ class SiteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
-      height: 150,
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      height: MediaQuery.of(context).size.height * 0.213,
       child: Stack(
         children: [
           Positioned.fill(
@@ -20,33 +23,67 @@ class SiteCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 0,
+            top: 0,
             left: 0,
             right: 0,
             child: Container(
-                height: 120,
+                height: 170,
                 decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                     gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.topCenter,
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                         colors: [
                           Colors.black.withOpacity(0.8),
                           Colors.transparent
                         ]))),
           ),
           Positioned(
-            bottom: 0,
+            top: 0,
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
-                  const SizedBox(width: 10),
                   Text(site!.name,
-                      style: const TextStyle(color: Colors.white, fontSize: 25))
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 20)),
                 ],
+              ),
+            ),
+          ),
+          Positioned(
+            top: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: LikeButton(
+                size: 30,
+                circleColor: const CircleColor(
+                    start: Color(0xFFFF989C), end: Color(0xFFFF5A5F)),
+                bubblesColor: const BubblesColor(
+                  dotPrimaryColor: Color(0xFFFF5A5F),
+                  dotSecondaryColor: Color(0xFFF2B203),
+                ),
+                likeBuilder: (bool isLiked) {
+                  return Icon(
+                    Icons.favorite,
+                    color: isLiked ? const Color(0xFFFF5A5F) : Colors.white,
+                    size: 30,
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: Padding(
+              padding: const EdgeInsets.all(15),
+              child: IconTheme(
+                data: const IconThemeData(
+                  color: Color(0xFFFF5A5F),
+                  size: 23,
+                ),
+                child: RatingBarWidget(site!.rate),
               ),
             ),
           )

@@ -1,0 +1,20 @@
+{
+    "site_types": [{
+            "id": 1,
+            "name": "Peluquería"
+        },
+        {
+            "id": 2,
+            "name": "Berbería"
+        },
+        {
+            "id": 3,
+            "name": "Salón de Belleza"
+        },
+        {
+            "id": 4,
+            "name": "Centro de Estética"
+        }
+
+    ]
+}

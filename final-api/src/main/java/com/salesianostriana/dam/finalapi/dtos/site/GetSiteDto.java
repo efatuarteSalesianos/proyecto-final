@@ -25,4 +25,5 @@ public class GetSiteDto {
     private int likes;
     private boolean liked;
     private String type;
+    private String propietario;
 }

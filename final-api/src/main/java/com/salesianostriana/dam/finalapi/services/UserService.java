@@ -1,10 +1,7 @@
 package com.salesianostriana.dam.finalapi.services;
 
 import com.salesianostriana.dam.finalapi.awss3.AWSS3Service;
-import com.salesianostriana.dam.finalapi.dtos.user.CreateUserDto;
-import com.salesianostriana.dam.finalapi.dtos.user.GetUserDto;
-import com.salesianostriana.dam.finalapi.dtos.user.UserDtoConverter;
-import com.salesianostriana.dam.finalapi.dtos.user.UserNameAvailabilityDto;
+import com.salesianostriana.dam.finalapi.dtos.user.*;
 import com.salesianostriana.dam.finalapi.errors.exceptions.EntityNotFoundException;
 import com.salesianostriana.dam.finalapi.errors.exceptions.PasswordMissMatchException;
 import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
@@ -141,6 +138,18 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
                 return userDtoConverter.toGetUserDto(user.get());
             }
             return userDtoConverter.toGetUserDto(user.get());
+        }
+    }
+
+    public GetPropietarioDto getPropietarioProfileByUsername(String username, UserEntity userEntityPrincipal) {
+        Optional<UserEntity> user = userRepository.findFirstByUsername(username);
+        if(user.isEmpty()){
+            throw new EntityNotFoundException("No userEntity matches the provided username");
+        }else{
+            if(user.get().getId().equals(userEntityPrincipal.getId())){
+                return userDtoConverter.toGetPropietarioDto(user.get());
+            }
+            return userDtoConverter.toGetPropietarioDto(user.get());
         }
     }
 

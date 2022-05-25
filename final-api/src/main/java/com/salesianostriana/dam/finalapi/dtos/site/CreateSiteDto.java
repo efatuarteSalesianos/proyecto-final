@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.URL;
 import javax.persistence.Lob;
 import javax.validation.constraints.*;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
@@ -40,4 +41,5 @@ public class CreateSiteDto {
     @Min(value = 0, message = "{site.closingHour.min}")
     @Max(value = 23, message = "{site.closingHour.max}")
     private LocalTime closingHour;
+    private UUID propietarioId;
 }

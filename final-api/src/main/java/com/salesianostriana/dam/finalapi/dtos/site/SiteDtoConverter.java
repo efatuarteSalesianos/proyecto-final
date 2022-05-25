@@ -31,6 +31,7 @@ public class SiteDtoConverter {
                 .scaledFileUrl(site.getScaledFile())
                 .likes(site.getLikes().size())
                 .type(site.getType().getValue())
+                .propietario(site.getPropietario().getFull_name())
                 .build();
     }
 

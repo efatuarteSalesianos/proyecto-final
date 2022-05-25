@@ -86,6 +86,15 @@ public class SiteController {
         return ResponseEntity.ok(sites);
     }
 
+    @GetMapping("/{propietarioId}")
+    public ResponseEntity<List<GetSiteDto>> getAllSitesByType(@PathVariable Long propietarioId){
+        List<GetSiteDto> sites = siteRepository.findByPropietarioId(propietarioId);
+        if (sites.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(sites);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<GetSiteDto> getSingleSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.getSingleSite(id)));
@@ -95,19 +104,32 @@ public class SiteController {
     public ResponseEntity<GetSiteDto> createSite(@Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file, userEntity)));
+        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file)));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<GetSiteDto> editSite(@PathVariable Long id, @Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
-        return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.editSite(id, newSite, file)));
+        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
+            return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.editSite(id, newSite, file)));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity) {
-        return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
+        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
+            return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @PostMapping("/like/{id}")
@@ -164,7 +186,7 @@ public class SiteController {
                         .build();
             }
             else {
-                siteService.deleteComment(id, userEntity, commentId);
+                siteService.deleteComment(id, userEntity.getId(), commentId);
                 return ResponseEntity
                         .noContent()
                         .build();
@@ -178,7 +200,7 @@ public class SiteController {
     //add appointment to site by site id
     @PostMapping("{id}/appointment/")
     public ResponseEntity<GetAppointmentDto> addAppointment(@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity.getId(), newAppointment));
     }
 
     //list all appointments by site id

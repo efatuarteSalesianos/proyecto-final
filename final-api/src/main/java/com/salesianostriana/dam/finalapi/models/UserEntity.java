@@ -46,7 +46,7 @@ public class UserEntity implements UserDetails {
     private List<Site> negocios = new ArrayList<>();
 
     @Builder.Default
-    @OneToMany(mappedBy = "user_entity", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
 
     @Builder.Default

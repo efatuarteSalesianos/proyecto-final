@@ -12,20 +12,14 @@ import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
 import com.salesianostriana.dam.finalapi.errors.exceptions.*;
 import com.salesianostriana.dam.finalapi.models.*;
-import com.salesianostriana.dam.finalapi.repositories.AppointmentRepository;
-import com.salesianostriana.dam.finalapi.repositories.CommentRepository;
-import com.salesianostriana.dam.finalapi.repositories.LikeRepository;
-import com.salesianostriana.dam.finalapi.repositories.SiteRepository;
+import com.salesianostriana.dam.finalapi.repositories.*;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,6 +32,8 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
     private final SiteRepository siteRepository;
 
+    private final UserRepository userRepository;
+
     private final LikeRepository likeRepository;
 
     private final CommentRepository commentRepository;
@@ -48,9 +44,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
     private final AppointmentDtoConverter appointmentDtoConverter;
 
-    public Site createSite(CreateSiteDto createSiteDto, MultipartFile file, UserEntity userEntity) {
+    public Site createSite(CreateSiteDto createSiteDto, MultipartFile file) {
         String originalFileUrl;
         String scaledFileUrl;
+
+        Optional<UserEntity> propietario = userRepository.findById(createSiteDto.getPropietarioId());
+        if(propietario.isEmpty())
+            throw new EntityNotFoundException("No user matches the provided id");
+
         //Check if file is image or video and save it
         if (imagesTypes.contains(file.getContentType())) {
             //Save scaled and original images
@@ -76,6 +77,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
                 .closingHour(createSiteDto.getClosingHour())
                 .originalFile(originalFileUrl)
                 .scaledFile(scaledFileUrl)
+                .propietario(propietario.get())
                 .build();
 
         return save(site);
@@ -159,6 +161,16 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new FileNotFoundException("There are not sites with this postal code available");
         } else {
             return sitesByPostalCode.stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList());
+        }
+    }
+
+    public List<GetSiteDto> getAllSitesByPropietario(Long id) {
+        List<GetSiteDto> sitesByUserEntity = siteRepository.findByPropietarioId(id);
+
+        if (sitesByUserEntity.isEmpty()) {
+            throw new FileNotFoundException("There are not sites with this userEntity id available");
+        } else {
+            return sitesByUserEntity;
         }
     }
 
@@ -327,16 +339,20 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public void deleteComment(Long siteId, UserEntity userEntity, CommentPK commentId) {
+    public void deleteComment(Long siteId, UUID clienteId, CommentPK commentId) {
         Optional<Site> site = findById(siteId);
         Optional<Comment> comment = commentRepository.existsById(commentId);
+        Optional<UserEntity> cliente = userRepository.findById(clienteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
         if (comment.isEmpty()) {
             throw new EntityNotFoundException("No comment matches the provided id");
         }
-        if (!comment.get().getCliente().getId().equals(userEntity.getId())) {
+        if (cliente.isEmpty()) {
+            throw new EntityNotFoundException("No cliente matches the provided id");
+        }
+        if (!comment.get().getCliente().getId().equals(cliente.get().getId())) {
             throw new UnauthorizeException("You can't delete a comment that is not yours");
         }
         //Delete old files
@@ -347,10 +363,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         save(site.get());
     }
 
-    public GetAppointmentDto addAppointment(Long siteId, UserEntity userEntity, CreateAppointmentDto createAppointmentDto) {
+    public GetAppointmentDto addAppointment(Long siteId, UUID clienteId, CreateAppointmentDto createAppointmentDto) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
+        }
+        Optional<UserEntity> cliente = userRepository.findById(clienteId);
+        if (cliente.isEmpty()) {
+            throw new EntityNotFoundException("No cliente matches the provided id");
         }
         if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
             throw new AppointmentNotAvailableException("The appointment day is not available");
@@ -360,7 +380,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
         if(isAppointmentTimeAvailable(site.get().getId(), createAppointmentDto.getDate())) {
             Appointment appointment = Appointment.builder()
-                    .cliente(userEntity)
+                    .cliente(cliente.get())
                     .site(site.get())
                     .date(createAppointmentDto.getDate())
                     .description(createAppointmentDto.getDescription())
