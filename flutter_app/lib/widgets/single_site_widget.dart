@@ -37,7 +37,8 @@ class _SingleSiteState extends State<SingleSite> {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(site!.scaledFileUrl, fit: BoxFit.cover),
+              child: Image.network(
+                  'https://phantom-elmundo.unidadeditorial.es/37812441ebf2e1d7b564b23077108513/resize/640/assets/multimedia/imagenes/2021/11/17/16371506566138.png'),
             ),
           ),
           Positioned(
@@ -62,7 +63,7 @@ class _SingleSiteState extends State<SingleSite> {
               padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
-                  Text(site!.name,
+                  Text("Roylo's",
                       style:
                           const TextStyle(color: Colors.white, fontSize: 20)),
                 ],
@@ -101,7 +102,7 @@ class _SingleSiteState extends State<SingleSite> {
                   color: Color(0xFFFF5A5F),
                   size: 23,
                 ),
-                child: RatingBarWidget(site!.rate),
+                child: RatingBarWidget(4),
               ),
             ),
           )

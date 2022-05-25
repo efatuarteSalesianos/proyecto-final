@@ -18,27 +18,27 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 
     List<Site> findByCity(String city);
 
-    @Query("""
+    @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
-                s.name, s.address, s.city, s.postalCode, s.totalComments, s.rate, s.scaledFileUrl, s.liked
+                s.id, s.name, s.address, s.city, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
-            where s.rate >= :rate
+            where (select avg(c.rate) from Comment c where c.site.id = s.id) >= :rate
             """)
     List<GetListSiteDto> findByRateGreaterThan(@Param("rate") Double rate);
 
-    @Query("""
+    @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
-                s.name, s.address, s.city, s.postalCode, s.totalComments, s.rate, s.scaledFileUrl, s.liked
+                s.id, s.name, s.address, s.city, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
             where s.type = :type
             """)
     List<GetListSiteDto> findByType(@Param("type") SiteTypes type);
 
-    @Query("""
+    @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
-                s.name, s.address, s.city, s.postalCode, s.totalComments, s.rate, s.scaledFileUrl, s.liked
+                s.id, s.name, s.address, s.city, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
             where s.propietario.id = :id

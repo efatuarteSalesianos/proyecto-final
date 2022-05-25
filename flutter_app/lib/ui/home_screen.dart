@@ -28,60 +28,48 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        shadowColor: const Color(0xFFFF5A5F),
-        backgroundColor: const Color(0xFFFF5A5F),
-        foregroundColor: const Color(0xFFFFFFFF),
-        title: Text('MySalon'),
-        actions: [
-          // Navigate to the Search Screen
-          IconButton(
-              onPressed: () => Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (_) => SearchPage())),
-              icon: Icon(Icons.search))
-        ],
-      ),
-    );
-  }
-}
-
-// Search Page
-class SearchPage extends StatelessWidget {
-  const SearchPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          shadowColor: const Color(0xFFFF5A5F),
-          backgroundColor: const Color(0xFFFF5A5F),
-          foregroundColor: const Color(0xFFFFFFFF),
-          // The search area here
-          title: Container(
-            width: double.infinity,
-            height: 40,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(5)),
-            child: Center(
-              child: TextField(
-                decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: IconButton(
-                      icon: Icon(Icons.clear),
-                      onPressed: () {
-                        /* Clear the search field */
-                      },
-                    ),
-                    hintText: '¿Dónde quieres buscar?',
-                    border: InputBorder.none),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            shadowColor: const Color(0xFFFF5A5F),
+            backgroundColor: const Color(0xFFFF5A5F),
+            foregroundColor: const Color(0xFFFFFFFF),
+            floating: true,
+            pinned: true,
+            snap: false,
+            centerTitle: false,
+            title: Text('MySalon'),
+            actions: [
+              IconButton(
+                icon: Icon(Icons.exit_to_app),
+                onPressed: () => {
+                  PreferenceUtils.clear(),
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const LoginScreen()))
+                },
+              ),
+            ],
+            bottom: AppBar(
+              title: Container(
+                width: double.infinity,
+                height: 40,
+                color: Colors.white,
+                child: Center(
+                  child: TextField(
+                    decoration: InputDecoration(
+                        hintText: '¿Dónde quieres buscar?',
+                        prefixIcon: Icon(Icons.location_city_outlined),
+                        suffixIcon: Icon(Icons.search_rounded)),
+                  ),
+                ),
               ),
             ),
-          )),
-      body: ListView(
-        children: [
-          SizedBox(
-              height: MediaQuery.of(context).size.height,
-              child: const SiteCard()),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([SiteCard()]),
+          ),
         ],
       ),
     );

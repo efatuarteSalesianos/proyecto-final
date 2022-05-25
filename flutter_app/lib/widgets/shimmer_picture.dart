@@ -6,7 +6,7 @@ class ShimmerListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int time = 800;
+    int time = 500;
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -17,7 +17,7 @@ class ShimmerListCard extends StatelessWidget {
             period: Duration(milliseconds: time),
             child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: 350,
+                height: 200,
                 color: Colors.grey),
           ),
         ],

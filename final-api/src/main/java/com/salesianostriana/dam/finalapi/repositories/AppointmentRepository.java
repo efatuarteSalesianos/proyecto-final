@@ -13,18 +13,18 @@ import java.util.UUID;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, AppointmentPK> {
 
-    @Query("""
+    @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto(
-                a.cliente, a.site, a.date, a.description, a.status
+                a.cliente.fullName, a.site.name, a.date, a.description, a.status
             )
             from Appointment a
             where a.cliente.id = :clienteId
             """)
     List<GetAppointmentDto> findByClienteId(@Param("clienteId") UUID clienteId);
 
-    @Query("""
+    @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto(
-                a.cliente, a.site, a.date, a.description, a.status
+                a.cliente.fullName, a.site.name, a.date, a.description, a.status
             )
             from Appointment a
             where a.cliente.id = :clienteId and a.id = :appointmentId

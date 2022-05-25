@@ -16,7 +16,7 @@ public class GetListSiteDto {
     private String address;
     private String city;
     private String postalCode;
-    private int totalComments;
+    private long totalComments;
     private double rate;
     private String scaledFileUrl;
     private boolean liked;

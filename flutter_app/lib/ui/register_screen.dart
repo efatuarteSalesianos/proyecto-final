@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 30),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                  fixedSize: const Size(275, 55),
+                                  fixedSize: const Size(275, 50),
                                   primary: const Color(0xFF385185),
                                   onPrimary: Colors.white,
                                 ),

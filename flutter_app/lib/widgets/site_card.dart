@@ -49,7 +49,7 @@ class _SiteCardState extends State<SiteCard> {
             child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.64,
+                    height: MediaQuery.of(context).size.height,
                     child: _createBody(context)))));
   }
 
@@ -76,22 +76,7 @@ class _SiteCardState extends State<SiteCard> {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: ShimmerListCard(),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: ShimmerListCard(),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 10),
-                child: ShimmerListCard(),
-              ),
             ],
-          );
-        } else if (state is SiteFetchError) {
-          return ErrorWidget(
-            message: state.message,
-            retry: () {
-              context.watch<SiteBloc>().add(FetchSite());
-            },
           );
         } else if (state is SitesFetched) {
           return _createSitesView(context, state.sites);
