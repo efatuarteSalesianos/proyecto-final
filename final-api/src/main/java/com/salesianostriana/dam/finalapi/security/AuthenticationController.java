@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.security;
 
+import com.salesianostriana.dam.finalapi.dtos.user.GetUserDto;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.security.dto.JwtUserResponse;
 import com.salesianostriana.dam.finalapi.security.dto.LoginDto;
@@ -44,6 +45,8 @@ public class AuthenticationController {
 
     private JwtUserResponse convertUserToJwtUserResponse(UserEntity userEntity, String jwt) {
         return JwtUserResponse.builder()
+                .id(userEntity.getId())
+                .fullName(userEntity.getFullName())
                 .username(userEntity.getUsername())
                 .avatar(userEntity.getAvatar())
                 .rol(userEntity.getRol().name())

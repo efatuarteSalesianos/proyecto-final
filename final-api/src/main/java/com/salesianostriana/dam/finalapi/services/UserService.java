@@ -41,6 +41,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
 
         if (newUser.getPassword().contentEquals(newUser.getVerifyPassword())) {
             UserEntity userEntity = UserEntity.builder()
+                    .fullName(newUser.getFullName())
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
@@ -59,6 +60,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
 
         if (newUser.getPassword().contentEquals(newUser.getVerifyPassword())) {
             UserEntity userEntity = UserEntity.builder()
+                    .fullName(newUser.getFullName())
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
@@ -78,6 +80,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
 
         if (newUser.getPassword().contentEquals(newUser.getVerifyPassword())) {
             UserEntity userEntity = UserEntity.builder()
+                    .fullName(newUser.getFullName())
                     .username(newUser.getUsername())
                     .email(newUser.getEmail())
                     .avatar(fileUrl)

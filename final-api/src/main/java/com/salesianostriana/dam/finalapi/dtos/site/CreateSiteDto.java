@@ -33,11 +33,9 @@ public class CreateSiteDto {
     private String phone;
     @URL(message = "{site.url.url}")
     private String web;
-    @NotBlank(message = "{site.openingHour.blank}")
     @Min(value = 0, message = "{site.openingHour.min}")
     @Max(value = 23, message = "{site.openingHour.max}")
     private LocalTime openingHour;
-    @NotBlank(message = "{site.closingHour.blank}")
     @Min(value = 0, message = "{site.closingHour.min}")
     @Max(value = 23, message = "{site.closingHour.max}")
     private LocalTime closingHour;

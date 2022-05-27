@@ -15,6 +15,7 @@ public class UserDtoConverter {
 
     public GetUserDto toGetUserDto(UserEntity userEntity) {
         return GetUserDto.builder()
+                .id(userEntity.getId())
                 .fullName(userEntity.getFullName())
                 .username(userEntity.getUsername())
                 .email(userEntity.getEmail())
@@ -27,6 +28,7 @@ public class UserDtoConverter {
 
     public GetPropietarioDto toGetPropietarioDto(UserEntity user) {
         return GetPropietarioDto.builder()
+                .id(user.getId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
                 .avatar(user.getAvatar())

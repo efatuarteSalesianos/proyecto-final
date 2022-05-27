@@ -21,7 +21,7 @@ import java.util.Objects;
 public class AWSS3Service {
     private final AmazonS3 s3client;
 
-    private final String bucketName = "mysalon";
+    private final String bucketName = "mysalonapi";
 
     private String storeByteArray(byte[] image, String filename, String contentType, long size) throws IOException {
         try (InputStream inputStream = new ByteArrayInputStream(image)) {

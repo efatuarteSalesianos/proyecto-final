@@ -52,16 +52,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
             bottom: AppBar(
+              backgroundColor: const Color(0xFFFF5A5F),
               title: Container(
                 width: double.infinity,
                 height: 40,
                 color: Colors.white,
-                child: Center(
+                child: const Center(
                   child: TextField(
+                    cursorColor: Color(0xFFFF5A5F),
                     decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hoverColor: Color(0xFFFF5A5F),
+                        focusColor: Color(0xFFFF5A5F),
+                        fillColor: Color(0xFFFF5A5F),
                         hintText: '¿Dónde quieres buscar?',
-                        prefixIcon: Icon(Icons.location_city_outlined),
-                        suffixIcon: Icon(Icons.search_rounded)),
+                        prefixIcon: Icon(
+                          Icons.location_city_outlined,
+                          color: Color(0xFF000000),
+                        ),
+                        suffixIcon: Icon(
+                          Icons.search_rounded,
+                          color: Color(0xFF000000),
+                        )),
                   ),
                 ),
               ),

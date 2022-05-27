@@ -29,6 +29,7 @@ public class AwsConfig {
         BasicAWSCredentials awsCredentials = new BasicAWSCredentials(accessKeyId, accessSecretKey);
 
         return AmazonS3ClientBuilder.standard().withRegion(Regions.fromName(region)).
-                withCredentials(new AWSStaticCredentialsProvider(awsCredentials)).build();
+                withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
+                .enableForceGlobalBucketAccess().build();
     }
 }
