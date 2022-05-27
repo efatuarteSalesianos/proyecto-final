@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.dtos.site;
 
+import com.salesianostriana.dam.finalapi.models.SiteTypes;
 import lombok.*;
 import org.hibernate.validator.constraints.URL;
 
@@ -29,15 +30,12 @@ public class CreateSiteDto {
     @Email(message = "{site.email.email}")
     private String email;
     @NotBlank(message = "{site.phone.blank}")
-    @Size(min = 9, max = 9, message = "{site.phone.size}")
+    @Size(min = 12, max = 12, message = "{site.phone.size}")
     private String phone;
     @URL(message = "{site.url.url}")
     private String web;
-    @Min(value = 0, message = "{site.openingHour.min}")
-    @Max(value = 23, message = "{site.openingHour.max}")
     private LocalTime openingHour;
-    @Min(value = 0, message = "{site.closingHour.min}")
-    @Max(value = 23, message = "{site.closingHour.max}")
     private LocalTime closingHour;
+    private SiteTypes type;
     private UUID propietarioId;
 }

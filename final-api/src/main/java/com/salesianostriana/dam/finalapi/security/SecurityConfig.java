@@ -47,13 +47,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/login").anonymous()
-                .antMatchers(HttpMethod.POST, "/auth/register").anonymous()
-                .antMatchers(HttpMethod.POST, "/auth/register/admin").anonymous()
-                .antMatchers(HttpMethod.POST, "/auth/register/propietario").anonymous()
-                .antMatchers(HttpMethod.GET, "**/").anonymous()
-                .antMatchers(HttpMethod.PUT, "**/").anonymous()
-                .antMatchers(HttpMethod.DELETE, "**/").anonymous()
+//                .antMatchers(HttpMethod.POST, "/auth/login").anonymous()
+//                .antMatchers(HttpMethod.POST, "/auth/register").anonymous()
+//                .antMatchers(HttpMethod.POST, "/auth/register/admin").anonymous()
+//                .antMatchers(HttpMethod.POST, "/auth/register/propietario").anonymous()
+                .antMatchers(HttpMethod.POST, "/**").anonymous()
+                .antMatchers(HttpMethod.GET, "/**").anonymous()
+                .antMatchers(HttpMethod.PUT, "/*").anonymous()
+                .antMatchers(HttpMethod.DELETE, "/*").anonymous()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

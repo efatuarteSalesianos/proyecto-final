@@ -79,6 +79,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
                 .originalFile(originalFileUrl)
                 .scaledFile(scaledFileUrl)
                 .propietario(propietario.get())
+                .type(createSiteDto.getType())
                 .build();
 
         return save(site);
