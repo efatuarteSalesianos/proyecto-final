@@ -1,6 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:flutter_app/models/create_site_dto.dart';
+
 import 'package:flutter_app/models/site_detail_response.dart';
 import 'package:flutter_app/models/site_response.dart';
 import 'package:flutter_app/repositories/site/site_repository.dart';
@@ -17,7 +16,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response =
-        await http.get(Uri.parse('${Constant.apiBaseUrl}/site'), headers: {
+        await http.get(Uri.parse('${Constant.apiBaseUrl}/site/'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -93,7 +92,7 @@ class SiteRepositoryImpl extends SiteRepository {
   }
 
   @override
-  Future<SiteResponse> fetchSiteById(Long id) async {
+  Future<SiteResponse> fetchSiteById(int id) async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
@@ -107,45 +106,6 @@ class SiteRepositoryImpl extends SiteRepository {
       return SiteResponse.fromJson(jsonResponse);
     } else {
       throw Exception('Failed to load sites');
-    }
-  }
-
-  @override
-  Future<SiteDetailResponse> createSite(
-      CreateSiteDto createSiteDto, String imagePath) async {
-    Map<String, String> headers = {
-      'Content-Type': 'multipart/form-data',
-    };
-
-    var uri = Uri.parse('${Constant.apiBaseUrl}/site/');
-
-    var body = jsonEncode({
-      'name': createSiteDto.name,
-      'description': createSiteDto.description,
-      'address': createSiteDto.address,
-      'city': createSiteDto.city,
-      'postalCode': createSiteDto.postalCode,
-      'email': createSiteDto.email,
-      'phone': createSiteDto.phone,
-      'web': createSiteDto.web,
-      'openingHour': createSiteDto.openingHour,
-      'closingHour': createSiteDto.closingHour,
-    });
-
-    var request = http.MultipartRequest('POST', uri)
-      ..files.add(http.MultipartFile.fromString('newUser', body,
-          contentType: MediaType('application', 'json')))
-      ..files.add(await http.MultipartFile.fromPath('file', imagePath,
-          contentType: MediaType('image', 'jpg')))
-      ..headers.addAll(headers);
-
-    final response = await request.send();
-
-    if (response.statusCode == 201) {
-      return SiteDetailResponse.fromJson(
-          jsonDecode(await response.stream.bytesToString()));
-    } else {
-      throw Exception('Failed to create site');
     }
   }
 }

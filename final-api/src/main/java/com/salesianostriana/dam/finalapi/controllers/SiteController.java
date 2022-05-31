@@ -163,7 +163,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("/{type}")
+    @GetMapping(value = "/", params = {"type"})
     public ResponseEntity<List<GetListSiteDto>> getAllSitesByType(@PathVariable SiteTypes type){
         List<GetListSiteDto> sites = siteRepository.findByType(type);
         if (sites.isEmpty()){
@@ -185,7 +185,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("/{propietarioId}")
+    @GetMapping(value = "/", params = {"propietarioId"})
     public ResponseEntity<List<GetListSiteDto>> getAllSitesByPropietario(@PathVariable Long propietarioId){
         List<GetListSiteDto> sites = siteRepository.findByPropietarioId(propietarioId);
         if (sites.isEmpty()){

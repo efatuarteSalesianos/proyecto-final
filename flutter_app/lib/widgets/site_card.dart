@@ -21,14 +21,14 @@ class SiteCard extends StatefulWidget {
 
 class _SiteCardState extends State<SiteCard> {
   late SiteRepository siteRepository;
-  late SiteBloc _siteBloc;
+  late SitesBloc _siteBloc;
 
   @override
   void initState() {
     PreferenceUtils.init();
     super.initState();
     siteRepository = SiteRepositoryImpl();
-    _siteBloc = SiteBloc(siteRepository)..add(const FetchSite());
+    _siteBloc = SitesBloc(siteRepository)..add(const FetchSite());
   }
 
   @override
@@ -38,19 +38,17 @@ class _SiteCardState extends State<SiteCard> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-        providers: [
-          BlocProvider(create: (context) => _siteBloc),
-        ],
-        child: RefreshIndicator(
-            onRefresh: () async {
-              _siteBloc.add(const FetchSite());
-            },
-            child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: _createBody(context)))));
+    return BlocProvider(
+        create: ((context) => _siteBloc),
+        child: BlocBuilder<SitesBloc, SitesState>(builder: (context, state) {
+          if (state is SitesInitial) {
+            return Center(child: CircularProgressIndicator());
+          } else if (state is SitesFetched) {
+            return _createSitesView(context, state.sites);
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        }));
   }
 
   Widget _createBody(BuildContext context) {
@@ -74,7 +72,7 @@ class _SiteCardState extends State<SiteCard> {
       );
     }
 
-    return BlocBuilder<SiteBloc, SitesState>(
+    return BlocBuilder<SitesBloc, SitesState>(
       bloc: _siteBloc,
       builder: (context, state) {
         if (state is SitesInitial) {
@@ -110,7 +108,7 @@ class _SiteCardState extends State<SiteCard> {
   Widget _createSitesView(BuildContext context, List<SiteResponse> sites) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _siteItem(sites[index]);
+        return _siteItem(context, sites[index]);
       },
       padding: const EdgeInsets.symmetric(vertical: 5),
       scrollDirection: Axis.vertical,
@@ -118,7 +116,7 @@ class _SiteCardState extends State<SiteCard> {
     );
   }
 
-  Widget _siteItem(SiteResponse site) {
+  Widget _siteItem(BuildContext context, SiteResponse site) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       height: MediaQuery.of(context).size.height * 0.213,

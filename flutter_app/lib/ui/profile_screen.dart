@@ -3,10 +3,7 @@ import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/profile_menu_widget.dart';
 import 'package:flutter_app/widgets/profile_pic_widget.dart';
-
-void main() {
-  runApp(const MyProfileScreen());
-}
+import "dart:convert";
 
 class MyProfileScreen extends StatelessWidget {
   const MyProfileScreen({Key? key}) : super(key: key);
@@ -34,6 +31,9 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    String fullName = PreferenceUtils.getString('FULLNAME')!;
+    String decodeFullName =
+        utf8.decode(latin1.encode(fullName), allowMalformed: true);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -66,6 +66,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: Column(
                   children: [
                     ProfilePicWidget(),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                      child: Text(
+                        latin1.decode(latin1.encode(decodeFullName)),
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.w500),
+                      ),
+                    ),
                     SizedBox(height: 20),
                     ProfileMenuWidget(
                       text: "Mi Cuenta",

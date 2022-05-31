@@ -29,43 +29,51 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     private final UserService userService;
     private final JwtProvider jwtProvider;
 
-    private String getJwtFromRequest(HttpServletRequest request) {
-
-        String bearerToken = request.getHeader(JwtProvider.TOKEN_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtProvider.TOKEN_PREFIX)) {
-            return bearerToken.substring(JwtProvider.TOKEN_PREFIX.length());
-        }
-        return null;
-    }
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        // 1. Obtener el token de la petición (request)
         String token = getJwtFromRequest(request);
+
+        // 2. Validar token
         try {
             if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
 
                 UUID userId = jwtProvider.getUserIdFromJwt(token);
 
-                Optional<UserEntity> userOptional = userService.findById(userId);
+                Optional<UserEntity> userEntity = userService.findById(userId);
 
-                if (userOptional.isPresent()) {
-                    UserEntity userEntity = userOptional.get();
-                    UsernamePasswordAuthenticationToken authenticationToken =
+                if (userEntity.isPresent()) {
+                    UserEntity user = userEntity.get();
+                    UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
-                                    userEntity,
-                                    userEntity.getRol().name(),
-                                    userEntity.getAuthorities()
+                                    user,
+                                    user.getRol().name(),
+                                    user.getAuthorities()
                             );
-                    authenticationToken.setDetails(new WebAuthenticationDetails(request));
+                    authentication.setDetails(new WebAuthenticationDetails(request));
 
-                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
             }
 
         } catch (Exception ex) {
-            throw new UnauthorizeException("Could not set userEntity authentication in security context");
+            // Informar en el log
+            log.info("No se ha podido establecer el contexto de seguridad (" + ex.getMessage() + ")");
         }
+
         filterChain.doFilter(request, response);
+        // 2.1 Si es válido, autenticamos al usuario
+        // 2.2 Si no es válido, lanzamos una excepcion
+    }
+
+    private String getJwtFromRequest(HttpServletRequest request) {
+        // Authorization: Bearer header.payload.signature
+        String bearerToken = request.getHeader(JwtProvider.TOKEN_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JwtProvider.TOKEN_PREFIX)) {
+            return bearerToken.substring(JwtProvider.TOKEN_PREFIX.length());
+        }
+        return null;
     }
 
 }

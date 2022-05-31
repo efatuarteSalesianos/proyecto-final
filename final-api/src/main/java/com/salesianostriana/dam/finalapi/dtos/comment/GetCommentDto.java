@@ -11,5 +11,6 @@ public class GetCommentDto {
     private String site;
     private String title;
     private String description;
+    private double rate;
     private String image;
 }

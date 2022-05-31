@@ -190,7 +190,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         try {
             Site site = siteOptional.get();
 
-            if (userEntity.getRol().equals(Rol.ADMIN)) {
+            if (userEntity.getRol().equals(Rol.ADMIN) || (userEntity.getRol().equals(Rol.PROPIETARIO) && site.getPropietario().getId().equals(userEntity.getId()))) {
                 //Delete old files
                 awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
                 awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));

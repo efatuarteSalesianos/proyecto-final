@@ -5,10 +5,10 @@ import 'package:flutter_app/repositories/site/site_repository.dart';
 part 'sites_event.dart';
 part 'sites_state.dart';
 
-class SiteBloc extends Bloc<SitesEvent, SitesState> {
+class SitesBloc extends Bloc<SitesEvent, SitesState> {
   final SiteRepository siteRepository;
 
-  SiteBloc(this.siteRepository) : super(SitesInitial()) {
+  SitesBloc(this.siteRepository) : super(SitesInitial()) {
     on<FetchSite>(_sitesFetched);
   }
 
@@ -18,7 +18,7 @@ class SiteBloc extends Bloc<SitesEvent, SitesState> {
       emit(SitesFetched(sites));
       return;
     } on Exception catch (e) {
-      emit(SiteFetchError(e.toString()));
+      emit(SitesFetchError(e.toString()));
     }
   }
 }

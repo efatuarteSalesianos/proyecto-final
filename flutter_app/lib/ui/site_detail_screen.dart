@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -15,7 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 class SiteDetailScreen extends StatefulWidget {
   const SiteDetailScreen({Key? key}) : super(key: key);
 
-  //final Long id;
+  //final int id;
 
   @override
   _SiteDetailState createState() => _SiteDetailState();
@@ -23,16 +22,16 @@ class SiteDetailScreen extends StatefulWidget {
 
 class _SiteDetailState extends State<SiteDetailScreen> {
   _SiteDetailState();
-  late Long id;
+  late int id;
   late Future<SiteDetailResponse> Site;
   late SiteRepository siteRepository;
-  late SiteBloc _siteBloc;
+  late SitesBloc _siteBloc;
 
   @override
   void initState() {
     super.initState();
     siteRepository = SiteRepositoryImpl();
-    _siteBloc = SiteBloc(siteRepository)..add(const FetchSite());
+    _siteBloc = SitesBloc(siteRepository)..add(const FetchSite());
   }
 
   Widget _siteDetailItem(SiteDetailResponse site) {

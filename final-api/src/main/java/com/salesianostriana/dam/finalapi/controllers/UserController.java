@@ -1,6 +1,7 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
 import com.salesianostriana.dam.finalapi.dtos.user.*;
+import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -106,7 +107,7 @@ public class UserController {
     })
     @GetMapping("/users")
     public ResponseEntity<List<GetUserDto>> getAllUsers(@AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers(userEntity).stream().map(userDtoConverter::toGetUserDto).collect(java.util.stream.Collectors.toList()));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers(userEntity));
     }
 
     @Operation(summary = "Método para convertir a un usuario en administrador.", description = "Método para convertir a un usuario en administrador.", tags = "Usuarios")
@@ -120,8 +121,12 @@ public class UserController {
                     content = @Content)
     })
     @PutMapping("/users/{username}/admin")
-    public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username,@AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(userDtoConverter.toGetUserDto(userService.convertToAdmin(userEntity,username)));
+    public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username, @AuthenticationPrincipal UserEntity userEntity){
+        if (userEntity.getRol().equals(Rol.ADMIN)){
+            return ResponseEntity.status(HttpStatus.OK).body(userService.convertToAdmin(userEntity,username));
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @Operation(summary = "Método para ver los datos de mi perfil.", description = "Método para ver los datos de mi perfil.", tags = "Usuarios")
@@ -150,8 +155,8 @@ public class UserController {
                     content = @Content)
     })
     @GetMapping("/profile/{username}")
-    public ResponseEntity<GetUserDto> getUserProfileById(@PathVariable String username,@AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfileByUsername(username, userEntity));
+    public ResponseEntity<GetUserDto> getUserProfileByUsername(@PathVariable String username){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getUserProfileByUsername(username));
     }
 
     @Operation(summary = "Método para obtener los datos del perfil de un propietario", description = "Método para obtener los datos del perfil de un propietario", tags = "Usuarios")
@@ -165,8 +170,8 @@ public class UserController {
                     content = @Content)
     })
     @GetMapping("/profile/propietario/{username}")
-    public ResponseEntity<GetPropietarioDto> getPropietarioProfileById(@PathVariable String username, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getPropietarioProfileByUsername(username, userEntity));
+    public ResponseEntity<GetPropietarioDto> getPropietarioProfileByUsername(@PathVariable String username){
+        return ResponseEntity.status(HttpStatus.OK).body(userService.getPropietarioProfileByUsername(username));
     }
 
     @Operation(summary = "Método para editar los datos de mi perfil.", description = "Método para editar los datos de mi perfil.", tags = "Usuarios")
@@ -179,11 +184,11 @@ public class UserController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @PutMapping("/profile/me")
+    @PutMapping("/me")
     public ResponseEntity<GetUserDto> editMyProfile (@Valid @RequestPart CreateUserDto newUser,
                                                      @RequestPart MultipartFile file,
                                                      @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.editMyProfile(newUser,file, userEntity));
+        return ResponseEntity.status(HttpStatus.OK).body(userService.editMyProfile(newUser, file, userEntity));
     }
 
     @Operation(summary = "Método para comprobar si el nombre de usuario ya existe.", description = "Método para comprobar si el nombre de usuario ya existe.", tags = "Usuarios")
@@ -200,6 +205,4 @@ public class UserController {
     public ResponseEntity<UserNameAvailabilityDto> checkUsernameAvailability(@PathVariable String username){
         return ResponseEntity.status(HttpStatus.OK).body(userService.checkUsernameAvailability(username));
     }
-
-
 }

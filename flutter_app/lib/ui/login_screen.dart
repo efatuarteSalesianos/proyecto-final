@@ -53,6 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 PreferenceUtils.setString('TOKEN', state.loginResponse.token);
                 PreferenceUtils.setString(
                     'USERNAME', state.loginResponse.username);
+                PreferenceUtils.setString('AVATAR', state.loginResponse.avatar);
+                PreferenceUtils.setString(
+                    'FULLNAME', state.loginResponse.fullName);
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(

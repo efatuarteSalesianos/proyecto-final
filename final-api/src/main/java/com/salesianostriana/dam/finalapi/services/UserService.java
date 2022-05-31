@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service("userDetailsService")
 @RequiredArgsConstructor
@@ -46,6 +47,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
                     .email(newUser.getEmail())
                     .avatar(fileUrl)
                     .birthDate(newUser.getBirthDate())
+                    .phone(newUser.getPhone())
                     .rol(Rol.CLIENTE)
                     .password(passwordEncoder.encode(newUser.getPassword()))
                     .build();
@@ -96,7 +98,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     }
 
     // convertToAdmin
-    public UserEntity convertToAdmin(UserEntity userEntity, String username) {
+    public GetUserDto convertToAdmin(UserEntity userEntity, String username) {
         Optional <UserEntity> userOptional = userRepository.findFirstByUsername(username);
         if (userOptional.isEmpty()) {
             throw new EntityNotFoundException("UserEntity not found");
@@ -105,19 +107,23 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
             UserEntity newAdmin = userOptional.get();
 
             newAdmin.setRol(Rol.ADMIN);
-            return save(newAdmin);
+            save(newAdmin);
+            return userDtoConverter.toGetUserDto(newAdmin);
         } else {
             throw new UnauthorizeException("You must be an admin to convert to admin");
         }
     }
 
-    public List<UserEntity> getAllUsers(UserEntity userEntity){
-        List<UserEntity> userEntityOptional = userRepository.findAll();
-        if(userEntityOptional.isEmpty()){ throw new EntityNotFoundException("There are no users to show"); }
-        if(userEntity.getRol().equals(Rol.ADMIN)){
-            return userRepository.findAll();
-        }else{
-            throw new UnauthorizeException("Only admins can see all users");
+    public List<GetUserDto> getAllUsers(UserEntity user) {
+        List<UserEntity> users = userRepository.findAll();
+        if (user.getRol() == Rol.ADMIN) {
+            if (users.isEmpty()) {
+                throw new EntityNotFoundException("Users not found");
+            } else {
+                return users.stream().map(userDtoConverter::toGetUserDto).collect(Collectors.toList());
+            }
+        } else {
+            throw new UnauthorizeException("You must be an admin to see all users");
         }
     }
 
@@ -132,26 +138,20 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
             return userDtoConverter.toGetUserDto(userEntity);
     }
 
-    public GetUserDto getUserProfileByUsername(String username, UserEntity userEntityPrincipal) {
+    public GetUserDto getUserProfileByUsername(String username) {
         Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
             throw new EntityNotFoundException("No userEntity matches the provided username");
         }else{
-            if(user.get().getId().equals(userEntityPrincipal.getId())){
-                return userDtoConverter.toGetUserDto(user.get());
-            }
             return userDtoConverter.toGetUserDto(user.get());
         }
     }
 
-    public GetPropietarioDto getPropietarioProfileByUsername(String username, UserEntity userEntityPrincipal) {
+    public GetPropietarioDto getPropietarioProfileByUsername(String username) {
         Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
             throw new EntityNotFoundException("No userEntity matches the provided username");
         }else{
-            if(user.get().getId().equals(userEntityPrincipal.getId())){
-                return userDtoConverter.toGetPropietarioDto(user.get());
-            }
             return userDtoConverter.toGetPropietarioDto(user.get());
         }
     }

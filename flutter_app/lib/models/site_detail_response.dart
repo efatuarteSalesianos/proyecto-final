@@ -1,7 +1,5 @@
-import 'dart:ffi';
-
 class SiteDetailResponse {
-  late Long id;
+  late int id;
   late String name;
   late String description;
   late String address;

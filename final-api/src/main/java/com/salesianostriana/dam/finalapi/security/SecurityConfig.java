@@ -53,8 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers(HttpMethod.POST, "/auth/register/propietario").anonymous()
                 .antMatchers(HttpMethod.POST, "/**").anonymous()
                 .antMatchers(HttpMethod.GET, "/**").anonymous()
-                .antMatchers(HttpMethod.PUT, "/*").anonymous()
-                .antMatchers(HttpMethod.DELETE, "/*").anonymous()
+                .antMatchers(HttpMethod.PUT, "/**").anonymous()
+                .antMatchers(HttpMethod.DELETE, "/**").anonymous()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

@@ -22,7 +22,7 @@ public class CreateCommentDto {
     @NotBlank(message = "{comment.rate.blank}")
     @Min(value = 0, message = "{comment.rate.min}")
     @Max(value = 5, message = "{comment.rate.max}")
-    private int rate;
+    private double rate;
 
     private String image;
 }

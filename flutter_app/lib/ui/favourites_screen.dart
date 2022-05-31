@@ -11,12 +11,6 @@ import 'package:flutter_app/widgets/site_card.dart';
 import 'package:flutter_app/widgets/site_type_chip_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    debugShowCheckedModeBanner: false,
-  ));
-}
-
 class FavouritesScreen extends StatefulWidget {
   const FavouritesScreen({Key? key}) : super(key: key);
 

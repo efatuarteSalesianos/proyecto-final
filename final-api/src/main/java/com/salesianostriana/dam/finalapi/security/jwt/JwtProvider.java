@@ -18,19 +18,19 @@ import java.util.UUID;
 @Log
 @Service
 public class JwtProvider {
+
     public static final String TOKEN_TYPE = "JWT";
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
 
-    @Value("${jwt.secret:elsecretodelaapiestaenlamasamaslarga}")
+    @Value("${jwt.secret:elsecretoestaenlamasadelapizzadeldominospizza}")
     private String jwtSecret;
 
-    @Value("${jwt.duration:86400}")
+    @Value("${jwt.duration:86400}") // 1 día
     private int jwtLifeInSeconds;
 
     private JwtParser parser;
 
-    //Esto sirve para inicializar el parser, de lo contrario quedaría como null
     @PostConstruct
     public void init() {
         parser = Jwts.parserBuilder()
@@ -38,10 +38,9 @@ public class JwtProvider {
                 .build();
     }
 
-    //Método para construir el token jwt
     public String generateToken(Authentication authentication) {
 
-        UserEntity userEntity = (UserEntity) authentication.getPrincipal();
+        UserEntity user = (UserEntity) authentication.getPrincipal();
 
         Date tokenExpirationDate = Date
                 .from(LocalDateTime
@@ -49,37 +48,26 @@ public class JwtProvider {
                         .plusSeconds(jwtLifeInSeconds)
                         .atZone(ZoneId.systemDefault()).toInstant());
 
-
         return Jwts.builder()
                 .setHeaderParam("typ", TOKEN_TYPE)
-                .setSubject(userEntity.getId().toString())
+                .setSubject(user.getId().toString())
                 .setIssuedAt(tokenExpirationDate)
-                .claim("username", userEntity.getUsername())
-                .claim("avatar", userEntity.getAvatar())
-                .claim("role", userEntity.getRol().name())
+                .claim("fullname", user.getFullName())
                 .signWith(Keys.hmacShaKeyFor(jwtSecret.getBytes()))
                 .compact();
-
-
     }
 
-    //Método para conseguir el id de usuario de un token jwt
     public UUID getUserIdFromJwt(String token) {
-
         return UUID.fromString(parser.parseClaimsJws(token).getBody().getSubject());
     }
 
-    //Método para implementar las excepciones de jsonWebToken
     public boolean validateToken(String token) {
-
         try {
             parser.parseClaimsJws(token);
             return true;
         } catch (SignatureException | MalformedJwtException | ExpiredJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
-            log.info("Token error: " + ex.getMessage());
+            log.info("Error con el token: " + ex.getMessage());
         }
         return false;
-
     }
-
 }

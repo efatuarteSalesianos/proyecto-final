@@ -4,6 +4,7 @@ import 'package:http/http.dart';
 import 'package:flutter_app/models/login_dto.dart';
 import 'package:flutter_app/models/login_response.dart';
 import 'package:flutter_app/repositories/login/login_repository.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginRepositoryImpl extends LoginRepository {
   final Client _client = Client();
@@ -20,7 +21,13 @@ class LoginRepositoryImpl extends LoginRepository {
     if (response.statusCode == 201) {
       return LoginResponse.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Fail to login');
+      throw Exception(
+          'No se ha podido iniciar sesión. Compruebe sus credenciales');
     }
   }
+}
+
+addStringToSF(String field, String value) async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setString(field, value);
 }

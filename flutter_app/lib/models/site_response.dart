@@ -1,7 +1,5 @@
-import 'dart:ffi';
-
 class SiteResponse {
-  late Long id;
+  late int id;
   late String name;
   late String address;
   late String city;

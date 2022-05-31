@@ -10,7 +10,6 @@ import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/bottom_navbar.dart';
 
 void main() {
-  PreferenceUtils.init();
   runApp(const MyApp());
 }
 
