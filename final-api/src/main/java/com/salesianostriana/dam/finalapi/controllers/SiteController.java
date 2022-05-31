@@ -319,6 +319,24 @@ public class SiteController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(id, userEntity)));
     }
 
+    @Operation(summary = "Método para obtener el listado de negocios favoritos del usuario logueado", description = "Método para obtener el listado de negocios favoritos del usuario logueado", tags = "Site")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se obtiene el listado correctamente.",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = Boolean.class))}),
+            @ApiResponse(responseCode = "400",
+                    description = "Hay un error en los datos de la petición.",
+                    content = @Content),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado.",
+                    content = @Content)
+    })
+    @GetMapping("/favorites")
+    public ResponseEntity<List<GetListSiteDto>> getFavorites(@AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.ok(siteService.getLikedSites(userEntity));
+    }
+
     @Operation(summary = "Método para añadir un comentario a un negocio", description = "Método para añadir un comentario a un negocio", tags = "Site")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201",

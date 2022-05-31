@@ -32,4 +32,6 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Appoin
     GetAppointmentDto findOneByIdAndClienteId(@Param("appointmentId") Long appointmentId, @Param("clienteId") UUID clienteId);
 
     Optional<Appointment> findFirstBySiteIdAndClienteId(Long siteId, UUID id);
+
+    List<Appointment> findAllByClienteId(UUID id);
 }

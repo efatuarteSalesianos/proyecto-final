@@ -12,15 +12,16 @@ class AppointmentRepositoryImpl extends AppointmentRepository {
   final PreferenceUtils preferenceUtils = PreferenceUtils();
 
   @override
-  Future<List<AppointmentResponse>> fetchAppointments() async {
+  Future<List<AppointmentResponse>> fetchMyAppointments() async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
-    final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/appointment/'), headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    });
+    final response = await http.get(
+        Uri.parse('${Constant.apiBaseUrl}/appointment/misCitas'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       return (jsonResponse as List)

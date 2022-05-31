@@ -236,7 +236,15 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    //Add comment to a site by id only if the appointment hour that client had in that site has passed
+    public List<GetListSiteDto> getLikedSites(UserEntity userEntity){
+        List<Like> likes = likeRepository.findAllByClienteId(userEntity.getId());
+        List<Site> sites = new ArrayList<>();
+        for(Like like : likes){
+            sites.add(like.getSite());
+        }
+        return sites.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
+    }
+
     public GetCommentDto addComment(Long siteId, CreateCommentDto newComment, UserEntity userEntity, MultipartFile file) {
         Optional<Site> site = findById(siteId);
         String originalFileUrl;

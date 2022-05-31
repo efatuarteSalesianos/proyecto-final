@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -19,4 +20,5 @@ public interface LikeRepository extends JpaRepository<Like, LikePK> {
 
     Optional<Like> findFirstBySiteIdAndClienteId(Long siteId, UUID userId);
 
+    List<Like> findAllByClienteId(UUID id);
 }

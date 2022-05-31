@@ -75,3 +75,12 @@ class SitesFetchError extends SitesState {
   @override
   List<Object> get props => [message];
 }
+
+class FavouriteSitesFetched extends SitesState {
+  final List<SiteResponse> sites;
+
+  const FavouriteSitesFetched(this.sites);
+
+  @override
+  List<Object> get props => [sites];
+}

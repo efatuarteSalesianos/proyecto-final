@@ -32,11 +32,29 @@ class SiteRepositoryImpl extends SiteRepository {
   }
 
   @override
+  Future<SiteDetailResponse> fetchSiteDetail(int id) async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/{$id}'), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      return SiteDetailResponse.fromJson(jsonResponse);
+    } else {
+      throw Exception('Failed to load site detail');
+    }
+  }
+
+  @override
   Future<List<SiteResponse>> fetchSitesWithType(String type) async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/{$type}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?type={$type}'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -56,7 +74,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/{$name}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?name={$name}'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -72,11 +90,11 @@ class SiteRepositoryImpl extends SiteRepository {
   }
 
   @override
-  Future<List<SiteResponse>> fetchSitesWithRateGreaterThan(int rate) async {
+  Future<List<SiteResponse>> fetchSitesWithCity(String city) async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/{$rate}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?city={$city}'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -92,20 +110,63 @@ class SiteRepositoryImpl extends SiteRepository {
   }
 
   @override
-  Future<SiteResponse> fetchSiteById(int id) async {
+  Future<List<SiteResponse>> fetchSitesWithPostalCode(String postalCode) async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http.get(
+        Uri.parse('${Constant.apiBaseUrl}/site/?postalCode={$postalCode}'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      return (jsonResponse as List)
+          .map((data) => SiteResponse.fromJson(data))
+          .toList();
+    } else {
+      throw Exception('Failed to load sites');
+    }
+  }
+
+  @override
+  Future<List<SiteResponse>> fetchSitesWithRateGreaterThan(double rate) async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/{$id}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?rate={$rate}'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
-      return SiteResponse.fromJson(jsonResponse);
+      return (jsonResponse as List)
+          .map((data) => SiteResponse.fromJson(data))
+          .toList();
     } else {
       throw Exception('Failed to load sites');
+    }
+  }
+
+  @override
+  Future<List<SiteResponse>> fetchFavouriteSites() async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/favourites'), headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    });
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      return (jsonResponse as List)
+          .map((data) => SiteResponse.fromJson(data))
+          .toList();
+    } else {
+      throw Exception('Failed to load favourite sites');
     }
   }
 }

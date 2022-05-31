@@ -7,7 +7,8 @@ import 'package:flutter_app/models/site_type_response.dart';
 import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/ui/site_detail_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
-import 'package:flutter_app/widgets/site_card.dart';
+import 'package:flutter_app/widgets/favourite_site_list.dart';
+import 'package:flutter_app/widgets/site_list.dart';
 import 'package:flutter_app/widgets/site_type_chip_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,7 +44,7 @@ class _FavouritesScreenState extends State<FavouritesScreen> {
         children: [
           SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: const SiteCard()),
+              child: const FavouriteSiteList()),
         ],
       ),
     );

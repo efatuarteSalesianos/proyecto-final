@@ -12,14 +12,14 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:like_button/like_button.dart';
 import 'package:flutter_app/widgets/error_widget.dart';
 
-class SiteCard extends StatefulWidget {
-  const SiteCard({Key? key}) : super(key: key);
+class SiteList extends StatefulWidget {
+  const SiteList({Key? key}) : super(key: key);
 
   @override
-  _SiteCardState createState() => _SiteCardState();
+  _SiteListState createState() => _SiteListState();
 }
 
-class _SiteCardState extends State<SiteCard> {
+class _SiteListState extends State<SiteList> {
   late SiteRepository siteRepository;
   late SitesBloc _siteBloc;
 
@@ -28,7 +28,7 @@ class _SiteCardState extends State<SiteCard> {
     PreferenceUtils.init();
     super.initState();
     siteRepository = SiteRepositoryImpl();
-    _siteBloc = SitesBloc(siteRepository)..add(const FetchSite());
+    _siteBloc = SitesBloc(siteRepository)..add(const FetchSites());
   }
 
   @override

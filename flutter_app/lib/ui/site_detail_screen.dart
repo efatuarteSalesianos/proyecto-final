@@ -14,8 +14,6 @@ import 'package:url_launcher/url_launcher.dart';
 class SiteDetailScreen extends StatefulWidget {
   const SiteDetailScreen({Key? key}) : super(key: key);
 
-  //final int id;
-
   @override
   _SiteDetailState createState() => _SiteDetailState();
 }
@@ -31,7 +29,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
   void initState() {
     super.initState();
     siteRepository = SiteRepositoryImpl();
-    _siteBloc = SitesBloc(siteRepository)..add(const FetchSite());
+    _siteBloc = SitesBloc(siteRepository)..add(const FetchSites());
   }
 
   Widget _siteDetailItem(SiteDetailResponse site) {

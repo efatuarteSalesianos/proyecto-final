@@ -9,12 +9,86 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
   final SiteRepository siteRepository;
 
   SitesBloc(this.siteRepository) : super(SitesInitial()) {
-    on<FetchSite>(_sitesFetched);
+    on<FetchSites>(_sitesFetched);
+    on<FetchSitesWithType>(_sitesFetchedWithType);
+    on<FetchSitesWithName>(_sitesFetchedWithName);
+    on<FetchSitesWithPostalCode>(_sitesFetchedWithPostalCode);
+    on<FetchSitesWithCity>(_sitesFetchedWithCity);
+    on<FetchSitesWithRate>(_sitesFetchedWithRate);
+    on<FetchFavouriteSites>(_favouriteSitesFeteched);
   }
 
-  void _sitesFetched(FetchSite event, Emitter<SitesState> emit) async {
+  void _sitesFetched(FetchSites event, Emitter<SitesState> emit) async {
     try {
       final sites = await siteRepository.fetchSites();
+      emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _sitesFetchedWithType(
+      FetchSitesWithType event, Emitter<SitesState> emit) async {
+    try {
+      final sites = await siteRepository.fetchSitesWithType(event.type);
+      emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _sitesFetchedWithName(
+      FetchSitesWithName event, Emitter<SitesState> emit) async {
+    try {
+      final sites = await siteRepository.fetchSitesWithName(event.name);
+      emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _sitesFetchedWithPostalCode(
+      FetchSitesWithPostalCode event, Emitter<SitesState> emit) async {
+    try {
+      final sites =
+          await siteRepository.fetchSitesWithPostalCode(event.postalCode);
+      emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _sitesFetchedWithCity(
+      FetchSitesWithCity event, Emitter<SitesState> emit) async {
+    try {
+      final sites = await siteRepository.fetchSitesWithCity(event.city);
+      emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _sitesFetchedWithRate(
+      FetchSitesWithRate event, Emitter<SitesState> emit) async {
+    try {
+      final sites =
+          await siteRepository.fetchSitesWithRateGreaterThan(event.rate);
+      emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _favouriteSitesFeteched(
+      FetchFavouriteSites event, Emitter<SitesState> emit) async {
+    try {
+      final sites = await siteRepository.fetchFavouriteSites();
       emit(SitesFetched(sites));
       return;
     } on Exception catch (e) {
