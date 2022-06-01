@@ -44,13 +44,15 @@ public class UserController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @PostMapping(value = "/auth/register" /*, consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE */)
+    @PostMapping(value = "/auth/register")
     public ResponseEntity<GetUserDto> newUser(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                               @RequestPart("file") MultipartFile file) {
-        if(!file.isEmpty() || newUser!=null)
-            return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(userService.saveUser(newUser, file)));
+        UserEntity saved = userService.saveUser(newUser, file);
+
+        if(saved == null)
+            return ResponseEntity.badRequest().build();
         else
-            throw new MultipartException("The provided multipart file must not be null");
+            return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(saved));
     }
 
     @Operation(summary = "Método para dar de alta un administrador.", description = "Método para dar de alta un administrador.", tags = "Usuarios")
@@ -70,8 +72,12 @@ public class UserController {
     public ResponseEntity<GetUserDto> newAdmin(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                                @RequestPart("file") MultipartFile file) {
 
-            return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(userService.saveAdmin(newUser, file)));
+        UserEntity saved = userService.saveUser(newUser, file);
 
+        if(saved == null)
+            return ResponseEntity.badRequest().build();
+        else
+            return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(saved));
     }
 
     @Operation(summary = "Método para dar de alta un propietario.", description = "Método para dar de alta un propietario.", tags = "Usuarios")
@@ -88,11 +94,15 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/auth/register/propietario")
-    public ResponseEntity<GetUserDto> newPropietario(@Valid @RequestPart("newUser") CreateUserDto newUser,
+    public ResponseEntity<GetPropietarioDto> newPropietario(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                                @RequestPart("file") MultipartFile file) {
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetUserDto(userService.savePropietario(newUser, file)));
+        UserEntity saved = userService.saveUser(newUser, file);
 
+        if(saved == null)
+            return ResponseEntity.badRequest().build();
+        else
+            return ResponseEntity.status(HttpStatus.CREATED).body(userDtoConverter.toGetPropietarioDto(saved));
     }
 
     @Operation(summary = "Método para obtener todos los usuarios dados de alta en la aplicación.", description = "Método para obtener todos los usuarios dados de alta en la aplicación.", tags = "Usuarios")
@@ -107,7 +117,11 @@ public class UserController {
     })
     @GetMapping("/users")
     public ResponseEntity<List<GetUserDto>> getAllUsers(@AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.OK).body(userService.getAllUsers(userEntity));
+        List<GetUserDto> users = userService.getAllUsers(userEntity);
+        if (users.isEmpty())
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok(users);
     }
 
     @Operation(summary = "Método para convertir a un usuario en administrador.", description = "Método para convertir a un usuario en administrador.", tags = "Usuarios")
@@ -122,11 +136,7 @@ public class UserController {
     })
     @PutMapping("/users/{username}/admin")
     public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username, @AuthenticationPrincipal UserEntity userEntity){
-        if (userEntity.getRol().equals(Rol.ADMIN)){
-            return ResponseEntity.status(HttpStatus.OK).body(userService.convertToAdmin(userEntity,username));
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(userService.convertToAdmin(userEntity,username));
     }
 
     @Operation(summary = "Método para ver los datos de mi perfil.", description = "Método para ver los datos de mi perfil.", tags = "Usuarios")
@@ -139,9 +149,9 @@ public class UserController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("/me")
-    public ResponseEntity<GetUserDto> getAuthenticatedUser(@AuthenticationPrincipal UserEntity userEntity) {
-        return ResponseEntity.ok(userService.getAuthenticatedUser(userEntity));
+    @GetMapping("/profile/me")
+    public ResponseEntity<GetUserDto> getMyProfile(@AuthenticationPrincipal UserEntity userEntity) {
+        return ResponseEntity.ok(userDtoConverter.toGetUserDto(userEntity));
     }
 
     @Operation(summary = "Método para obtener los datos del perfil de un usuario según su username.", description = "Método para obtener los datos del perfil de un usuario según su username.", tags = "Usuarios")

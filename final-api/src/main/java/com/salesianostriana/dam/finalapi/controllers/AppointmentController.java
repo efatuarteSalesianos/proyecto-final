@@ -63,9 +63,9 @@ public class AppointmentController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("/client/{id}")
-    public List<GetAppointmentDto> citasCliente(@PathVariable UUID id) {
-        return appointmentService.listAppointmentsOfUser(id);
+    @GetMapping("/cliente/{clienteId}")
+    public List<GetAppointmentDto> citasCliente(@PathVariable UUID clienteId) {
+        return appointmentService.listAppointmentsOfUser(clienteId);
     }
 
     @Operation(summary = "Método para obtener la información de una cita de un cliente", description = "Método para obtener la información de una cita de un cliente", tags = "Appointment")
@@ -81,7 +81,7 @@ public class AppointmentController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("/{id}/cliente/{clienteId}")
+    @GetMapping("/{appointmentId}/cliente/{clienteId}")
     public ResponseEntity<GetAppointmentDto> getAppointment(@PathVariable Long appointmentId, @PathVariable UUID clienteId) {
         return ResponseEntity.ok(appointmentService.getAppointmentByIdAndClienteId(appointmentId, clienteId));
     }}

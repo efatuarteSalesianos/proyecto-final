@@ -229,11 +229,11 @@ public class SiteController {
     public ResponseEntity<GetSiteDto> createSite(@Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
-//        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
+        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
             return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file)));
-//        } else {
-//            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-//        }
+        } else {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
     }
 
     @Operation(summary = "Método para editar un negocio", description = "Método para editar un negocio", tags = "Site")
@@ -296,9 +296,9 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @PostMapping("/like/{id}")
-    public ResponseEntity<GetSiteDto> addLike(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.addLike(id, userEntity)));
+    @PostMapping("/{siteId}/like")
+    public ResponseEntity<GetSiteDto> addLike(@PathVariable Long siteId, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.addLike(siteId, userEntity)));
     }
 
     @Operation(summary = "Método para eliminar un like de un negocio", description = "Método para eliminar un like de un negocio", tags = "Site")
@@ -314,9 +314,9 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @DeleteMapping("/like/{id}")
-    public ResponseEntity<GetSiteDto> deleteLike(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(id, userEntity)));
+    @DeleteMapping("/{siteId}/like")
+    public ResponseEntity<GetSiteDto> deleteLike(@PathVariable Long siteId, @AuthenticationPrincipal UserEntity userEntity){
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(siteId, userEntity)));
     }
 
     @Operation(summary = "Método para obtener el listado de negocios favoritos del usuario logueado", description = "Método para obtener el listado de negocios favoritos del usuario logueado", tags = "Site")
@@ -350,7 +350,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @PostMapping("{id}/comment/")
+    @PostMapping("{id}/comment")
     public ResponseEntity<GetCommentDto> addComment(@PathVariable Long id, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
         return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addComment(id, newComment, userEntity, file));
     }
@@ -368,7 +368,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("{id}/comment/")
+    @GetMapping("{id}/comment")
     public ResponseEntity<List<GetCommentDto>> getAllComments(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllComments(id));
     }
@@ -465,7 +465,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @PostMapping("{id}/appointment/")
+    @PostMapping("{id}/appointment")
     public ResponseEntity<GetAppointmentDto> addAppointment(@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity.getId(), newAppointment));
     }
@@ -483,7 +483,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("{id}/appointment/")
+    @GetMapping("{id}/appointment")
     public ResponseEntity<List<GetAppointmentDto>> getAllAppointments(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllAppointments(id));
     }

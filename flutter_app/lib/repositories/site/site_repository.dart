@@ -3,7 +3,7 @@ import 'package:flutter_app/models/site_response.dart';
 
 abstract class SiteRepository {
   Future<List<SiteResponse>> fetchSites();
-  Future<SiteDetailResponse> fetchSiteDetail(int id);
+  Future<SiteDetailResponse> fetchSiteDetails(int id);
   Future<List<SiteResponse>> fetchSitesWithType(String type);
   Future<List<SiteResponse>> fetchSitesWithName(String name);
   Future<List<SiteResponse>> fetchSitesWithPostalCode(String postalCode);

@@ -32,7 +32,7 @@ class SiteRepositoryImpl extends SiteRepository {
   }
 
   @override
-  Future<SiteDetailResponse> fetchSiteDetail(int id) async {
+  Future<SiteDetailResponse> fetchSiteDetails(int id) async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http

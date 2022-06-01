@@ -1,15 +1,7 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_app/models/site_response.dart';
-import 'package:flutter_app/models/site_type_response.dart';
 import 'package:flutter_app/ui/login_screen.dart';
-import 'package:flutter_app/ui/site_detail_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/site_list.dart';
-import 'package:flutter_app/widgets/site_type_chip_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,10 +24,10 @@ class _HomeScreenState extends State<HomeScreen> {
             pinned: true,
             snap: false,
             centerTitle: false,
-            title: Text('MySalon'),
+            title: const Text('MySalon'),
             actions: [
               IconButton(
-                icon: Icon(Icons.exit_to_app),
+                icon: const Icon(Icons.exit_to_app),
                 onPressed: () => {
                   PreferenceUtils.clear(),
                   Navigator.push(
@@ -74,7 +66,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([SiteList()]),
+            delegate: SliverChildListDelegate([
+              SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: const SiteList())
+            ]),
           ),
         ],
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter_app/ui/bookings_screen.dart';
+import 'package:flutter_app/ui/create_appointment_screen.dart';
 import 'package:flutter_app/ui/favourites_screen.dart';
 import 'package:flutter_app/ui/home_screen.dart';
 import 'package:flutter_app/ui/profile_screen.dart';
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 class BottomNavbarWidget extends StatelessWidget {
   const BottomNavbarWidget({Key? key}) : super(key: key);
 
-// This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

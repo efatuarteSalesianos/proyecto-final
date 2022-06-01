@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/appointment/appointments_bloc.dart';
 import 'package:flutter_app/models/appointment_response.dart';
@@ -7,15 +9,14 @@ import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/shimmer_picture.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FavouriteAppointmentList extends StatefulWidget {
-  const FavouriteAppointmentList({Key? key}) : super(key: key);
+class BookingsList extends StatefulWidget {
+  const BookingsList({Key? key}) : super(key: key);
 
   @override
-  _FavouriteAppointmentListState createState() =>
-      _FavouriteAppointmentListState();
+  _BookingsListState createState() => _BookingsListState();
 }
 
-class _FavouriteAppointmentListState extends State<FavouriteAppointmentList> {
+class _BookingsListState extends State<BookingsList> {
   late AppointmentRepository appointmentRepository;
   late AppointmentsBloc _appointmentBloc;
 
@@ -97,6 +98,9 @@ class _FavouriteAppointmentListState extends State<FavouriteAppointmentList> {
 
   Widget _appointmentItem(
       BuildContext context, AppointmentResponse appointment) {
+    String siteName = appointment.site;
+    String decodeSiteName =
+        utf8.decode(latin1.encode(siteName), allowMalformed: true);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       height: MediaQuery.of(context).size.height * 0.213,
@@ -105,7 +109,7 @@ class _FavouriteAppointmentListState extends State<FavouriteAppointmentList> {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Text(appointment.date.toIso8601String()),
+              child: Text(decodeSiteName),
             ),
           ),
           Positioned(

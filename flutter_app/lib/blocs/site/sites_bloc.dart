@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_app/models/site_detail_response.dart';
 import 'package:flutter_app/models/site_response.dart';
 import 'package:flutter_app/repositories/site/site_repository.dart';
 part 'sites_event.dart';
@@ -16,6 +17,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
     on<FetchSitesWithCity>(_sitesFetchedWithCity);
     on<FetchSitesWithRate>(_sitesFetchedWithRate);
     on<FetchFavouriteSites>(_favouriteSitesFeteched);
+    on<FetchSiteDetails>(_siteDetailsFetched);
   }
 
   void _sitesFetched(FetchSites event, Emitter<SitesState> emit) async {
@@ -90,6 +92,17 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
     try {
       final sites = await siteRepository.fetchFavouriteSites();
       emit(SitesFetched(sites));
+      return;
+    } on Exception catch (e) {
+      emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _siteDetailsFetched(
+      FetchSiteDetails event, Emitter<SitesState> emit) async {
+    try {
+      final site = await siteRepository.fetchSiteDetails(event.id);
+      emit(SiteDetailsFetched(site, event.id));
       return;
     } on Exception catch (e) {
       emit(SitesFetchError(e.toString()));

@@ -3,25 +3,25 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/site/sites_bloc.dart';
 import 'package:flutter_app/models/site_detail_response.dart';
-import 'package:flutter_app/models/site_response.dart';
 import 'package:flutter_app/repositories/site/site_repository.dart';
 import 'package:flutter_app/repositories/site/site_repository_impl.dart';
-import 'package:flutter_app/ui/login_screen.dart';
-import 'package:flutter_app/utils/shared_preferences.dart';
+import 'package:flutter_app/ui/create_appointment_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SiteDetailScreen extends StatefulWidget {
-  const SiteDetailScreen({Key? key}) : super(key: key);
+  const SiteDetailScreen({Key? key, required this.id}) : super(key: key);
+
+  final int id;
 
   @override
-  _SiteDetailState createState() => _SiteDetailState();
+  _SiteDetailState createState() => _SiteDetailState(id: this.id);
 }
 
 class _SiteDetailState extends State<SiteDetailScreen> {
-  _SiteDetailState();
+  _SiteDetailState({required this.id});
   late int id;
-  late Future<SiteDetailResponse> Site;
+  late Future<SiteDetailResponse> site;
   late SiteRepository siteRepository;
   late SitesBloc _siteBloc;
 
@@ -29,7 +29,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
   void initState() {
     super.initState();
     siteRepository = SiteRepositoryImpl();
-    _siteBloc = SitesBloc(siteRepository)..add(const FetchSites());
+    _siteBloc = SitesBloc(siteRepository)..add(FetchSiteDetails(id));
   }
 
   Widget _siteDetailItem(SiteDetailResponse site) {
@@ -79,6 +79,41 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                     width: 30, semanticsLabel: 'Google Maps')
               ],
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 20.0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    onPressed: () => {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const CreateAppointmentScreen()))
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      height: 80.0,
+                      child: const Text(
+                        "Comprobar Disponibilidad",
+                        style: TextStyle(
+                            color: Color(0xFFFF5A5F),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30.0),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             FloatingActionButton(
               elevation: 50,
               backgroundColor: const Color(0xFF25D366),
@@ -96,9 +131,10 @@ class _SiteDetailState extends State<SiteDetailScreen> {
   }
 
   void openwhatsapp(String phone) async {
-    var whatsappURlAndroid = "whatsapp://send?phone=$phone&text=hola";
+    var whatsappURlAndroid =
+        "whatsapp://send?phone=$phone&text=Hola,%20quiero%20reservar%20una%20cita";
     var whatappURLIos =
-        "https://wa.me/$phone?text=${Uri.parse("Hola! Me gustaría pedir información")}";
+        "https://wa.me/$phone?text=${Uri.parse("Hola! Me gustaría pedir información!")}";
     if (Platform.isIOS) {
       // for iOS phone only
       if (await canLaunch(whatappURLIos)) {
@@ -123,7 +159,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
     return MaterialApp(
       home: Scaffold(
           body: FutureBuilder<SiteDetailResponse>(
-              future: Site,
+              future: site,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return _siteDetailItem(snapshot.data!);

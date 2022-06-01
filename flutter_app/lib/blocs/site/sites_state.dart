@@ -68,14 +68,6 @@ class SitesFetchedWithRate extends SitesState {
   List<Object> get props => [sites, rate];
 }
 
-class SitesFetchError extends SitesState {
-  final String message;
-  const SitesFetchError(this.message);
-
-  @override
-  List<Object> get props => [message];
-}
-
 class FavouriteSitesFetched extends SitesState {
   final List<SiteResponse> sites;
 
@@ -83,4 +75,22 @@ class FavouriteSitesFetched extends SitesState {
 
   @override
   List<Object> get props => [sites];
+}
+
+class SiteDetailsFetched extends SitesState {
+  final int id;
+  final SiteDetailResponse site;
+
+  const SiteDetailsFetched(this.site, this.id);
+
+  @override
+  List<Object> get props => [id];
+}
+
+class SitesFetchError extends SitesState {
+  final String message;
+  const SitesFetchError(this.message);
+
+  @override
+  List<Object> get props => [message];
 }

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/site/sites_bloc.dart';
 import 'package:flutter_app/models/site_response.dart';
@@ -8,9 +10,7 @@ import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/rating_bar_widget.dart';
 import 'package:flutter_app/widgets/shimmer_picture.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:like_button/like_button.dart';
-import 'package:flutter_app/widgets/error_widget.dart';
 
 class SiteList extends StatefulWidget {
   const SiteList({Key? key}) : super(key: key);
@@ -42,36 +42,16 @@ class _SiteListState extends State<SiteList> {
         create: ((context) => _siteBloc),
         child: BlocBuilder<SitesBloc, SitesState>(builder: (context, state) {
           if (state is SitesInitial) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is SitesFetched) {
             return _createSitesView(context, state.sites);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         }));
   }
 
   Widget _createBody(BuildContext context) {
-    Route _createRoute() {
-      return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            SiteDetailScreen(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0, 2000.0);
-          const end = Offset.infinite;
-          const curve = Curves.easeOut;
-
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      );
-    }
-
     return BlocBuilder<SitesBloc, SitesState>(
       bloc: _siteBloc,
       builder: (context, state) {
@@ -108,7 +88,14 @@ class _SiteListState extends State<SiteList> {
   Widget _createSitesView(BuildContext context, List<SiteResponse> sites) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _siteItem(context, sites[index]);
+        return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SiteDetailScreen(id: index)));
+            },
+            child: _siteItem(context, sites[index]));
       },
       padding: const EdgeInsets.symmetric(vertical: 5),
       scrollDirection: Axis.vertical,
@@ -117,6 +104,9 @@ class _SiteListState extends State<SiteList> {
   }
 
   Widget _siteItem(BuildContext context, SiteResponse site) {
+    String siteName = site.name;
+    String decodeSiteName =
+        utf8.decode(latin1.encode(siteName), allowMalformed: true);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       height: MediaQuery.of(context).size.height * 0.213,
@@ -125,7 +115,7 @@ class _SiteListState extends State<SiteList> {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(site.scaledFileUrl),
+              child: Image.network(site.scaledFileUrl, fit: BoxFit.cover),
             ),
           ),
           Positioned(
@@ -133,7 +123,7 @@ class _SiteListState extends State<SiteList> {
             left: 0,
             right: 0,
             child: Container(
-                height: 170,
+                height: 175,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                     gradient: LinearGradient(
@@ -150,7 +140,7 @@ class _SiteListState extends State<SiteList> {
               padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
-                  Text(site.name,
+                  Text(decodeSiteName,
                       style:
                           const TextStyle(color: Colors.white, fontSize: 20)),
                 ],
@@ -187,7 +177,7 @@ class _SiteListState extends State<SiteList> {
               child: IconTheme(
                 data: const IconThemeData(
                   color: Color(0xFFFF5A5F),
-                  size: 23,
+                  size: 25,
                 ),
                 child: RatingBarWidget(site.rate),
               ),

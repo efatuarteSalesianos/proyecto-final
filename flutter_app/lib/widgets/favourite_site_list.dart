@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/site/sites_bloc.dart';
 import 'package:flutter_app/models/site_response.dart';
@@ -52,26 +54,6 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
   }
 
   Widget _createBody(BuildContext context) {
-    Route _createRoute() {
-      return PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) =>
-            SiteDetailScreen(),
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0, 2000.0);
-          const end = Offset.infinite;
-          const curve = Curves.easeOut;
-
-          var tween =
-              Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-          return SlideTransition(
-            position: animation.drive(tween),
-            child: child,
-          );
-        },
-      );
-    }
-
     return BlocBuilder<SitesBloc, SitesState>(
       bloc: _siteBloc,
       builder: (context, state) {
@@ -117,6 +99,9 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
   }
 
   Widget _siteItem(BuildContext context, SiteResponse site) {
+    String siteName = site.name;
+    String decodeSiteName =
+        utf8.decode(latin1.encode(siteName), allowMalformed: true);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       height: MediaQuery.of(context).size.height * 0.213,
@@ -150,7 +135,7 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
               padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
-                  Text(site.name,
+                  Text(decodeSiteName,
                       style:
                           const TextStyle(color: Colors.white, fontSize: 20)),
                 ],

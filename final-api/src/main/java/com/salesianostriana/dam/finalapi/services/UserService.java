@@ -131,13 +131,6 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         return userRepository.findUserEntityByRol(rol);
     }
 
-    public GetUserDto getAuthenticatedUser(UserEntity userEntity) {
-        if (userEntity == null) {
-            throw new EntityNotFoundException("UserEntity not found");
-        } else
-            return userDtoConverter.toGetUserDto(userEntity);
-    }
-
     public GetUserDto getUserProfileByUsername(String username) {
         Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
