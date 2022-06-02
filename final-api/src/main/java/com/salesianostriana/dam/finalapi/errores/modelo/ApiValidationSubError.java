@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.finalapi.errors.models;
+package com.salesianostriana.dam.finalapi.errores.modelo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -7,14 +7,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor @NoArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Builder
 public class ApiValidationSubError extends ApiSubError {
 
-    private String object;
+    private String objeto;
+    private String mensaje;
+
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private String field;
+    private String campo;
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Object rejectedValue;
-    private String message;
+    private Object valorRechazado;
+
+
 }

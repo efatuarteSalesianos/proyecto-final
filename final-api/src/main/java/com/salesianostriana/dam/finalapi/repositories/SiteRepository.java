@@ -1,7 +1,6 @@
 package com.salesianostriana.dam.finalapi.repositories;
 
 import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.models.Site;
 import com.salesianostriana.dam.finalapi.models.SiteTypes;
 import org.springframework.data.jpa.repository.JpaRepository;

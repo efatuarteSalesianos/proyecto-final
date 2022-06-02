@@ -4,7 +4,7 @@ import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
 import com.salesianostriana.dam.finalapi.utils.ImageCompressor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

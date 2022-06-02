@@ -1,7 +1,5 @@
 package com.salesianostriana.dam.finalapi.security.jwt;
 
-
-import com.salesianostriana.dam.finalapi.errors.exceptions.UnauthorizeException;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -37,25 +35,25 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
 
         // 2. Validar token
         try {
-            if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
+        if (StringUtils.hasText(token) && jwtProvider.validateToken(token)) {
 
-                UUID userId = jwtProvider.getUserIdFromJwt(token);
+            UUID userId = jwtProvider.getUserIdFromJwt(token);
 
-                Optional<UserEntity> userEntity = userService.findById(userId);
+            Optional<UserEntity> userEntity = userService.findById(userId);
 
-                if (userEntity.isPresent()) {
-                    UserEntity user = userEntity.get();
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(
-                                    user,
-                                    user.getRol().name(),
-                                    user.getAuthorities()
-                            );
-                    authentication.setDetails(new WebAuthenticationDetails(request));
+            if (userEntity.isPresent()) {
+                UserEntity user = userEntity.get();
+                UsernamePasswordAuthenticationToken authentication =
+                new UsernamePasswordAuthenticationToken(
+                        user,
+                        user.getRol().name(),
+                        user.getAuthorities()
+                );
+                authentication.setDetails(new WebAuthenticationDetails(request));
 
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
+        }
 
         } catch (Exception ex) {
             // Informar en el log

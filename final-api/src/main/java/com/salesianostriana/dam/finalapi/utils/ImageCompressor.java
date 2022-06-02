@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.finalapi.utils;
 
-import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
 import io.github.techgnious.IVCompressor;
 import io.github.techgnious.dto.ResizeResolution;
 import io.github.techgnious.dto.VideoFormats;

@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,11 +76,9 @@ public class PropietarioController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<GetPropietarioDto> findPropietarioById(@AuthenticationPrincipal UserEntity user, @Parameter(description = "El id del propietario que se desea consultar") @PathVariable UUID id) {
-        if(user.getId().equals(id) || user.getRol().equals(Rol.ADMIN))
-            return ResponseEntity
-                    .of(userEntityService.findById(id)
-                            .map(userDtoConverter::toGetPropietarioDto));
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        return ResponseEntity
+                .of(userEntityService.findById(id)
+                        .map(userDtoConverter::toGetPropietarioDto));
     }
 
     @Operation(summary = "Se borra un propietario")
@@ -96,22 +95,11 @@ public class PropietarioController {
                     content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletePropietarioById(@AuthenticationPrincipal UserEntity user, @Parameter(description = "El id del propietario que se quiere eliminar") @PathVariable UUID id){
-        if(user.getId().equals(id) || user.getRol().equals(Rol.ADMIN)) {
-            if(userEntityService.findById(id).isEmpty()) {
-                return ResponseEntity
-                        .notFound()
-                        .build();
-            }
-            else {
-                userEntityService.deleteById(id);
-                return ResponseEntity
-                        .noContent()
-                        .build();
-            }
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        userEntityService.deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

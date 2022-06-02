@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.finalapi.errors.config;
+package com.salesianostriana.dam.finalapi.errores.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -7,12 +7,13 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @Configuration
-public class ValidationConfig {
+public class ConfiguracionValidacion {
+
     @Bean
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         messageSource.setBasename("classpath:errores");
-        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setDefaultEncoding("ISO-8859-1");
         return messageSource;
     }
 
@@ -22,4 +23,5 @@ public class ValidationConfig {
         validator.setValidationMessageSource(messageSource());
         return validator;
     }
+
 }

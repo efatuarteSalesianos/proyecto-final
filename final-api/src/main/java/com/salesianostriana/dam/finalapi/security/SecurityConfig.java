@@ -1,8 +1,7 @@
 package com.salesianostriana.dam.finalapi.security;
 
-import com.salesianostriana.dam.finalapi.security.jwt.JwtAuthenticationEntryPoint;
+import com.salesianostriana.dam.finalapi.security.jwt.JwtAccessDeniedHandler;
 import com.salesianostriana.dam.finalapi.security.jwt.JwtAuthorizationFilter;
-import com.salesianostriana.dam.finalapi.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,50 +13,42 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-@Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@Configuration
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
-    private final AccessDeniedHandler accessDeniedHandler;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     private final JwtAuthorizationFilter filter;
+    private final JwtAccessDeniedHandler accessDeniedHandler;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(accessDeniedHandler)
+                    .exceptionHandling()
+                        .authenticationEntryPoint(authenticationEntryPoint)
+                    .accessDeniedHandler(accessDeniedHandler)
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionManagement()
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/auth/login").anonymous()
-                .antMatchers(HttpMethod.POST, "/auth/register").anonymous()
-                .antMatchers(HttpMethod.POST, "/auth/register/admin").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/auth/register/propietario").hasRole("ADMIN")
-                .antMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/users/{username}/admin").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/site/").hasAnyRole("ADMIN", "PROPIETARIO")
-                .antMatchers(HttpMethod.PUT, "/site/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
-                .antMatchers(HttpMethod.DELETE, "/site/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
-                .antMatchers(HttpMethod.GET, "/propietario/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
-                .antMatchers(HttpMethod.DELETE, "/propietario/{id}").hasAnyRole("ADMIN", "PROPIETARIO")
+                .antMatchers(HttpMethod.POST, "/auth/**").anonymous()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);

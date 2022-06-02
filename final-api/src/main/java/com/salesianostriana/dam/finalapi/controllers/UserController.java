@@ -1,7 +1,6 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
 import com.salesianostriana.dam.finalapi.dtos.user.*;
-import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,12 +11,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -69,6 +67,7 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/auth/register/admin")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GetUserDto> newAdmin(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                                @RequestPart("file") MultipartFile file) {
 
@@ -94,6 +93,7 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/auth/register/propietario")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GetPropietarioDto> newPropietario(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                                @RequestPart("file") MultipartFile file) {
 
@@ -116,6 +116,7 @@ public class UserController {
                     content = @Content)
     })
     @GetMapping("/users")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<GetUserDto>> getAllUsers(@AuthenticationPrincipal UserEntity userEntity){
         List<GetUserDto> users = userService.getAllUsers(userEntity);
         if (users.isEmpty())
@@ -135,6 +136,7 @@ public class UserController {
                     content = @Content)
     })
     @PutMapping("/users/{username}/admin")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username, @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(userService.convertToAdmin(userEntity,username));
     }

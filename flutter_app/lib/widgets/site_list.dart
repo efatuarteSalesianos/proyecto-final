@@ -44,7 +44,7 @@ class _SiteListState extends State<SiteList> {
           if (state is SitesInitial) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is SitesFetched) {
-            return _createSitesView(context, state.sites);
+            return _createBody(context);
           } else {
             return const Center(child: CircularProgressIndicator());
           }
@@ -91,9 +91,13 @@ class _SiteListState extends State<SiteList> {
         return GestureDetector(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => SiteDetailScreen(id: index)));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SiteDetailScreen(
+                    id: sites[index].id,
+                  ),
+                ),
+              );
             },
             child: _siteItem(context, sites[index]));
       },

@@ -1,8 +1,8 @@
 package com.salesianostriana.dam.finalapi.services;
 
 import com.salesianostriana.dam.finalapi.config.StorageProperties;
-import com.salesianostriana.dam.finalapi.errors.exceptions.FileNotFoundException;
-import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.FileNotFoundException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
 import com.salesianostriana.dam.finalapi.utils.MediaTypeUrlResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;

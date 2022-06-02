@@ -1,6 +1,6 @@
 package com.salesianostriana.dam.finalapi.utils;
 
-import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
 import org.apache.tika.Tika;
 import org.springframework.core.io.UrlResource;
 

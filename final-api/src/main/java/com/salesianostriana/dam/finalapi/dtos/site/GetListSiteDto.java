@@ -1,9 +1,6 @@
 package com.salesianostriana.dam.finalapi.dtos.site;
 
-import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter

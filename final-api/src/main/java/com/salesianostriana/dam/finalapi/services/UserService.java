@@ -2,10 +2,9 @@ package com.salesianostriana.dam.finalapi.services;
 
 import com.salesianostriana.dam.finalapi.awss3.AWSS3Service;
 import com.salesianostriana.dam.finalapi.dtos.user.*;
-import com.salesianostriana.dam.finalapi.errors.exceptions.EntityNotFoundException;
-import com.salesianostriana.dam.finalapi.errors.exceptions.PasswordMissMatchException;
-import com.salesianostriana.dam.finalapi.errors.exceptions.StorageException;
-import com.salesianostriana.dam.finalapi.errors.exceptions.UnauthorizeException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.EntityNotFoundException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.PasswordMissMatchException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
 import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.UserRepository;
@@ -103,27 +102,20 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         if (userOptional.isEmpty()) {
             throw new EntityNotFoundException("UserEntity not found");
         }
-        if (userEntity.getRol() == Rol.ADMIN) {
-            UserEntity newAdmin = userOptional.get();
+        UserEntity newAdmin = userOptional.get();
 
-            newAdmin.setRol(Rol.ADMIN);
-            save(newAdmin);
-            return userDtoConverter.toGetUserDto(newAdmin);
-        } else {
-            throw new UnauthorizeException("You must be an admin to convert to admin");
-        }
+        newAdmin.setRol(Rol.ADMIN);
+        save(newAdmin);
+        return userDtoConverter.toGetUserDto(newAdmin);
     }
 
     public List<GetUserDto> getAllUsers(UserEntity user) {
         List<UserEntity> users = userRepository.findAll();
-        if (user.getRol() == Rol.ADMIN) {
-            if (users.isEmpty()) {
-                throw new EntityNotFoundException("Users not found");
-            } else {
-                return users.stream().map(userDtoConverter::toGetUserDto).collect(Collectors.toList());
-            }
+
+        if (users.isEmpty()) {
+            throw new EntityNotFoundException("Users not found");
         } else {
-            throw new UnauthorizeException("You must be an admin to see all users");
+            return users.stream().map(userDtoConverter::toGetUserDto).collect(Collectors.toList());
         }
     }
 

@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -226,14 +227,11 @@ public class SiteController {
                     content = @Content)
     })
     @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO')")
     public ResponseEntity<GetSiteDto> createSite(@Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
-        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file)));
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.createSite(newSite, file)));
     }
 
     @Operation(summary = "Método para editar un negocio", description = "Método para editar un negocio", tags = "Site")
@@ -250,14 +248,11 @@ public class SiteController {
                     content = @Content)
     })
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO')")
     public ResponseEntity<GetSiteDto> editSite(@PathVariable Long id, @Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
-        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
-            return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.editSite(id, newSite, file)));
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.editSite(id, newSite, file)));
     }
 
     @Operation(summary = "Método para borrar un negocio", description = "Método para borrar un negocio", tags = "Site")
@@ -274,13 +269,9 @@ public class SiteController {
                     content = @Content)
     })
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO')")
     public ResponseEntity<?> deleteSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity) {
-        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getRol().equals(Rol.PROPIETARIO)) {
-            return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
     }
 
     @Operation(summary = "Método para añadir un like a un negocio", description = "Método para añadir un like a un negocio", tags = "Site")
@@ -315,8 +306,9 @@ public class SiteController {
                     content = @Content)
     })
     @DeleteMapping("/{siteId}/like")
-    public ResponseEntity<GetSiteDto> deleteLike(@PathVariable Long siteId, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(siteDtoConverter.toGetSiteDto(siteService.deleteLike(siteId, userEntity)));
+    public ResponseEntity<?> deleteLike(@PathVariable Long siteId, @AuthenticationPrincipal UserEntity userEntity){
+        siteService.deleteLike(siteId, userEntity);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Operation(summary = "Método para obtener el listado de negocios favoritos del usuario logueado", description = "Método para obtener el listado de negocios favoritos del usuario logueado", tags = "Site")
@@ -406,17 +398,7 @@ public class SiteController {
     })
     @PutMapping("{id}/comment/{commentId}")
     public ResponseEntity<GetCommentDto> editComment(@PathVariable Long id, @PathVariable CommentPK commentId, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
-        if(userEntity.getRol().equals(Rol.ADMIN) || userEntity.getComments().stream().anyMatch(comment -> comment.getId().equals(commentId))) {
-            if (siteService.findById(id).isEmpty()) {
-                return ResponseEntity
-                        .notFound()
-                        .build();
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).body(siteService.editComment(id, commentId, userEntity, file, newComment));
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.editComment(id, commentId, userEntity, file, newComment));
     }
 
     @Operation(summary = "Método para eliminar un comentario", description = "Método para eliminar un comentario", tags = "Site")
@@ -433,23 +415,10 @@ public class SiteController {
                     content = @Content)
     })
     @DeleteMapping("{id}/comment/{commentId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO') or hasRole('CLIENTE')")
     public ResponseEntity<?> deleteComment(@PathVariable Long id, @PathVariable CommentPK commentId, @AuthenticationPrincipal UserEntity userEntity){
-        if(userEntity.getRol().equals(Rol.ADMIN) || userEntity.getComments().stream().anyMatch(comment -> comment.getId().equals(commentId))) {
-            if(siteService.findById(id).isEmpty()) {
-                return ResponseEntity
-                        .notFound()
-                        .build();
-            }
-            else {
-                siteService.deleteComment(id, userEntity.getId(), commentId);
-                return ResponseEntity
-                        .noContent()
-                        .build();
-            }
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        siteService.deleteComment(id, userEntity.getId(), commentId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @Operation(summary = "Método para añadir una cita a un negocio", description = "Método para añadir una cita a un negocio", tags = "Site")
@@ -488,7 +457,7 @@ public class SiteController {
         return ResponseEntity.status(HttpStatus.OK).body(siteService.getAllAppointments(id));
     }
 
-    @Operation(summary = "Método para obtener la información de una cita", description = "", tags = "Site")
+    @Operation(summary = "Método para obtener la información de una cita", description = "Método para obtener la información de una cita", tags = "Site")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",
                     description = ".",
@@ -521,17 +490,7 @@ public class SiteController {
     })
     @PutMapping("{id}/appointment/{appointmentId}")
     public ResponseEntity<GetAppointmentDto> editAppointment(@PathVariable Long id, @PathVariable AppointmentPK appointmentId, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity) {
-        if (userEntity.getRol().equals(Rol.ADMIN) || userEntity.getAppointments().stream().anyMatch(appointment -> appointment.getId().equals(appointmentId))) {
-            if (siteService.findById(id).isEmpty()) {
-                return ResponseEntity
-                        .notFound()
-                        .build();
-            } else {
-                return ResponseEntity.status(HttpStatus.OK).body(siteService.editAppointment(id, appointmentId, userEntity, newAppointment));
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+        return ResponseEntity.status(HttpStatus.OK).body(siteService.editAppointment(id, appointmentId, userEntity, newAppointment));
     }
 
     @Operation(summary = "Método para eliminar la información de una cita", description = "Método para eliminar la información de una cita", tags = "Site")
@@ -549,22 +508,10 @@ public class SiteController {
     })
     @DeleteMapping("{id}/appointment/{appointmentId}")
     public ResponseEntity<?> deleteAppointment(@PathVariable Long id, @PathVariable AppointmentPK appointmentId, @AuthenticationPrincipal UserEntity userEntity){
-        if(userEntity.getRol().equals(Rol.ADMIN) || userEntity.getAppointments().stream().anyMatch(appointment -> appointment.getId().equals(appointmentId))) {
-            if(siteService.findById(id).isEmpty()) {
-                return ResponseEntity
-                        .notFound()
-                        .build();
-            }
-            else {
-                siteService.deleteAppointment(id, userEntity, appointmentId);
-                return ResponseEntity
-                        .noContent()
-                        .build();
-            }
-        }
-        else {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
+            siteService.deleteAppointment(id, userEntity, appointmentId);
+            return ResponseEntity
+                    .noContent()
+                    .build();
     }
 
     @Operation(summary = "Método para comprobar si una hora está libre de citas", description = "Método para comprobar si una hora está libre de citas", tags = "Site")

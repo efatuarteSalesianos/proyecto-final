@@ -6,11 +6,15 @@ import 'package:flutter_app/models/site_detail_response.dart';
 import 'package:flutter_app/repositories/site/site_repository.dart';
 import 'package:flutter_app/repositories/site/site_repository_impl.dart';
 import 'package:flutter_app/ui/create_appointment_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SiteDetailScreen extends StatefulWidget {
-  const SiteDetailScreen({Key? key, required this.id}) : super(key: key);
+  const SiteDetailScreen({
+    Key? key,
+    required this.id,
+  }) : super(key: key);
 
   final int id;
 
@@ -19,7 +23,9 @@ class SiteDetailScreen extends StatefulWidget {
 }
 
 class _SiteDetailState extends State<SiteDetailScreen> {
-  _SiteDetailState({required this.id});
+  _SiteDetailState({
+    required this.id,
+  });
   late int id;
   late Future<SiteDetailResponse> site;
   late SiteRepository siteRepository;
@@ -30,6 +36,74 @@ class _SiteDetailState extends State<SiteDetailScreen> {
     super.initState();
     siteRepository = SiteRepositoryImpl();
     _siteBloc = SitesBloc(siteRepository)..add(FetchSiteDetails(id));
+  }
+
+  void openwhatsapp(String phone) async {
+    var whatsappURlAndroid =
+        "whatsapp://send?phone=$phone&text=Hola,%20quiero%20reservar%20una%20cita";
+    var whatappURLIos =
+        "https://wa.me/$phone?text=${Uri.parse("Hola! Me gustaría pedir información!")}";
+    if (Platform.isIOS) {
+      if (await canLaunch(whatappURLIos)) {
+        await launch(whatappURLIos, forceSafariVC: false);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("No tiene WhatsApp instalado")));
+      }
+    } else {
+      if (await canLaunch(whatsappURlAndroid)) {
+        await launch(whatsappURlAndroid);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("No tiene WhatsApp instalado")));
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+        create: ((context) => _siteBloc),
+        child: BlocBuilder<SitesBloc, SitesState>(builder: (context, state) {
+          if (state is SitesInitial) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is SitesFetched) {
+            return _createBody(context);
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        }));
+  }
+
+  _createBody(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+            height: MediaQuery.of(context).size.height,
+            color: const Color(0xFFFF5A5F),
+            padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
+            child: BlocConsumer<SitesBloc, SitesState>(
+                listenWhen: (context, state) {
+              return state is SiteDetailsFetched || state is SitesFetchError;
+            }, listener: (context, state) {
+              if (state is SiteDetailsFetched) {
+              } else if (state is SitesFetchError) {
+                _showSnackbar(context, state.message);
+              }
+            }, buildWhen: (context, state) {
+              return state is SitesInitial || state is SitesFetchError;
+            }, builder: (context, state) {
+              if (state is SitesInitial) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is SiteDetailsFetched) {
+                return _siteDetailItem(state.site);
+              } else if (state is SitesFetchError) {
+                _showSnackbar(context, state.message);
+              }
+              return Text('Ha ocurrido un error');
+            })),
+      ),
+    );
   }
 
   Widget _siteDetailItem(SiteDetailResponse site) {
@@ -130,44 +204,10 @@ class _SiteDetailState extends State<SiteDetailScreen> {
     );
   }
 
-  void openwhatsapp(String phone) async {
-    var whatsappURlAndroid =
-        "whatsapp://send?phone=$phone&text=Hola,%20quiero%20reservar%20una%20cita";
-    var whatappURLIos =
-        "https://wa.me/$phone?text=${Uri.parse("Hola! Me gustaría pedir información!")}";
-    if (Platform.isIOS) {
-      // for iOS phone only
-      if (await canLaunch(whatappURLIos)) {
-        await launch(whatappURLIos, forceSafariVC: false);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("No tiene WhatsApp instalado")));
-      }
-    } else {
-      // android , web
-      if (await canLaunch(whatsappURlAndroid)) {
-        await launch(whatsappURlAndroid);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("No tiene WhatsApp instalado")));
-      }
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-          body: FutureBuilder<SiteDetailResponse>(
-              future: site,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return _siteDetailItem(snapshot.data!);
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-                return const CircularProgressIndicator();
-              })),
+  void _showSnackbar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
     );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

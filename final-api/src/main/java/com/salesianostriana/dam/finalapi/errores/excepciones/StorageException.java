@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.finalapi.errors.exceptions;
+package com.salesianostriana.dam.finalapi.errores.excepciones;
 
 public class StorageException extends RuntimeException {
     public StorageException(String message, Exception e) {

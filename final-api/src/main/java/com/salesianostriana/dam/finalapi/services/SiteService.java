@@ -9,9 +9,8 @@ import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
-import com.salesianostriana.dam.finalapi.errors.exceptions.*;
+import com.salesianostriana.dam.finalapi.errores.excepciones.*;
 import com.salesianostriana.dam.finalapi.models.*;
 import com.salesianostriana.dam.finalapi.repositories.*;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
@@ -224,7 +223,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public Site deleteLike(Long siteId, UserEntity userEntity) {
+    public void deleteLike(Long siteId, UserEntity userEntity) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
@@ -232,7 +231,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             site.get().getLikes().removeIf(like -> like.getCliente().getId().equals(userEntity.getId()));
             site.get().setLiked(false);
             likeRepository.deleteLike(siteId, userEntity.getId());
-            return save(site.get());
+            save(site.get());
         }
     }
 

@@ -1,7 +1,6 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
 import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.AppointmentRepository;
 import com.salesianostriana.dam.finalapi.services.AppointmentService;
@@ -12,8 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +62,7 @@ public class AppointmentController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/cliente/{clienteId}")
     public List<GetAppointmentDto> citasCliente(@PathVariable UUID clienteId) {
         return appointmentService.listAppointmentsOfUser(clienteId);

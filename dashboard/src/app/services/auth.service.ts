@@ -25,8 +25,13 @@ export class AuthService {
     return this.http.post<LoginResponse>(requestUrl, loginDto, DEFAULT_HEADERS);
   }
 
-  register(registerDto: RegisterDTO): Observable<RegisterResponse> {
-    let requestUrl: string = `${environment.API_BASE_URL}/auth/register`;
+  registerPropietario(registerDto: RegisterDTO): Observable<RegisterResponse> {
+    let requestUrl: string = `${environment.API_BASE_URL}/auth/register/propietario`;
+    return this.http.post<RegisterResponse>(requestUrl, registerDto, DEFAULT_HEADERS);
+  }
+
+  registerAdmin(registerDto: RegisterDTO): Observable<RegisterResponse> {
+    let requestUrl: string = `${environment.API_BASE_URL}/auth/register/admin`;
     return this.http.post<RegisterResponse>(requestUrl, registerDto, DEFAULT_HEADERS);
   }
 }

@@ -1,17 +1,21 @@
 export class RegisterDTO {
+  fullName: string;
   username:	string;
   email:	string;
+  verifyEmail: string;
   birthDate: Date;
-  privateAccount: boolean;
+  phone: string;
   password:	string;
-  password2: string;
+  verifyPassword: string;
 
   constructor() {
+    this.fullName = '';
     this.username = '';
     this.email = '';
+    this.verifyEmail = '';
     this.birthDate = new Date();
-    this.privateAccount = false;
+    this.phone = '';
     this.password = '';
-    this.password2 = '';
+    this.verifyPassword = '';
   }
 }

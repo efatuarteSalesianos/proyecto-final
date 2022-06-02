@@ -5,6 +5,7 @@ import 'package:flutter_app/ui/home_screen.dart';
 import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/ui/profile_screen.dart';
 import 'package:flutter_app/ui/register_screen.dart';
+import 'package:flutter_app/ui/site_detail_screen.dart';
 import 'package:flutter_app/ui/splash_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/bottom_navbar.dart';

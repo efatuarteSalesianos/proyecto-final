@@ -1,4 +1,4 @@
-package com.salesianostriana.dam.finalapi.errors.exceptions;
+package com.salesianostriana.dam.finalapi.errores.excepciones;
 
 public class UnauthorizeException extends RuntimeException {
     public UnauthorizeException(String message) {

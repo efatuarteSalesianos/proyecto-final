@@ -2,8 +2,7 @@ package com.salesianostriana.dam.finalapi.services;
 
 import com.salesianostriana.dam.finalapi.dtos.appointment.AppointmentDtoConverter;
 import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
-import com.salesianostriana.dam.finalapi.errors.exceptions.AppointmentNotAvailableException;
-import com.salesianostriana.dam.finalapi.errors.exceptions.EntityNotFoundException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.EntityNotFoundException;
 import com.salesianostriana.dam.finalapi.models.Appointment;
 import com.salesianostriana.dam.finalapi.models.AppointmentPK;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
