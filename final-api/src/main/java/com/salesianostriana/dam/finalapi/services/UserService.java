@@ -5,8 +5,10 @@ import com.salesianostriana.dam.finalapi.dtos.user.*;
 import com.salesianostriana.dam.finalapi.errores.excepciones.EntityNotFoundException;
 import com.salesianostriana.dam.finalapi.errores.excepciones.PasswordMissMatchException;
 import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
-import com.salesianostriana.dam.finalapi.models.Rol;
-import com.salesianostriana.dam.finalapi.models.UserEntity;
+import com.salesianostriana.dam.finalapi.models.*;
+import com.salesianostriana.dam.finalapi.repositories.AppointmentRepository;
+import com.salesianostriana.dam.finalapi.repositories.CommentRepository;
+import com.salesianostriana.dam.finalapi.repositories.LikeRepository;
 import com.salesianostriana.dam.finalapi.repositories.UserRepository;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +30,14 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     private final UserDtoConverter userDtoConverter;
     private final AWSS3Service awsS3Service;
     private final UserRepository userRepository;
+
+    private final LikeRepository likeRepository;
+
+    private final CommentRepository commentRepository;
+
+    private final AppointmentRepository appointmentRepository;
+
+
     private final List<String> imagesTypes = new ArrayList<>(Arrays.asList("image/jpeg", "image/png", "image/jpg"));
 
     @Override
@@ -150,16 +160,16 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         }
     }
 
-    public GetUserDto editMyProfile (CreateUserDto newUser, MultipartFile file, UserEntity userEntity){
+    public GetUserDto editMyProfile (CreateUserDto newUser, MultipartFile file, UserEntity userEntity) {
         Optional<UserEntity> userOptional = findById(userEntity.getId());
 
-        if(userOptional.isEmpty()){
+        if (userOptional.isEmpty()) {
             throw new EntityNotFoundException("No userEntity matches the actual userEntity");
-        }else if (file == null || !imagesTypes.contains(file.getContentType())){
+        } else if (file == null || !imagesTypes.contains(file.getContentType())) {
             throw new StorageException("The provided file does not match any of the allowed file types, please ensure image type is jpg, jpeg or png.");
-        }else {
+        } else {
             UserEntity userEntityPresent = userOptional.get();
-            awsS3Service.deleteObject(userEntityPresent.getAvatar().substring(userEntityPresent.getAvatar().lastIndexOf("/")+1));
+            awsS3Service.deleteObject(userEntityPresent.getAvatar().substring(userEntityPresent.getAvatar().lastIndexOf("/") + 1));
             String fileUrl = awsS3Service.storeCompressed(file);
 
             userEntity.setUsername(newUser.getUsername());
@@ -172,5 +182,27 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
             return userDtoConverter.toGetUserDto(save(userEntity));
         }
     }
-}
 
+    //delete user and all its likes, comments and appointments from all the sites that has any like, comment or appointment which clienteId is the same as the userEntity.getId()
+    public void deleteUser(UUID userId){
+        Optional<UserEntity> userOptional = findById(userId);
+        if(userOptional.isEmpty()){
+            throw new EntityNotFoundException("No user matches the provided userId");
+        } else {
+            UserEntity userEntity = userOptional.get();
+            List<Like> likes = likeRepository.findAllByClienteId(userEntity.getId());
+            List<Comment> comments = commentRepository.findAllByClienteId(userEntity.getId());
+            List<Appointment> appointments = appointmentRepository.findAllByClienteId(userEntity.getId());
+            for(Like like : likes){
+                likeRepository.delete(like);
+            }
+            for(Comment comment : comments){
+                commentRepository.delete(comment);
+            }
+            for(Appointment appointment : appointments){
+                appointmentRepository.delete(appointment);
+            }
+            userRepository.delete(userEntity);
+        }
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "name": "Kingsman Barber Club",
+    "description": "Barbería Vintage en pleno centro de Barcelona. Cuida de tu Barba con Profesionales",
+    "address": "Edificio Denia, C/ d'Aragó, 184",
+    "city": "Barcelona",
+    "postalCode": "08011",
+    "email": "kingsman_barber@gmail.com",
+    "phone": "934 65 32 95",
+    "web": "https://www.facebook.com/thekingsmanbarberclub/",
+    "openingHour": "09:00:00",
+    "closingHour": "21:00:00",
+    "type": "BARBERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

@@ -1,0 +1,14 @@
+{
+    "name": "The BarberShop",
+    "description": "Barbería para el hombre actual.",
+    "address": "C. Alfarería, 113",
+    "city": "Sevilla",
+    "postalCode": "41010",
+    "email": "the_barbershop@gmail.com",
+    "phone": "616 53 94 12",
+    "web": "https://www.the_barbershop.es/",
+    "openingHour": "10:30:00",
+    "closingHour": "21:00:00",
+    "type": "BARBERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

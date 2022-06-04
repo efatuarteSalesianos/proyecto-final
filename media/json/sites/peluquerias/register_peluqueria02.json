@@ -1,0 +1,14 @@
+{
+    "name": "Mayte del Valle",
+    "description": "En el Salón de Peluquería y Belleza MdV estamos especializados en asesorarte para el cuidado integral de tu imagen. Somos capaces de sacar lo más bello que hay en ti, a través de tu propia imagen sin dejar de ser tú misma.",
+    "address": "C. San Jacinto, 68",
+    "city": "Sevilla",
+    "postalCode": "41010",
+    "email": "mdv@gmail.com",
+    "phone": "638 92 49 30",
+    "web": "https://www.peluqueriamdv.com/",
+    "openingHour": "09:45:00",
+    "closingHour": "20:15:00",
+    "type": "PELUQUERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

@@ -62,7 +62,6 @@ public class AppointmentController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/cliente/{clienteId}")
     public List<GetAppointmentDto> citasCliente(@PathVariable UUID clienteId) {
         return appointmentService.listAppointmentsOfUser(clienteId);

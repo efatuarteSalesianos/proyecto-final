@@ -1,0 +1,14 @@
+{
+    "name": "Barber's Crew",
+    "description": "Bienvenido a Barbers Crew. Si quieres lucir un buen corte de pelo o tener una barba cuidada, pásate por nuestra barbería y disfruta de la experiencia de la peluquería para hombres.",
+    "address": "C. de Manuela Malasaña, 27",
+    "city": "Madrid",
+    "postalCode": "28004",
+    "email": "barbers_crew@gmail.com",
+    "phone": "915 02 87 06",
+    "web": "https://www.barberscrew.com",
+    "openingHour": "09:00:00",
+    "closingHour": "14:00:00",
+    "type": "BARBERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

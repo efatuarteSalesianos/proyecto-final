@@ -1,0 +1,14 @@
+{
+    "name": "El Kinze de Cuchilleros",
+    "description": "El Kinze de cuchilleros es la Peluquería y Barbería más antigua de Madrid; ubicada en la calle de Cuchilleros número 15.",
+    "address": "C. de Cuchilleros, 15",
+    "city": "Madrid",
+    "postalCode": "28004",
+    "email": "barberia_kinze@gmail.com",
+    "phone": "913 66 58 87",
+    "web": "https://www.barberiaelkinze.es",
+    "openingHour": "09:00:00",
+    "closingHour": "14:00:00",
+    "type": "BARBERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

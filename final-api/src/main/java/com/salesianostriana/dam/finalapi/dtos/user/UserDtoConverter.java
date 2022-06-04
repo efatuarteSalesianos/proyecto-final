@@ -31,6 +31,7 @@ public class UserDtoConverter {
                 .id(user.getId())
                 .fullName(user.getFullName())
                 .email(user.getEmail())
+                .phone(user.getPhone())
                 .avatar(user.getAvatar())
                 .num_negocios(user.getNegocios().size())
                 .negocios(user.getNegocios().stream().map(siteDtoConverter::toGetSiteDto).collect(Collectors.toList()))

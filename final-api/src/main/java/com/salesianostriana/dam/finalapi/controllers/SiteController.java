@@ -8,7 +8,10 @@ import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
-import com.salesianostriana.dam.finalapi.models.*;
+import com.salesianostriana.dam.finalapi.models.AppointmentPK;
+import com.salesianostriana.dam.finalapi.models.CommentPK;
+import com.salesianostriana.dam.finalapi.models.SiteTypes;
+import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.SiteRepository;
 import com.salesianostriana.dam.finalapi.services.SiteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -227,7 +230,6 @@ public class SiteController {
                     content = @Content)
     })
     @PostMapping("/")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO')")
     public ResponseEntity<GetSiteDto> createSite(@Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
@@ -248,7 +250,6 @@ public class SiteController {
                     content = @Content)
     })
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO')")
     public ResponseEntity<GetSiteDto> editSite(@PathVariable Long id, @Valid @RequestPart("newSite") CreateSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
@@ -269,7 +270,6 @@ public class SiteController {
                     content = @Content)
     })
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO')")
     public ResponseEntity<?> deleteSite(@PathVariable Long id, @AuthenticationPrincipal UserEntity userEntity) {
         return siteService.deleteSite(id, userEntity) ? ResponseEntity.status(HttpStatus.NO_CONTENT).build() : ResponseEntity.badRequest().build();
     }
@@ -289,7 +289,7 @@ public class SiteController {
     })
     @PostMapping("/{siteId}/like")
     public ResponseEntity<GetSiteDto> addLike(@PathVariable Long siteId, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteDtoConverter.toGetSiteDto(siteService.addLike(siteId, userEntity)));
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addLike(siteId, userEntity));
     }
 
     @Operation(summary = "Método para eliminar un like de un negocio", description = "Método para eliminar un like de un negocio", tags = "Site")
@@ -415,7 +415,6 @@ public class SiteController {
                     content = @Content)
     })
     @DeleteMapping("{id}/comment/{commentId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('PROPIETARIO') or hasRole('CLIENTE')")
     public ResponseEntity<?> deleteComment(@PathVariable Long id, @PathVariable CommentPK commentId, @AuthenticationPrincipal UserEntity userEntity){
         siteService.deleteComment(id, userEntity.getId(), commentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -436,7 +435,7 @@ public class SiteController {
     })
     @PostMapping("{id}/appointment")
     public ResponseEntity<GetAppointmentDto> addAppointment(@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
-        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity.getId(), newAppointment));
+        return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
     }
 
     @Operation(summary = "Método para listar las citas de un negocio", description = "Método para listar las citas de un negocio", tags = "Site")

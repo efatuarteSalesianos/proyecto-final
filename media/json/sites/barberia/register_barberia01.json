@@ -1,0 +1,14 @@
+{
+    "name": "El barbero de Triana",
+    "description": "Una barberia con estilo para gente con clase.",
+    "address": "C. Sevilla, 17",
+    "city": "Camas",
+    "postalCode": "41900",
+    "email": "barberia_triana@gmail.com",
+    "phone": "658 86 40 44",
+    "web": "https://www.facebook.com/elbarberodetriana/",
+    "openingHour": "09:30:00",
+    "closingHour": "21:00:00",
+    "type": "BARBERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

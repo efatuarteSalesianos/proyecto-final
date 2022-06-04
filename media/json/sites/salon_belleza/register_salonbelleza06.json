@@ -1,0 +1,14 @@
+{
+    "name": "Ifiras Salon",
+    "description": "Natural Concept",
+    "address": "Carrer de Bori i Fontestà, 11",
+    "city": "Barcelona",
+    "postalCode": "08021",
+    "email": "ifiras_salon@gmail.com",
+    "phone": "931 25 37 42",
+    "web": "https://www.ifiras.salon.com/",
+    "openingHour": "09:30:00",
+    "closingHour": "21:00:00",
+    "type": "SALON_BELLEZA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

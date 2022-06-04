@@ -1,0 +1,14 @@
+{
+    "name": "Andr&s enobarberia",
+    "description": "Andr&s enobarberia dispone de dos espacios exclusivos dedicados al cuidado de la imagen masculina y femenina. En nuestros salones contamos con profesionales especializados en todas las técnicas, tanto actuales como tradicionales, pudiendo así ser versátiles en función al servicio al cual se enfrentan. Nuestro objetivo principal es realizar un servicio en el cual nuestro cliente vea mejorada su imagen sin alterar su propio estilo.",
+    "address": "Carrer de la Mare de Déu del Pilar, 12",
+    "city": "Barcelona",
+    "postalCode": "08003",
+    "email": "andre_enobarberia@gmail.com",
+    "phone": "930 01 69 92",
+    "web": "https://www.andre_enobarberia.es/",
+    "openingHour": "10:00:00",
+    "closingHour": "20:00:00",
+    "type": "BARBERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

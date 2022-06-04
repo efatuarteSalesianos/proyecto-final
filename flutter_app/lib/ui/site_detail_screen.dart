@@ -11,22 +11,20 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SiteDetailScreen extends StatefulWidget {
+  final id;
+  final name;
   const SiteDetailScreen({
     Key? key,
     required this.id,
+    required this.name,
   }) : super(key: key);
 
-  final int id;
-
   @override
-  _SiteDetailState createState() => _SiteDetailState(id: this.id);
+  _SiteDetailState createState() => _SiteDetailState();
 }
 
 class _SiteDetailState extends State<SiteDetailScreen> {
-  _SiteDetailState({
-    required this.id,
-  });
-  late int id;
+  _SiteDetailState();
   late Future<SiteDetailResponse> site;
   late SiteRepository siteRepository;
   late SitesBloc _siteBloc;
@@ -35,7 +33,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
   void initState() {
     super.initState();
     siteRepository = SiteRepositoryImpl();
-    _siteBloc = SitesBloc(siteRepository)..add(FetchSiteDetails(id));
+    _siteBloc = SitesBloc(siteRepository)..add(FetchSiteDetails(widget.id));
   }
 
   void openwhatsapp(String phone) async {
@@ -62,56 +60,56 @@ class _SiteDetailState extends State<SiteDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: ((context) => _siteBloc),
-        child: BlocBuilder<SitesBloc, SitesState>(builder: (context, state) {
-          if (state is SitesInitial) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (state is SitesFetched) {
-            return _createBody(context);
-          } else {
-            return const Center(child: CircularProgressIndicator());
-          }
-        }));
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFFF5A5F),
+        title: Text(widget.name),
+      ),
+      body: BlocProvider(
+          create: ((context) => _siteBloc),
+          child: BlocBuilder<SitesBloc, SitesState>(builder: (context, state) {
+            if (state is SitesInitial) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is SiteDetailsFetched) {
+              return _createBody(context);
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          })),
+    );
   }
 
   _createBody(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: const Color(0xFFFF5A5F),
-            padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
-            child: BlocConsumer<SitesBloc, SitesState>(
-                listenWhen: (context, state) {
-              return state is SiteDetailsFetched || state is SitesFetchError;
-            }, listener: (context, state) {
-              if (state is SiteDetailsFetched) {
-              } else if (state is SitesFetchError) {
-                _showSnackbar(context, state.message);
-              }
-            }, buildWhen: (context, state) {
-              return state is SitesInitial || state is SitesFetchError;
-            }, builder: (context, state) {
-              if (state is SitesInitial) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is SiteDetailsFetched) {
-                return _siteDetailItem(state.site);
-              } else if (state is SitesFetchError) {
-                _showSnackbar(context, state.message);
-              }
-              return Text('Ha ocurrido un error');
-            })),
-      ),
+    return SingleChildScrollView(
+      child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: const Color(0xFFFF5A5F),
+          padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
+          child:
+              BlocConsumer<SitesBloc, SitesState>(listenWhen: (context, state) {
+            return state is SiteDetailsFetched || state is SitesFetchError;
+          }, listener: (context, state) {
+            if (state is SiteDetailsFetched) {
+            } else if (state is SitesFetchError) {
+              _showSnackbar(context, state.message);
+            }
+          }, buildWhen: (context, state) {
+            return state is SitesInitial || state is SitesFetchError;
+          }, builder: (context, state) {
+            if (state is SitesInitial) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (state is SiteDetailsFetched) {
+              return _siteDetailItem(state.site);
+            } else if (state is SitesFetchError) {
+              _showSnackbar(context, state.message);
+            }
+            return Text('Ha ocurrido un error');
+          })),
     );
   }
 
   Widget _siteDetailItem(SiteDetailResponse site) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFF5A5F),
-        title: Text(site.name),
-      ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -167,11 +165,10 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                       ),
                     ),
                     onPressed: () => {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  const CreateAppointmentScreen()))
+                      MaterialPageRoute(
+                          builder: (context) => CreateAppointmentScreen(
+                                id: widget.id,
+                              )),
                     },
                     child: Container(
                       alignment: Alignment.center,

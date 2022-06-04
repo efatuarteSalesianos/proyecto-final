@@ -1,0 +1,14 @@
+{
+    "name": "Amalia Moliní",
+    "description": "Una barberia con estilo para gente con clase.",
+    "address": "C. Bailén, 35",
+    "city": "Sevilla",
+    "postalCode": "41001",
+    "email": "amalia_molini@gmail.com",
+    "phone": "954 22 22 30",
+    "web": "https://www.facebook.com/amaliamolini/",
+    "openingHour": "10:30:00",
+    "closingHour": "20:00:00",
+    "type": "CENTRO_ESTETICA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

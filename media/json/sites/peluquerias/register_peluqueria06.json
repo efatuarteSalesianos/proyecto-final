@@ -1,0 +1,14 @@
+{
+    "name": "Le Petit Salon",
+    "description": "Tu peluquería en Barcelona, ¡vive el momento! ¡Ponte en las manos de nuestro gran equipo de peluqueros!",
+    "address": "Carrer de Buenos Aires, 15",
+    "city": "Barcelona",
+    "postalCode": "08029",
+    "email": "petit_salon@gmail.com",
+    "phone": "931 24 88 14",
+    "web": "https://lepetitsalonbarcelona.com",
+    "openingHour": "09:45:00",
+    "closingHour": "20:15:00",
+    "type": "PELUQUERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

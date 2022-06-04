@@ -50,6 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               return state is LoginSuccessState || state is LoginErrorState;
             }, listener: (context, state) {
               if (state is LoginSuccessState) {
+                //PreferenceUtils.setInt('USER_ID', state.loginResponse.id);
                 PreferenceUtils.setString('TOKEN', state.loginResponse.token);
                 PreferenceUtils.setString(
                     'USERNAME', state.loginResponse.username);

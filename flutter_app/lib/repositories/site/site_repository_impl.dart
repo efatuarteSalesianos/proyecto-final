@@ -35,12 +35,13 @@ class SiteRepositoryImpl extends SiteRepository {
   Future<SiteDetailResponse> fetchSiteDetails(int id) async {
     String token = PreferenceUtils.getString('TOKEN')!;
 
-    final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/{$id}'), headers: {
+    final response =
+        await http.get(Uri.parse('${Constant.apiBaseUrl}/site/$id'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
+    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       return SiteDetailResponse.fromJson(jsonResponse);
@@ -54,7 +55,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/?type={$type}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?type=$type'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',

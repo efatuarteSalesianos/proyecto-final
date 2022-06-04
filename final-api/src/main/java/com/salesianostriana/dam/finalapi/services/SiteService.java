@@ -9,12 +9,14 @@ import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
+import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
 import com.salesianostriana.dam.finalapi.errores.excepciones.*;
 import com.salesianostriana.dam.finalapi.models.*;
 import com.salesianostriana.dam.finalapi.repositories.*;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -188,27 +190,22 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         Optional<Site> siteOptional = findById(siteId);
         try {
             Site site = siteOptional.get();
-
-            if (userEntity.getRol().equals(Rol.ADMIN) || (userEntity.getRol().equals(Rol.PROPIETARIO) && site.getPropietario().getId().equals(userEntity.getId()))) {
-                //Delete old files
-                awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
-                awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
-                delete(site);
-                return true;
-            } else {
-                throw new UnauthorizeException("You are not authorized to delete this site");
-            }
+            //Delete old files
+            awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
+            awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
+            delete(site);
+            return true;
         } catch (Exception e) {
             throw new FileNotFoundException("File not found");
         }
     }
 
-    public Site addLike(Long siteId, UserEntity cliente) {
+    public GetSiteDto addLike(Long siteId, UserEntity cliente) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         } else {
-            Optional<Like> likeOptional = likeRepository.findFirstBySiteIdAndClienteId(siteId, cliente.getId());
+            Optional<Like> likeOptional = likeRepository.findBySiteIdAndClienteId(siteId, cliente.getId());
             if(likeOptional.isPresent()){
                 throw new UnauthorizeException("You can't like the same site twice");
             }
@@ -216,10 +213,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
                     .site(site.get())
                     .cliente(cliente)
                     .build();
-
-            site.get().getLikes().add(like);
             site.get().setLiked(true);
-            return save(site.get());
+            like.addLikeToCliente(cliente);
+            like.addLikeToSite(site.get());
+            likeRepository.save(like);
+            userRepository.save(cliente);
+            siteRepository.save(site.get());
+            save(site.get());
+            return siteDtoConverter.toGetSiteDto(site.get());
         }
     }
 
@@ -244,7 +245,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         return sites.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
     }
 
-    public GetCommentDto addComment(Long siteId, CreateCommentDto newComment, UserEntity userEntity, MultipartFile file) {
+    public GetCommentDto addComment(Long siteId, CreateCommentDto newComment, UserEntity cliente, MultipartFile file) {
         Optional<Site> site = findById(siteId);
         String originalFileUrl;
         String scaledFileUrl;
@@ -264,7 +265,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new EntityNotFoundException("No site matches the provided id");
         }
         else {
-            Optional<Appointment> appointmentOptional = appointmentRepository.findFirstBySiteIdAndClienteId(siteId, userEntity.getId());
+            Optional<Appointment> appointmentOptional = appointmentRepository.findFirstBySiteIdAndClienteId(siteId, cliente.getId());
             if(appointmentOptional.isEmpty()){
                 throw new UnauthorizeException("You can't comment on a site without an appointment");
             }
@@ -274,12 +275,17 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             }
             Comment comment = Comment.builder()
                     .site(site.get())
-                    .cliente(userEntity)
+                    .cliente(cliente)
                     .description(newComment.getDescription())
                     .createdDate(LocalDateTime.now())
                     .originalFile(originalFileUrl)
                     .scaledFile(scaledFileUrl)
                     .build();
+            comment.addCommentToCliente(cliente);
+            comment.addCommentToSite(site.get());
+            commentRepository.save(comment);
+            userRepository.save(cliente);
+            siteRepository.save(site.get());
             site.get().getComments().add(comment);
             save(site.get());
             return commentDtoConverter.toGetCommentDto(comment);
@@ -345,6 +351,8 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             commentEntity.setOriginalFile(originalFileUrl);
             commentEntity.setScaledFile(scaledFileUrl);
 
+            userRepository.save(cliente);
+            commentRepository.save(commentEntity);
             save(site.get());
             return commentDtoConverter.toGetCommentDto(commentEntity);
         }
@@ -371,17 +379,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         awsS3Service.deleteObject(comment.get().getScaledFile().substring(comment.get().getScaledFile().lastIndexOf("/") + 1));
         site.get().getComments().remove(comment.get());
         commentRepository.deleteById(commentId);
+        userRepository.save(cliente.get());
         save(site.get());
     }
 
-    public GetAppointmentDto addAppointment(Long siteId, UUID clienteId, CreateAppointmentDto createAppointmentDto) {
+    public GetAppointmentDto addAppointment(Long siteId, UserEntity cliente, CreateAppointmentDto createAppointmentDto) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
-        }
-        Optional<UserEntity> cliente = userRepository.findById(clienteId);
-        if (cliente.isEmpty()) {
-            throw new EntityNotFoundException("No cliente matches the provided id");
         }
         if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
             throw new AppointmentNotAvailableException("The appointment day is not available");
@@ -391,12 +396,16 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
         if(isAppointmentTimeAvailable(site.get().getId(), createAppointmentDto.getDate())) {
             Appointment appointment = Appointment.builder()
-                    .cliente(cliente.get())
+                    .cliente(cliente)
                     .site(site.get())
                     .date(createAppointmentDto.getDate())
                     .description(createAppointmentDto.getDescription())
                     .build();
-            site.get().getAppointments().add(appointment);
+            appointment.addAppointmentToCliente(cliente);
+            appointment.addAppointmentToSite(site.get());
+            appointmentRepository.save(appointment);
+            userRepository.save(cliente);
+            siteRepository.save(site.get());
             save(site.get());
             return appointmentDtoConverter.toGetAppointmentDto(appointment);
         } else {

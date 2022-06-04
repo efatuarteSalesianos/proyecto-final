@@ -11,5 +11,4 @@ public class FinalApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(FinalApiApplication.class, args);
 	}
-
 }

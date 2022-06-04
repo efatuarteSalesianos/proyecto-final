@@ -1,0 +1,14 @@
+{
+    "name": "Carlos Gálico Moscardo",
+    "description": "La peluquería técnica.",
+    "address": "C. de Edgar Neville, 30",
+    "city": "Madrid",
+    "postalCode": "28020",
+    "email": "pelu_tecnica@gmail.com",
+    "phone": "915 34 61 45",
+    "web": "https://www.carlosgalicomoscardo.es",
+    "openingHour": "09:45:00",
+    "closingHour": "20:15:00",
+    "type": "PELUQUERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

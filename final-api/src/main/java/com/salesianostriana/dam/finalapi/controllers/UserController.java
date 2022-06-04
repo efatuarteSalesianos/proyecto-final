@@ -1,5 +1,6 @@
 package com.salesianostriana.dam.finalapi.controllers;
 
+import com.amazonaws.Response;
 import com.salesianostriana.dam.finalapi.dtos.user.*;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -67,11 +69,10 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/auth/register/admin")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GetUserDto> newAdmin(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                                @RequestPart("file") MultipartFile file) {
 
-        UserEntity saved = userService.saveUser(newUser, file);
+        UserEntity saved = userService.saveAdmin(newUser, file);
 
         if(saved == null)
             return ResponseEntity.badRequest().build();
@@ -93,11 +94,10 @@ public class UserController {
                     content = @Content)
     })
     @PostMapping("/auth/register/propietario")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GetPropietarioDto> newPropietario(@Valid @RequestPart("newUser") CreateUserDto newUser,
                                                @RequestPart("file") MultipartFile file) {
 
-        UserEntity saved = userService.saveUser(newUser, file);
+        UserEntity saved = userService.savePropietario(newUser, file);
 
         if(saved == null)
             return ResponseEntity.badRequest().build();
@@ -116,7 +116,6 @@ public class UserController {
                     content = @Content)
     })
     @GetMapping("/users")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<GetUserDto>> getAllUsers(@AuthenticationPrincipal UserEntity userEntity){
         List<GetUserDto> users = userService.getAllUsers(userEntity);
         if (users.isEmpty())
@@ -136,7 +135,6 @@ public class UserController {
                     content = @Content)
     })
     @PutMapping("/users/{username}/admin")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GetUserDto> convertToAdmin(@PathVariable String username, @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(userService.convertToAdmin(userEntity,username));
     }
@@ -201,6 +199,22 @@ public class UserController {
                                                      @RequestPart MultipartFile file,
                                                      @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(userService.editMyProfile(newUser, file, userEntity));
+    }
+
+    @Operation(summary = "Método para borrar un usuario por su id.", description = "Método para borrar un usuario por su id.", tags = "Usuarios")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204",
+                    description = "Se han eliminado correctamente los datos del usuario seleccionado.",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserEntity.class))}),
+            @ApiResponse(responseCode = "400",
+                    description = "No existe el usuario que se busca.",
+                    content = @Content)
+    })
+    @DeleteMapping("user/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable UUID id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Método para comprobar si el nombre de usuario ya existe.", description = "Método para comprobar si el nombre de usuario ya existe.", tags = "Usuarios")

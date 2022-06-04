@@ -1,0 +1,14 @@
+{
+    "name": "Beldon Beauty",
+    "description": "Que tu amor de verano seas tú.",
+    "address": "Calle de Lagasca, 9",
+    "city": "Madrid",
+    "postalCode": "28001",
+    "email": "beldon_beauty@gmail.com",
+    "phone": "912 45 81 71",
+    "web": "https://www.beldonbeauty.com",
+    "openingHour": "09:30:00",
+    "closingHour": "21:00:00",
+    "type": "CENTRO_ESTETICA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

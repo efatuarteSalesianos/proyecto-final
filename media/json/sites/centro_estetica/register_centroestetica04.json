@@ -1,0 +1,14 @@
+{
+    "name": "IMR Madrid",
+    "description": "Juntos sumamos.",
+    "address": "Ruber Internacional, P.º de la Habana, 43",
+    "city": "Madrid",
+    "postalCode": "28036",
+    "email": "imr@gmail.com",
+    "phone": "960 61 90 02",
+    "web": "https://institutomedicoricartmadrid.com",
+    "openingHour": "09:00:00",
+    "closingHour": "21:00:00",
+    "type": "CENTRO_ESTETICA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9111f50003"
+}

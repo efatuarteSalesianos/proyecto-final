@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     this.loginDto.username = this.loginForm.get('username')?.value;
     this.loginDto.password = this.loginForm.get('password')?.value;
     this.authService.login(this.loginDto).subscribe(res => {
-      if (res.rol == 'ADMIN') {
+      if (res.rol == 'Admin') {
         localStorage.setItem('token', res.token);
         localStorage.setItem('username', res.username);
         localStorage.setItem('avatar', res.avatar);

@@ -1,0 +1,14 @@
+{
+    "name": "Mar i Riu",
+    "description": "Tu lugar de confianza.",
+    "address": "C. de Viladomat, 209",
+    "city": "Barcelona",
+    "postalCode": "08029",
+    "email": "mar_riu@gmail.com",
+    "phone": "934 10 68 50",
+    "web": "https://www.facebook.com/mar_i_riu/",
+    "openingHour": "10:00:00",
+    "closingHour": "20:00:00",
+    "type": "CENTRO_ESTETICA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

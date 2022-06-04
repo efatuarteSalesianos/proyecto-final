@@ -1,0 +1,14 @@
+{
+    "name": "Peluqueria y Estética MIA",
+    "description": "Tu salón de belleza en Sevilla",
+    "address": "Av. José Laguillo, 22S",
+    "city": "Sevilla",
+    "postalCode": "41003",
+    "email": "mia@gmail.com",
+    "phone": "955 07 54 76",
+    "web": "https://www.mia.com/",
+    "openingHour": "09:30:00",
+    "closingHour": "21:00:00",
+    "type": "SALON_BELLEZA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

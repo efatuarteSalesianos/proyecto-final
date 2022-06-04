@@ -1,0 +1,14 @@
+{
+    "name": "Louis Philippe Salón",
+    "description": "¿Listo para un nuevo Look?",
+    "address": "C. del Consell de Cent, 261",
+    "city": "Barcelona",
+    "postalCode": "08011",
+    "email": "lphilippe_salon@gmail.com",
+    "phone": "935 30 60 23",
+    "web": "https://booking.wavy.pro/luisfilippe/",
+    "openingHour": "09:45:00",
+    "closingHour": "20:15:00",
+    "type": "PELUQUERIA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

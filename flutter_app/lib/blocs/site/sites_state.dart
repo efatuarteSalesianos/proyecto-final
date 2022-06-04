@@ -78,13 +78,12 @@ class FavouriteSitesFetched extends SitesState {
 }
 
 class SiteDetailsFetched extends SitesState {
-  final int id;
   final SiteDetailResponse site;
 
-  const SiteDetailsFetched(this.site, this.id);
+  const SiteDetailsFetched(this.site);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [];
 }
 
 class SitesFetchError extends SitesState {

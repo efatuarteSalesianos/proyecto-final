@@ -1,18 +1,20 @@
 package com.salesianostriana.dam.finalapi.models;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "comments")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
-@Builder
+@SuperBuilder
 @EntityListeners(AuditingEntityListener.class)
 public class Comment implements Serializable {
 
@@ -38,4 +40,17 @@ public class Comment implements Serializable {
     private double rate;
     private String originalFile;
     private String scaledFile;
+
+    public void addCommentToCliente(UserEntity cliente) {
+        this.cliente = cliente;
+        if(cliente.getComments() == null) {
+            cliente.setComments(new ArrayList<>());
+            cliente.getComments().add(this);
+        }
+    }
+
+    public void addCommentToSite(Site site) {
+        this.site = site;
+        site.getComments().add(this);
+    }
 }

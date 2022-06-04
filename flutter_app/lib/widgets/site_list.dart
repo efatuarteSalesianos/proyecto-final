@@ -95,6 +95,7 @@ class _SiteListState extends State<SiteList> {
                 MaterialPageRoute(
                   builder: (context) => SiteDetailScreen(
                     id: sites[index].id,
+                    name: sites[index].name,
                   ),
                 ),
               );

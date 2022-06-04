@@ -1,0 +1,14 @@
+{
+    "name": "SK Style",
+    "description": "Todos tenemos belleza, pero no todo el mundo es capaz de verla.",
+    "address": "Carrer de Casanova, 43",
+    "city": "Barcelona",
+    "postalCode": "08011",
+    "email": "sk_style@gmail.com",
+    "phone": "934 52 14 60",
+    "web": "https://sk_style/",
+    "openingHour": "09:30:00",
+    "closingHour": "21:00:00",
+    "type": "SALON_BELLEZA",
+    "propietarioId": "c0a80163-812e-1e7b-8181-2e9042c10002"
+}

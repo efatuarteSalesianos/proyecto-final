@@ -3,7 +3,8 @@ import 'package:flutter_app/ui/booking_done_screen.dart';
 import 'package:flutter_app/ui/login_screen.dart';
 
 class CreateAppointmentScreen extends StatefulWidget {
-  const CreateAppointmentScreen({Key? key}) : super(key: key);
+  final id;
+  const CreateAppointmentScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   _CreateAppointmentScreenState createState() =>

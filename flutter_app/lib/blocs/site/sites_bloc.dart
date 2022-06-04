@@ -102,7 +102,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
       FetchSiteDetails event, Emitter<SitesState> emit) async {
     try {
       final site = await siteRepository.fetchSiteDetails(event.id);
-      emit(SiteDetailsFetched(site, event.id));
+      emit(SiteDetailsFetched(site));
       return;
     } on Exception catch (e) {
       emit(SitesFetchError(e.toString()));
