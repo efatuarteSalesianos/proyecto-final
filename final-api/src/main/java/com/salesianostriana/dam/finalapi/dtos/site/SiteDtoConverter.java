@@ -43,6 +43,7 @@ public class SiteDtoConverter {
                 .name(site.getName())
                 .address(site.getAddress())
                 .city(site.getCity())
+                .phone(site.getPhone())
                 .postalCode(site.getPostalCode())
                 .totalComments((site.getComments().size()))
                 .rate(average_rate(site.getComments()))

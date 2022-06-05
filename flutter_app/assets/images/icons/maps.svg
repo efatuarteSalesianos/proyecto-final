@@ -1,1 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 48 48" width="48px" height="48px"><path fill="#48b564" d="M35.76,26.36h0.01c0,0-3.77,5.53-6.94,9.64c-2.74,3.55-3.54,6.59-3.77,8.06	C24.97,44.6,24.53,45,24,45s-0.97-0.4-1.06-0.94c-0.23-1.47-1.03-4.51-3.77-8.06c-0.42-0.55-0.85-1.12-1.28-1.7L28.24,22l8.33-9.88	C37.49,14.05,38,16.21,38,18.5C38,21.4,37.17,24.09,35.76,26.36z"/><path fill="#fcc60e" d="M28.24,22L17.89,34.3c-2.82-3.78-5.66-7.94-5.66-7.94h0.01c-0.3-0.48-0.57-0.97-0.8-1.48L19.76,15	c-0.79,0.95-1.26,2.17-1.26,3.5c0,3.04,2.46,5.5,5.5,5.5C25.71,24,27.24,23.22,28.24,22z"/><path fill="#2c85eb" d="M28.4,4.74l-8.57,10.18L13.27,9.2C15.83,6.02,19.69,4,24,4C25.54,4,27.02,4.26,28.4,4.74z"/><path fill="#ed5748" d="M19.83,14.92L19.76,15l-8.32,9.88C10.52,22.95,10,20.79,10,18.5c0-3.54,1.23-6.79,3.27-9.3	L19.83,14.92z"/><path fill="#5695f6" d="M28.24,22c0.79-0.95,1.26-2.17,1.26-3.5c0-3.04-2.46-5.5-5.5-5.5c-1.71,0-3.24,0.78-4.24,2L28.4,4.74	c3.59,1.22,6.53,3.91,8.17,7.38L28.24,22z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4081"
+   viewBox="0 0 772.51629 772.51628"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="location-icon2.svg"
+   width="772.5163"
+   height="772.5163"
+   inkscape:export-filename="/home/lyuyhn/Documents/HEIG/Semestre 5/PDG/PDG/Doc/Documentation finale/Ressources/logo.png"
+   inkscape:export-xdpi="69.900002"
+   inkscape:export-ydpi="69.900002">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="706"
+     id="namedview19"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:zoom="1.1953881"
+     inkscape:cx="783.36686"
+     inkscape:cy="359.87025"
+     inkscape:window-x="0"
+     inkscape:window-y="30"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs4083">
+    <filter
+       id="filter4037"
+       height="1.2421"
+       width="1.0798"
+       y="-0.12104"
+       x="-0.039886001"
+       style="color-interpolation-filters:sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur4039"
+         stdDeviation="11.868751" />
+    </filter>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-68.027863,-23.250854)">
+    <path
+       id="path4043"
+       d="m 454.278,160.51201 c -99.484,0 -179.81,80.41 -179.81,179.59 0,31.186 7.9688,60.528 21.938,86.094 l 157.88,264.31 157.88,-264.31 c 13.969,-25.566 21.938,-54.908 21.938,-86.094 0,-99.184 -80.328,-179.59 -179.81,-179.59 z m -2,104.37 c 0.6674,-0.0169 1.3285,0 2,0 42.975,0 77.812,34.838 77.812,77.813 0,42.975 -34.838,77.812 -77.812,77.812 -42.975,0 -77.812,-34.838 -77.812,-77.812 0,-42.303 33.766,-76.747 75.812,-77.813 z"
+       inkscape:connector-curvature="0"
+       style="fill:#e52626;stroke:none;stroke-width:10.39700031" />
+    <circle
+       style="opacity:1;fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#e52626;stroke-width:35;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4153"
+       cx="454.28601"
+       cy="409.509"
+       r="368.75815" />
+  </g>
+  <metadata
+     id="metadata17">
+    <rdf:RDF>
+      <cc:Work>
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:publisher>
+          <cc:Agent
+             rdf:about="http://openclipart.org/">
+            <dc:title>Openclipart</dc:title>
+          </cc:Agent>
+        </dc:publisher>
+        <dc:title />
+        <dc:date>2013-04-16T08:39:00</dc:date>
+        <dc:description />
+        <dc:source>https://openclipart.org/detail/177208/map-location-by-snodnipper-177208</dc:source>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>snodnipper</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>location</rdf:li>
+            <rdf:li>map</rdf:li>
+            <rdf:li>pin</rdf:li>
+            <rdf:li>pinpoint</rdf:li>
+            <rdf:li>point</rdf:li>
+            <rdf:li>pointer</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+</svg>

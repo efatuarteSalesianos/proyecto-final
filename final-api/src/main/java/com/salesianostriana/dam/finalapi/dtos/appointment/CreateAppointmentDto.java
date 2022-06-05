@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class CreateAppointmentDto {
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    @FutureDate(message = "{appointment.date.futureDate}")
+//    @FutureDate(message = "{appointment.date.futureDate}")
     private LocalDateTime date;
 
     @Builder.Default

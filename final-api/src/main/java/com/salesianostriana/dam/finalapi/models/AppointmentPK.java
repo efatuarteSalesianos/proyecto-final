@@ -9,7 +9,6 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.UUID;
 
-
 @Embeddable
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor

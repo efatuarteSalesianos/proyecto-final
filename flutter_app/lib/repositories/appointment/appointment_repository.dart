@@ -5,5 +5,5 @@ abstract class AppointmentRepository {
   Future<List<AppointmentResponse>> fetchMyAppointments();
   Future<AppointmentResponse> fetchAppointmentById(int id);
   Future<AppointmentResponse> createAppointment(
-      CreateAppointmentDto createAppointmentDto);
+      int id, CreateAppointmentDto createAppointmentDto);
 }

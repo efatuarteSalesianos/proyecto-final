@@ -44,7 +44,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
         children: [
           SizedBox(
               height: MediaQuery.of(context).size.height,
-              child: const BookingsList()),
+              child: const BookingsSiteList()),
         ],
       ),
     );

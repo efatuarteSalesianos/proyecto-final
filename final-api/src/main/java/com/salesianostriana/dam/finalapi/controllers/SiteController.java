@@ -324,7 +324,7 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping("/favorites")
+    @GetMapping("/favourites")
     public ResponseEntity<List<GetListSiteDto>> getFavorites(@AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.ok(siteService.getLikedSites(userEntity));
     }
@@ -343,7 +343,7 @@ public class SiteController {
                     content = @Content)
     })
     @PostMapping("{id}/comment")
-    public ResponseEntity<GetCommentDto> addComment(@PathVariable Long id, @Valid @RequestBody CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, MultipartFile file){
+    public ResponseEntity<GetCommentDto> addComment(@PathVariable Long id, @Valid @RequestPart("newComment") CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, @RequestPart("file") MultipartFile file){
         return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addComment(id, newComment, userEntity, file));
     }
 
@@ -434,7 +434,7 @@ public class SiteController {
                     content = @Content)
     })
     @PostMapping("{id}/appointment")
-    public ResponseEntity<GetAppointmentDto> addAppointment(@PathVariable Long id, @Valid @RequestBody CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
+    public ResponseEntity<GetAppointmentDto> addAppointment(@PathVariable Long id, @Valid @RequestPart("newAppointment") CreateAppointmentDto newAppointment, @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addAppointment(id, userEntity, newAppointment));
     }
 

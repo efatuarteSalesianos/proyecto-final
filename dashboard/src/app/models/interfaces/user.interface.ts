@@ -1,9 +1,9 @@
 export interface UserResponse {
+  fullName: string;
   username: string;
   email: string;
-  privateAccount: boolean;
   avatar: string;
   birthDate: Date;
+  phone : number;
   rol: string;
-  followers : number;
 }

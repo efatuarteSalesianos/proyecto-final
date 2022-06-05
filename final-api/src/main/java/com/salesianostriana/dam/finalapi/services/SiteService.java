@@ -99,6 +99,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             site.setDescription(createSiteDto.getDescription());
             site.setAddress(createSiteDto.getAddress());
             site.setCity(createSiteDto.getCity());
+            site.setPhone(createSiteDto.getPhone());
             site.setPostalCode(createSiteDto.getPostalCode());
             site.setEmail(createSiteDto.getEmail());
             site.setPhone(createSiteDto.getPhone());
@@ -265,14 +266,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new EntityNotFoundException("No site matches the provided id");
         }
         else {
-            Optional<Appointment> appointmentOptional = appointmentRepository.findFirstBySiteIdAndClienteId(siteId, cliente.getId());
+            Optional<Appointment> appointmentOptional = appointmentRepository.findBySiteIdAndClienteId(siteId, cliente.getId());
             if(appointmentOptional.isEmpty()){
                 throw new UnauthorizeException("You can't comment on a site without an appointment");
             }
-            Appointment appointment = appointmentOptional.get();
-            if(appointment.getDate().isAfter(LocalDateTime.now())){
-                throw new UnauthorizeException("You can't comment on a site that has not already passed");
-            }
+//            Appointment appointment = appointmentOptional.get();
+//            if(appointment.getDate().isAfter(LocalDateTime.now())){
+//                throw new UnauthorizeException("You can't comment on a site that has not already passed");
+//            }
             Comment comment = Comment.builder()
                     .site(site.get())
                     .cliente(cliente)
@@ -388,12 +389,12 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");
         }
-        if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
-            throw new AppointmentNotAvailableException("The appointment day is not available");
-        }
-        if (site.get().getOpeningHour().isAfter(createAppointmentDto.getDate().toLocalTime()) || site.get().getClosingHour().isBefore(createAppointmentDto.getDate().toLocalTime())) {
-            throw new AppointmentNotAvailableException("The appointment hour is not available");
-        }
+//        if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
+//            throw new AppointmentNotAvailableException("The appointment day is not available");
+//        }
+//        if (site.get().getOpeningHour().isAfter(createAppointmentDto.getDate().toLocalTime()) || site.get().getClosingHour().isBefore(createAppointmentDto.getDate().toLocalTime())) {
+//            throw new AppointmentNotAvailableException("The appointment hour is not available");
+//        }
         if(isAppointmentTimeAvailable(site.get().getId(), createAppointmentDto.getDate())) {
             Appointment appointment = Appointment.builder()
                     .cliente(cliente)

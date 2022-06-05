@@ -41,7 +41,6 @@ class SiteRepositoryImpl extends SiteRepository {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
     });
-    print(response.body);
     if (response.statusCode == 200) {
       final jsonResponse = json.decode(response.body);
       return SiteDetailResponse.fromJson(jsonResponse);
@@ -75,7 +74,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/?name={$name}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?name=$name'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -95,7 +94,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/?city={$city}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?city=$city'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -115,7 +114,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http.get(
-        Uri.parse('${Constant.apiBaseUrl}/site/?postalCode={$postalCode}'),
+        Uri.parse('${Constant.apiBaseUrl}/site/?postalCode=$postalCode'),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -136,7 +135,7 @@ class SiteRepositoryImpl extends SiteRepository {
     String token = PreferenceUtils.getString('TOKEN')!;
 
     final response = await http
-        .get(Uri.parse('${Constant.apiBaseUrl}/site/?rate={$rate}'), headers: {
+        .get(Uri.parse('${Constant.apiBaseUrl}/site/?rate=$rate'), headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token',
@@ -168,6 +167,44 @@ class SiteRepositoryImpl extends SiteRepository {
           .toList();
     } else {
       throw Exception('Failed to load favourite sites');
+    }
+  }
+
+  @override
+  Future<void> addToFavourite(int id) async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http.post(
+      Uri.parse('${Constant.apiBaseUrl}/site/$id/like'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to add to favourite');
+    }
+  }
+
+  @override
+  Future<void> deleteFavourite(int id) async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http.delete(
+      Uri.parse('${Constant.apiBaseUrl}/site/$id/like'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to remove from favourite');
     }
   }
 }

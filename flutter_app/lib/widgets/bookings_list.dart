@@ -2,21 +2,24 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/appointment/appointments_bloc.dart';
+import 'package:flutter_app/blocs/appointment/appointments_bloc.dart';
 import 'package:flutter_app/models/appointment_response.dart';
 import 'package:flutter_app/repositories/appointment/appointment_repository.dart';
 import 'package:flutter_app/repositories/appointment/appointment_repository_impl.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
+import 'package:flutter_app/widgets/rating_bar_widget.dart';
 import 'package:flutter_app/widgets/shimmer_picture.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:like_button/like_button.dart';
 
-class BookingsList extends StatefulWidget {
-  const BookingsList({Key? key}) : super(key: key);
+class BookingsSiteList extends StatefulWidget {
+  const BookingsSiteList({Key? key}) : super(key: key);
 
   @override
-  _BookingsListState createState() => _BookingsListState();
+  _BookingsSiteListState createState() => _BookingsSiteListState();
 }
 
-class _BookingsListState extends State<BookingsList> {
+class _BookingsSiteListState extends State<BookingsSiteList> {
   late AppointmentRepository appointmentRepository;
   late AppointmentsBloc _appointmentBloc;
 
@@ -41,11 +44,11 @@ class _BookingsListState extends State<BookingsList> {
         child: BlocBuilder<AppointmentsBloc, AppointmentsState>(
             builder: (context, state) {
           if (state is AppointmentsInitial) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (state is AppointmentsFetched) {
-            return _createAppointmentView(context, state.appointments);
+            return _createBody(context);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         }));
   }
@@ -76,7 +79,7 @@ class _BookingsListState extends State<BookingsList> {
             ],
           );
         } else if (state is AppointmentsFetched) {
-          return _createAppointmentView(context, state.appointments);
+          return _createAppointmentsView(context, state.appointments);
         } else {
           return const Text('Not support');
         }
@@ -84,11 +87,13 @@ class _BookingsListState extends State<BookingsList> {
     );
   }
 
-  Widget _createAppointmentView(
+  Widget _createAppointmentsView(
       BuildContext context, List<AppointmentResponse> appointments) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _appointmentItem(context, appointments[index]);
+        return GestureDetector(
+            onTap: () {},
+            child: _appointmentItem(context, appointments[index]));
       },
       padding: const EdgeInsets.symmetric(vertical: 5),
       scrollDirection: Axis.vertical,
@@ -98,9 +103,6 @@ class _BookingsListState extends State<BookingsList> {
 
   Widget _appointmentItem(
       BuildContext context, AppointmentResponse appointment) {
-    String siteName = appointment.site;
-    String decodeSiteName =
-        utf8.decode(latin1.encode(siteName), allowMalformed: true);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
       height: MediaQuery.of(context).size.height * 0.213,
@@ -109,7 +111,11 @@ class _BookingsListState extends State<BookingsList> {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Text(decodeSiteName),
+              child: Text(appointment.site,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white)),
             ),
           ),
           Positioned(
@@ -117,7 +123,7 @@ class _BookingsListState extends State<BookingsList> {
             left: 0,
             right: 0,
             child: Container(
-                height: 170,
+                height: 175,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                     gradient: LinearGradient(
@@ -134,7 +140,7 @@ class _BookingsListState extends State<BookingsList> {
               padding: const EdgeInsets.all(15),
               child: Row(
                 children: [
-                  Text(appointment.description,
+                  Text(appointment.date.toIso8601String(),
                       style:
                           const TextStyle(color: Colors.white, fontSize: 20)),
                 ],

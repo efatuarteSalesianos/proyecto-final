@@ -19,7 +19,7 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 
     @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
-                s.id, s.name, s.address, s.city, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
+                s.id, s.name, s.address, s.city, s.phone, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
             where (select avg(c.rate) from Comment c where c.site.id = s.id) >= :rate
@@ -28,7 +28,7 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 
     @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
-                s.id, s.name, s.address, s.city, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
+                s.id, s.name, s.address, s.city, s.phone, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
             where s.type = :type
@@ -37,7 +37,7 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
 
     @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto(
-                s.id, s.name, s.address, s.city, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
+                s.id, s.name, s.address, s.city, s.phone, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
             where s.propietario.id = :id

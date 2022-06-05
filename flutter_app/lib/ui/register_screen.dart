@@ -23,7 +23,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  bool _isPrivate = false;
   XFile? _imageFile;
 
   final _formKey = GlobalKey<FormState>();
@@ -116,62 +115,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: Color(0xFF8E8E8E)),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 30),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  fixedSize: const Size(275, 50),
-                                  primary: const Color(0xFF385185),
-                                  onPrimary: Colors.white,
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(110, 50),
+                                  side: const BorderSide(
+                                      color: const Color(0xFF385185), width: 2),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                 ),
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const BottomNavbarScreen()));
-                                },
-                                child: GestureDetector(
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                          'assets/images/icons/fb_white.svg',
-                                          width: 28,
-                                          semanticsLabel: 'Facebook'),
-                                      const Padding(
-                                        padding: EdgeInsets.all(5),
-                                        child: Text(
-                                            'Iniciar sesión con Facebook',
-                                            style: TextStyle(fontSize: 15)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                                label: const Text('Registrarse con Facebook',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xFF385185))),
+                                icon: SvgPicture.asset(
+                                    'assets/images/icons/fb.svg',
+                                    width: 28,
+                                    semanticsLabel: 'FACEBOOK'),
+                                onPressed: () {},
                               ),
                             ),
-                            Row(children: [
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 10.0, right: 20.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                              const Text(
-                                "〇",
-                                style: TextStyle(
-                                  color: Colors.black,
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20),
+                              child: OutlinedButton.icon(
+                                style: OutlinedButton.styleFrom(
+                                  minimumSize: const Size(110, 50),
+                                  side: const BorderSide(
+                                      color: Color(0xFFD50032), width: 2),
+                                  shape: const RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5))),
                                 ),
+                                label: const Text('Registrarse con Google',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xFFD50032))),
+                                icon: SvgPicture.asset(
+                                    'assets/images/icons/google.svg',
+                                    width: 28,
+                                    semanticsLabel: 'GOOGLE'),
+                                onPressed: () {},
                               ),
-                              Expanded(
-                                child: Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 20.0, right: 10.0),
-                                    child: const Divider(
-                                      color: Colors.black,
-                                      height: 36,
-                                    )),
-                              ),
-                            ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15.0),
+                              child: Row(children: [
+                                Expanded(
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 10.0, right: 20.0),
+                                      child: const Divider(
+                                        color: Colors.black,
+                                        height: 36,
+                                      )),
+                                ),
+                                const Text(
+                                  "〇",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 20.0, right: 10.0),
+                                      child: const Divider(
+                                        color: Colors.black,
+                                        height: 36,
+                                      )),
+                                ),
+                              ]),
+                            ),
                             Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 20),
@@ -182,9 +197,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               ImageSource.gallery));
                                     },
                                     child: state is ImagePickInitial
-                                        ? Image.asset(
-                                            'assets/images/upload_image.png',
-                                            width: 110,
+                                        ? Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 20.0),
+                                            child: Image.asset(
+                                              'assets/images/upload_picture.png',
+                                              width: 120,
+                                            ),
                                           )
                                         : ClipRRect(
                                             borderRadius:
@@ -192,8 +211,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                             child: Image.file(
                                               File(state.pickedFile.path),
                                               fit: BoxFit.cover,
-                                              height: 110,
-                                              width: 110,
+                                              height: 120,
+                                              width: 120,
                                             ),
                                           ))),
                             Padding(

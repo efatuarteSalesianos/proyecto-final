@@ -7,5 +7,4 @@ export interface SiteResponse {
   totalComments: number;
   rate: number;
   scaledFileUrl: string;
-  liked: boolean;
 }

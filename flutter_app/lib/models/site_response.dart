@@ -3,6 +3,7 @@ class SiteResponse {
   late String name;
   late String address;
   late String city;
+  late String phone;
   late String postalCode;
   late int totalComments;
   late double rate;
@@ -14,6 +15,7 @@ class SiteResponse {
     required this.name,
     required this.address,
     required this.city,
+    required this.phone,
     required this.postalCode,
     required this.totalComments,
     required this.rate,
@@ -25,6 +27,7 @@ class SiteResponse {
     name = json['name'].toString();
     address = json['address'].toString();
     city = json['city'].toString();
+    phone = json['phone'].toString();
     postalCode = json['postalCode'].toString();
     totalComments = json['totalComments'].toInt();
     rate = json['rate'];
@@ -37,6 +40,7 @@ class SiteResponse {
     data['name'] = name;
     data['address'] = address;
     data['city'] = city;
+    data['phone'] = phone;
     data['postalCode'] = postalCode;
     data['totalComments'] = totalComments;
     data['rate'] = rate;

@@ -10,7 +10,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class UsersComponent implements OnInit {
 
-  displayedColumns: string[] = ['avatar', 'username', 'email', 'birthDate', 'followers', 'privateAccount', 'rol', 'actions'];
+  displayedColumns: string[] = ['avatar', 'fullName', 'username', 'email', 'birthDate', 'phone', 'rol', 'actions'];
   usuarios!: UserResponse[];
   dataSource = new MatTableDataSource(this.usuarios);
 
@@ -32,7 +32,6 @@ export class UsersComponent implements OnInit {
 
   confirmAdminDialog(username: string, rol: string) {
     console.log('Diálogo abierto');
-
     console.log('Give Admin started');
     if (rol == 'ADMIN') {
       console.log('Give Admin failed');
@@ -44,7 +43,6 @@ export class UsersComponent implements OnInit {
       }
     }
   }
-
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;

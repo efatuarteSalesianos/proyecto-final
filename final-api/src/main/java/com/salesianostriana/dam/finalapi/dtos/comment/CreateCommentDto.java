@@ -19,7 +19,6 @@ public class CreateCommentDto {
     @Lob
     private String description;
 
-    @NotBlank(message = "{comment.rate.blank}")
     @Min(value = 0, message = "{comment.rate.min}")
     @Max(value = 5, message = "{comment.rate.max}")
     private double rate;

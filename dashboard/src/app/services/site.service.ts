@@ -1,4 +1,4 @@
-import { environment } from '../../environments/environment.prod';
+import { environment } from 'src/environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SiteResponse } from '../models/interfaces/site.interface';

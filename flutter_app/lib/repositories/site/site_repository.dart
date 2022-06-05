@@ -10,4 +10,6 @@ abstract class SiteRepository {
   Future<List<SiteResponse>> fetchSitesWithCity(String city);
   Future<List<SiteResponse>> fetchSitesWithRateGreaterThan(double rate);
   Future<List<SiteResponse>> fetchFavouriteSites();
+  Future<void> addToFavourite(int id);
+  Future<void> deleteFavourite(int id);
 }

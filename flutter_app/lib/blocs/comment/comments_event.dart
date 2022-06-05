@@ -7,9 +7,19 @@ abstract class CommentsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchComment extends CommentsEvent {
-  const FetchComment();
+class FetchSiteComments extends CommentsEvent {
+  final int id;
+
+  const FetchSiteComments(this.id);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [id];
+}
+
+class CreateCommentEvent extends CommentsEvent {
+  final int id;
+  final CreateCommentDto createCommentDto;
+  final String imagePath;
+
+  const CreateCommentEvent(this.id, this.createCommentDto, this.imagePath);
 }

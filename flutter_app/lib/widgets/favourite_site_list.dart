@@ -10,9 +10,7 @@ import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/rating_bar_widget.dart';
 import 'package:flutter_app/widgets/shimmer_picture.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:like_button/like_button.dart';
-import 'package:flutter_app/widgets/error_widget.dart';
 
 class FavouriteSiteList extends StatefulWidget {
   const FavouriteSiteList({Key? key}) : super(key: key);
@@ -44,11 +42,11 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
         create: ((context) => _siteBloc),
         child: BlocBuilder<SitesBloc, SitesState>(builder: (context, state) {
           if (state is SitesInitial) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is SitesFetched) {
-            return _createSitesView(context, state.sites);
+            return const Center(child: CircularProgressIndicator());
+          } else if (state is FavouriteSitesFetched) {
+            return _createBody(context);
           } else {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
         }));
   }
@@ -78,7 +76,7 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
               ),
             ],
           );
-        } else if (state is SitesFetched) {
+        } else if (state is FavouriteSitesFetched) {
           return _createSitesView(context, state.sites);
         } else {
           return const Text('Not support');
@@ -90,7 +88,20 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
   Widget _createSitesView(BuildContext context, List<SiteResponse> sites) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _siteItem(context, sites[index]);
+        return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SiteDetailScreen(
+                    id: sites[index].id,
+                    name: sites[index].name,
+                    phone: sites[index].phone,
+                  ),
+                ),
+              );
+            },
+            child: _siteItem(context, sites[index]));
       },
       padding: const EdgeInsets.symmetric(vertical: 5),
       scrollDirection: Axis.vertical,
@@ -110,7 +121,7 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
           Positioned.fill(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: Image.network(site.scaledFileUrl),
+              child: Image.network(site.scaledFileUrl, fit: BoxFit.cover),
             ),
           ),
           Positioned(
@@ -118,7 +129,7 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
             left: 0,
             right: 0,
             child: Container(
-                height: 170,
+                height: 175,
                 decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(Radius.circular(20)),
                     gradient: LinearGradient(
@@ -172,7 +183,7 @@ class _FavouriteSiteListState extends State<FavouriteSiteList> {
               child: IconTheme(
                 data: const IconThemeData(
                   color: Color(0xFFFF5A5F),
-                  size: 23,
+                  size: 25,
                 ),
                 child: RatingBarWidget(site.rate),
               ),

@@ -10,17 +10,17 @@ import { SiteService } from 'src/app/services/site.service';
 })
 export class SitesComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'city', 'postalCode', 'totalComments', 'rate', 'scaledFileUrl', 'actions'];
+  displayedColumns: string[] = ['id', 'name', 'address', 'city', 'postalCode', 'phone', 'totalComments', 'rate', 'scaledFileUrl', 'actions'];
 
-  publicaciones!: SiteResponse[];
-  dataSource = new MatTableDataSource(this.publicaciones);
+  negocios!: SiteResponse[];
+  dataSource = new MatTableDataSource(this.negocios);
 
   constructor(private siteService: SiteService) { }
 
   ngOnInit(): void {
     this.siteService.getAllSites().subscribe(res => {
-      this.publicaciones = res;
-      this.dataSource = new MatTableDataSource(this.publicaciones);
+      this.negocios = res;
+      this.dataSource = new MatTableDataSource(this.negocios);
     });
   }
 

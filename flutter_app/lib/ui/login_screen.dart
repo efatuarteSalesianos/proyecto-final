@@ -95,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 520,
+          height: 530,
           child: Card(
             color: Colors.white,
             semanticContainer: true,
@@ -167,10 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
                         ),
-                        onSaved: (String? value) {
-                          // This optional block of code can be used to run
-                          // code when the user saves the form.
-                        },
+                        onSaved: (String? value) {},
                         validator: (value) {
                           return (value == null || value.isEmpty)
                               ? 'Debe introducir su contraseña'
@@ -218,7 +215,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         }
                       },
                       child: const Text(
-                        'Iniciar Sesión',
+                        'Entrar',
                         style: TextStyle(fontSize: 20),
                       ),
                     ),
@@ -237,8 +234,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               )),
                         ),
                         const Text(
-                          "〇",
+                          "O inicia sesión",
                           style: TextStyle(
+                            fontSize: 15,
                             color: Colors.black,
                           ),
                         ),
@@ -255,33 +253,64 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(bottom: 15),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(100, 50),
+                                side: const BorderSide(
+                                    color: Color(0xFF385185), width: 2),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                              ),
+                              label: const Text('FACEBOOK',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Color(0xFF385185))),
+                              icon: SvgPicture.asset(
+                                  'assets/images/icons/fb.svg',
+                                  width: 28,
+                                  semanticsLabel: 'FACEBOOK'),
+                              onPressed: () {},
+                            ),
+                            OutlinedButton.icon(
+                              style: OutlinedButton.styleFrom(
+                                minimumSize: const Size(100, 50),
+                                side: const BorderSide(
+                                    color: Color(0xFFD50032), width: 2),
+                                shape: const RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5))),
+                              ),
+                              label: const Text('GOOGLE',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Color(0xFFD50032))),
+                              icon: SvgPicture.asset(
+                                  'assets/images/icons/google.svg',
+                                  width: 28,
+                                  semanticsLabel: 'GOOGLE'),
+                              onPressed: () {},
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset('assets/images/icons/fb.svg',
-                              width: 30, semanticsLabel: 'Facebook'),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 5),
-                            child: Text(
-                              'Iniciar sesión con Facebook',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 17,
-                                  color: Color(0xFF385185)),
-                            ),
+                        children: const [
+                          Text(
+                            '¿Has olvidado tu contraseña?',
+                            style: TextStyle(
+                                fontSize: 15, color: Color(0xFF00376B)),
                           ),
                         ],
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
-                        Text(
-                          '¿Has olvidado tu contraseña?',
-                          style:
-                              TextStyle(fontSize: 15, color: Color(0xFF00376B)),
-                        ),
-                      ],
                     ),
                   ])
                 ],

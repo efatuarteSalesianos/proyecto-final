@@ -37,44 +37,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             floating: true,
             pinned: true,
             snap: false,
             centerTitle: false,
-            title: const Text('Mi Perfil'),
-            shadowColor: const Color(0xFFFF5A5F),
-            backgroundColor: const Color(0xFFFF5A5F),
-            foregroundColor: const Color(0xFFFFFFFF),
-            actions: [
-              IconButton(
-                  icon: const Icon(Icons.exit_to_app),
-                  onPressed: () => {
-                        PreferenceUtils.clear(),
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreen()))
-                      }),
-            ],
+            title: Text('Mi Perfil'),
+            shadowColor: Color(0xFFFF5A5F),
+            backgroundColor: Color(0xFFFF5A5F),
+            foregroundColor: Color(0xFFFFFFFF),
           ),
           SliverList(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
               return SingleChildScrollView(
-                padding: EdgeInsets.symmetric(vertical: 20),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Column(
                   children: [
-                    ProfilePicWidget(),
+                    const ProfilePicWidget(),
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 20),
                       child: Text(
                         latin1.decode(latin1.encode(decodeFullName)),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 22, fontWeight: FontWeight.w500),
                       ),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     ProfileMenuWidget(
                       text: "Mi Cuenta",
                       icon: "assets/images/icons/profile.svg",
@@ -98,7 +87,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileMenuWidget(
                       text: "Salir",
                       icon: "assets/images/icons/exit.svg",
-                      press: () {},
+                      press: () => {
+                        PreferenceUtils.clear(),
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()))
+                      },
                     ),
                   ],
                 ),

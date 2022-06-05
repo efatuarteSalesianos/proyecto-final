@@ -12,6 +12,7 @@ public class GetListSiteDto {
     private String name;
     private String address;
     private String city;
+    private String phone;
     private String postalCode;
     private long totalComments;
     private double rate;

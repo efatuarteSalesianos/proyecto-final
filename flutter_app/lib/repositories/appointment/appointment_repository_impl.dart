@@ -52,15 +52,15 @@ class AppointmentRepositoryImpl extends AppointmentRepository {
 
   @override
   Future<AppointmentResponse> createAppointment(
-      CreateAppointmentDto createAppointmentDto) async {
+      int id, CreateAppointmentDto createAppointmentDto) async {
     Map<String, String> headers = {
       'Content-Type': 'multipart/form-data',
     };
 
-    var uri = Uri.parse('${Constant.apiBaseUrl}/appointment/');
+    var uri = Uri.parse('${Constant.apiBaseUrl}/site/$id/appointment/');
 
     var body = jsonEncode({
-      'name': createAppointmentDto.date,
+      'date': createAppointmentDto.date,
       'description': createAppointmentDto.description,
     });
 
