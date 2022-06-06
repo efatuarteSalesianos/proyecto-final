@@ -86,7 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 1250,
+                    height: MediaQuery.of(context).size.height * 1.6,
                     child: Card(
                       color: Colors.white,
                       semanticContainer: true,
@@ -115,12 +115,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   color: Color(0xFF8E8E8E)),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 15.0),
+                              padding: const EdgeInsets.only(top: 20.0),
                               child: OutlinedButton.icon(
                                 style: OutlinedButton.styleFrom(
-                                  minimumSize: const Size(110, 50),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15, vertical: 15),
                                   side: const BorderSide(
-                                      color: const Color(0xFF385185), width: 2),
+                                      color: Color(0xFF385185), width: 2),
                                   shape: const RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(5))),
@@ -140,7 +141,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               padding: const EdgeInsets.only(top: 20),
                               child: OutlinedButton.icon(
                                 style: OutlinedButton.styleFrom(
-                                  minimumSize: const Size(110, 50),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 15),
                                   side: const BorderSide(
                                       color: Color(0xFFD50032), width: 2),
                                   shape: const RoundedRectangleBorder(

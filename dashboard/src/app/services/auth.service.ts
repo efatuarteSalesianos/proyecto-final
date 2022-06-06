@@ -1,8 +1,8 @@
+import { environment } from './../../environments/environment.prod';
 import { LoginDTO } from './../models/dto/login.dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { RegisterDTO } from '../models/dto/register.dto';
 import { RegisterResponse } from '../models/interfaces/register.interface';
 import { LoginResponse } from '../models/interfaces/login.interface';

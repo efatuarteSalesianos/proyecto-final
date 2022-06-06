@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class SettingsUI extends StatelessWidget {
   @override
@@ -8,58 +8,33 @@ class SettingsUI extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Setting UI",
-      home: EditProfilePage(),
+      home: MyProfileScreen(),
     );
   }
 }
 
-class EditProfilePage extends StatefulWidget {
+class MyProfileScreen extends StatefulWidget {
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  _MyProfileScreenState createState() => _MyProfileScreenState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class _MyProfileScreenState extends State<MyProfileScreen> {
   bool showPassword = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 1,
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Colors.green,
-          ),
-          onPressed: () {},
-        ),
-        actions: [
-          IconButton(
-              icon: const Icon(Icons.exit_to_app),
-              onPressed: () => {
-                    PreferenceUtils.clear(),
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen()))
-                  }),
-        ],
+        backgroundColor: const Color(0xFFFF5A5F),
+        title: const Text('Mis datos'),
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+        padding: const EdgeInsets.only(left: 16, top: 25, right: 16),
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();
           },
           child: ListView(
             children: [
-              Text(
-                "Editar Perfil",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w500),
-              ),
-              SizedBox(
-                height: 15,
-              ),
               Center(
                 child: Stack(
                   children: [
@@ -75,14 +50,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                 spreadRadius: 2,
                                 blurRadius: 10,
                                 color: Colors.black.withOpacity(0.1),
-                                offset: Offset(0, 10))
+                                offset: const Offset(0, 10))
                           ],
                           shape: BoxShape.circle,
                           image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                "https://images.pexels.com/photos/3307758/pexels-photo-3307758.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=250",
-                              ))),
+                                  PreferenceUtils.getString('AVATAR')!))),
                     ),
                     Positioned(
                         bottom: 0,
@@ -96,9 +70,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                               width: 4,
                               color: Theme.of(context).scaffoldBackgroundColor,
                             ),
-                            color: Colors.green,
+                            color: Colors.red,
                           ),
-                          child: Icon(
+                          child: const Icon(
                             Icons.edit,
                             color: Colors.white,
                           ),
@@ -106,41 +80,57 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   ],
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 35,
               ),
-              buildTextField("Full Name", "Dor Alex", false),
-              buildTextField("E-mail", "alexd@gmail.com", false),
-              buildTextField("Password", "********", true),
-              buildTextField("Location", "TLV, Israel", false),
-              SizedBox(
-                height: 35,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  OutlinedButton(
-                    style: TextButton.styleFrom(primary: Color(0xFF123AAC)),
-                    onPressed: () {},
-                    child: Text("CANCEL",
-                        style: TextStyle(
-                            fontSize: 14,
-                            letterSpacing: 2.2,
-                            color: Colors.black)),
+              buildTextField(
+                  "Nombre y Apellidos", "Ernesto Fatuarte Fernández", false),
+              buildTextField(
+                  "Correo Electrónico", "ernesto.fatuarte@gmail.com", false),
+              buildTextField("Teléfono", "681 300 493", false),
+              buildTextField("Fecha de Nacimiento", "31-05-1995", false),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          side: const BorderSide(
+                              color: Color(0xFFD50032), width: 2),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                        ),
+                        child: const Text('Cancelar',
+                            style: TextStyle(
+                                fontSize: 20, color: Color(0xFFD50032))),
+                        onPressed: () {},
+                      ),
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 15),
+                          side: const BorderSide(
+                              color: Color(0xFF385185), width: 2),
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5))),
+                        ),
+                        child: const Text('Guardar',
+                            style: TextStyle(
+                                fontSize: 20, color: Color(0xFF385185))),
+                        onPressed: () {},
+                      )
+                    ],
                   ),
-                  ElevatedButton(
-                    style: TextButton.styleFrom(primary: Color(0xFF123AAC)),
-                    onPressed: () {},
-                    child: Text(
-                      "SAVE",
-                      style: TextStyle(
-                          fontSize: 14,
-                          letterSpacing: 2.2,
-                          color: Colors.white),
-                    ),
-                  )
-                ],
-              )
+                ),
+              ),
             ],
           ),
         ),
@@ -162,17 +152,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         showPassword = !showPassword;
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.remove_red_eye,
                       color: Colors.grey,
                     ),
                   )
                 : null,
-            contentPadding: EdgeInsets.only(bottom: 3),
+            contentPadding: const EdgeInsets.only(bottom: 3),
             labelText: labelText,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             hintText: placeholder,
-            hintStyle: TextStyle(
+            hintStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.bold,
               color: Colors.black,

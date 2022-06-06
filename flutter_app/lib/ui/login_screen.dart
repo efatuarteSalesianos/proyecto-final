@@ -42,7 +42,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-            height: MediaQuery.of(context).size.height,
             color: const Color(0xFFFF5A5F),
             padding: const EdgeInsets.symmetric(vertical: 90, horizontal: 20),
             child: BlocConsumer<LoginBloc, LoginState>(
@@ -95,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: 530,
+          height: MediaQuery.of(context).size.height * 0.70,
           child: Card(
             color: Colors.white,
             semanticContainer: true,
@@ -255,13 +254,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
+                            horizontal: 10, vertical: 10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
-                                minimumSize: const Size(100, 50),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 13, vertical: 13),
                                 side: const BorderSide(
                                     color: Color(0xFF385185), width: 2),
                                 shape: const RoundedRectangleBorder(
@@ -279,7 +279,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             OutlinedButton.icon(
                               style: OutlinedButton.styleFrom(
-                                minimumSize: const Size(100, 50),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 17, vertical: 13),
                                 side: const BorderSide(
                                     color: Color(0xFFD50032), width: 2),
                                 shape: const RoundedRectangleBorder(

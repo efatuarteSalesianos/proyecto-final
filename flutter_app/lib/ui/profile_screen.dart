@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/login_screen.dart';
+import 'package:flutter_app/ui/my_profile_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
 import 'package:flutter_app/widgets/profile_menu_widget.dart';
 import 'package:flutter_app/widgets/profile_pic_widget.dart';
 import "dart:convert";
 
-class MyProfileScreen extends StatelessWidget {
-  const MyProfileScreen({Key? key}) : super(key: key);
+class ProfileMenuScreen extends StatelessWidget {
+  const ProfileMenuScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ProfileMenuWidget(
                       text: "Mi Cuenta",
                       icon: "assets/images/icons/profile.svg",
-                      press: () => {},
+                      press: () => {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => MyProfileScreen()))
+                      },
                     ),
                     ProfileMenuWidget(
                       text: "Notificaciones",
@@ -95,6 +101,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 builder: (context) => const LoginScreen()))
                       },
                     ),
+                    ProfileMenuWidget(
+                        text: "Eliminar Cuenta",
+                        icon: "assets/images/icons/trash.svg",
+                        press: () => _delete(context)),
                   ],
                 ),
               );
@@ -103,5 +113,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ],
       ),
     );
+  }
+
+  void _delete(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext ctx) {
+          return AlertDialog(
+            title: const Text('Confirmar eliminación'),
+            content: const Text('¿Está seguro que desea eliminar su cuenta?'),
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    setState(() {});
+
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Si')),
+              TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('No'))
+            ],
+          );
+        });
   }
 }

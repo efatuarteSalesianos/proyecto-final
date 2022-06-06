@@ -13,3 +13,10 @@ class FetchAppointment extends AppointmentsEvent {
   @override
   List<Object> get props => [];
 }
+
+class CreateAppointmentEvent extends AppointmentsEvent {
+  final int id;
+  final CreateAppointmentDto createAppointmentDto;
+
+  const CreateAppointmentEvent(this.id, this.createAppointmentDto);
+}

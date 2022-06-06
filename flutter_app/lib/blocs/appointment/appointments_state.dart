@@ -25,3 +25,20 @@ class AppointmentsFetchError extends AppointmentsState {
   @override
   List<Object> get props => [message];
 }
+
+class CreateAppointmentSuccessState extends AppointmentsState {
+  final AppointmentResponse appointmentResponse;
+
+  const CreateAppointmentSuccessState(this.appointmentResponse);
+
+  @override
+  List<Object> get props => [appointmentResponse];
+}
+
+class CreateAppointmentErrorState extends AppointmentsState {
+  final String message;
+  const CreateAppointmentErrorState(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

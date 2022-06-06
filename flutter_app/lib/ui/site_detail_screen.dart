@@ -146,7 +146,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset('assets/images/icons/phone.svg',
-                      width: 33, semanticsLabel: 'Phone'),
+                      width: 34, semanticsLabel: 'Phone'),
                   TextButton(
                       onPressed: () => launch('tel: +34${site.phone}'),
                       child: Text(
@@ -264,13 +264,12 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                 ),
                 onPressed: () => {
                   Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CreateAppointmentScreen(
-                        id: site.id,
-                      ),
-                    ),
-                  )
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateAppointmentScreen(
+                          id: site.id,
+                        ),
+                      ))
                 },
                 child: Container(
                   alignment: Alignment.center,

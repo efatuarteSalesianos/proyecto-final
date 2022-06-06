@@ -28,6 +28,7 @@ class ProfileMenuWidget extends StatelessWidget {
           children: [
             SvgPicture.asset(
               icon,
+              color: Colors.black87,
               width: 22,
             ),
             SizedBox(width: 20),

@@ -169,7 +169,9 @@ class _SiteListState extends State<SiteList> {
                 likeBuilder: (bool isLiked) {
                   return Icon(
                     Icons.favorite,
-                    color: site.liked ? const Color(0xFFFF5A5F) : Colors.white,
+                    color: site.liked
+                        ? const Color(0xFFFF5A5F)
+                        : Colors.transparent,
                     size: 30,
                   );
                 },

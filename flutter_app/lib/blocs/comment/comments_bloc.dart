@@ -11,6 +11,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
 
   CommentsBloc(this.commentRepository) : super(CommentsInitial()) {
     on<FetchSiteComments>(_commentsFetched);
+    on<CreateCommentEvent>(_createCommentEvent);
   }
 
   void _commentsFetched(

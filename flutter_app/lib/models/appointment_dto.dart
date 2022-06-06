@@ -3,7 +3,7 @@ class CreateAppointmentDto {
     required this.date,
     required this.description,
   });
-  late final DateTime date;
+  late final String date;
   late final String description;
 
   Map<String, dynamic> toJson() {
