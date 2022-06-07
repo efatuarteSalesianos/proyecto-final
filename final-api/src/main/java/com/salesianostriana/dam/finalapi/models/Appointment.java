@@ -35,7 +35,8 @@ public class Appointment implements Serializable {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    private LocalDateTime date;
+    private String date;
+    private String hour;
     private String description;
 
     @Enumerated(EnumType.STRING)

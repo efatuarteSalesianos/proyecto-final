@@ -15,7 +15,7 @@ const DEFAULT_HEADERS = {
 @Injectable({
   providedIn: 'root'
 })
-export class SiteService {
+export class CommentService {
 
   constructor(private http: HttpClient) { }
 

@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CreateAppointmentDto {
 
-//    @FutureDate(message = "{appointment.date.futureDate}")
-    private LocalDateTime date;
+    private String date;
+    private String hour;
 
     @Builder.Default
     StatusType status = StatusType.ESPERA;

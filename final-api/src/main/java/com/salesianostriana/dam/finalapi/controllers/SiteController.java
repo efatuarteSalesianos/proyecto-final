@@ -527,7 +527,7 @@ public class SiteController {
                     content = @Content)
     })
     @PostMapping("{id}/appointment/check")
-    public ResponseEntity<Boolean> checkAppointment(@PathVariable Long id, @Valid @RequestBody LocalDateTime appointmentTime){
+    public ResponseEntity<Boolean> checkAppointment(@PathVariable Long id, @Valid @RequestBody String appointmentTime){
         return ResponseEntity.status(HttpStatus.OK).body(siteService.isAppointmentTimeAvailable(id, appointmentTime));
     }
 }

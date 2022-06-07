@@ -477,7 +477,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         save(site.get());
     }
 
-    public boolean isAppointmentTimeAvailable(Long siteId, LocalDateTime appointmentDate) {
+    public boolean isAppointmentTimeAvailable(Long siteId, String appointmentDate) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
             throw new EntityNotFoundException("No site matches the provided id");

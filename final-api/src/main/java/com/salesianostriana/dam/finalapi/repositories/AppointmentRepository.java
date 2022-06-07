@@ -15,7 +15,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Appoin
 
     @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto(
-                a.cliente.fullName, a.site.name, a.date, a.description, a.status
+                a.cliente.fullName, a.site.name, a.date, a.hour, a.description, a.status
             )
             from Appointment a
             where a.cliente.id = :clienteId
@@ -24,7 +24,7 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Appoin
 
     @Query(value = """
             select new com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto(
-                a.cliente.fullName, a.site.name, a.date, a.description, a.status
+                a.cliente.fullName, a.site.name, a.date, a.hour, a.description, a.status
             )
             from Appointment a
             where a.cliente.id = :clienteId and a.id = :appointmentId

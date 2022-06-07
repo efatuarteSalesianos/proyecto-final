@@ -14,8 +14,8 @@ public class GetAppointmentDto {
     private String cliente;
     private String site;
 
-    @JsonFormat(pattern = "dd-MM-yyyy hh:mm")
-    private LocalDateTime date;
+    private String date;
+    private String hour;
 
     private String description;
     private StatusType status;

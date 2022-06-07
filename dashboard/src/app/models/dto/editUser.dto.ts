@@ -1,4 +1,4 @@
-export class RegisterDTO {
+export class EditUserDTO {
   fullName: string;
   username:	string;
   email:	string;

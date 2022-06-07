@@ -17,6 +17,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { SitesComponent } from './components/items/sites/sites.component';
 import { UsersComponent } from './components/items/users/users.component';
 import { ToolbarComponent } from './components/shared/toolbar/toolbar.component';
+import { DeleteUserDialogComponent } from './components/dialogs/delete-user-dialog/delete-user-dialog.component';
+import { DeleteCommentDialogComponent } from './components/dialogs/delete-comment-dialog/delete-comment-dialog.component';
+import { DeleteAppointmentDialogComponent } from './components/dialogs/delete-appointment-dialog/delete-appointment-dialog.component';
+import { CommentsComponent } from './components/items/comments/comments.component';
+import { AppointmentsComponent } from './components/items/appointments/appointments.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,12 @@ import { ToolbarComponent } from './components/shared/toolbar/toolbar.component'
     BackgroundComponent,
     SitesComponent,
     UsersComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    DeleteUserDialogComponent,
+    DeleteCommentDialogComponent,
+    DeleteAppointmentDialogComponent,
+    CommentsComponent,
+    AppointmentsComponent
   ],
   imports: [
     BrowserModule,

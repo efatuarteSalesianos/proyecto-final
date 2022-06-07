@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { EditUserDTO } from '../models/dto/editUser.dto';
 import { UserResponse } from '../models/interfaces/user.interface';
 
 const DEFAULT_HEADERS = {
@@ -21,6 +22,21 @@ export class UserService {
   listarUsuarios(): Observable<UserResponse[]> {
     let requestUrl = `${environment.API_BASE_URL}/users`;
     return this.http.get<UserResponse[]>(requestUrl, DEFAULT_HEADERS);
+  }
+
+  getUserByUsername(username: string): Observable<UserResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/profile/${username}`;
+    return this.http.get<UserResponse>(requestUrl, DEFAULT_HEADERS);
+  }
+
+  getPropietarioByUsername(username: string): Observable<UserResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/profile/propietario/${username}`;
+    return this.http.get<UserResponse>(requestUrl, DEFAULT_HEADERS);
+  }
+
+  deleteUser(id: number) {
+    let requestUrl = `${environment.API_BASE_URL}/user/${id}`;
+    return this.http.delete(requestUrl, DEFAULT_HEADERS);
   }
 
   giveAdmin(username: string): Observable<UserResponse> {

@@ -13,6 +13,7 @@ public class AppointmentDtoConverter {
                 .cliente(appointment.getCliente().getFullName())
                 .site(appointment.getSite().getName())
                 .date(appointment.getDate())
+                .hour(appointment.getHour())
                 .description(appointment.getDescription())
                 .status(appointment.getStatus())
                 .build();
