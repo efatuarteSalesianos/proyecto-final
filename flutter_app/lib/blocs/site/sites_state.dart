@@ -93,3 +93,25 @@ class SitesFetchError extends SitesState {
   @override
   List<Object> get props => [message];
 }
+
+class SiteFetchLike extends SitesState {
+  const SiteFetchLike();
+
+  @override
+  List<Object> get props => [];
+}
+
+class SiteFetchDislike extends SitesState {
+  const SiteFetchDislike();
+
+  @override
+  List<Object> get props => [];
+}
+
+class SiteFetchLikeError extends SitesState {
+  final String message;
+  const SiteFetchLikeError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}

@@ -201,7 +201,7 @@ class SiteRepositoryImpl extends SiteRepository {
         'Authorization': 'Bearer $token',
       },
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 204) {
       return;
     } else {
       throw Exception('Failed to remove from favourite');

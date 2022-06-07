@@ -158,23 +158,28 @@ class _SiteListState extends State<SiteList> {
             right: 0,
             child: Padding(
               padding: const EdgeInsets.all(15),
-              child: LikeButton(
-                size: 30,
-                circleColor: const CircleColor(
-                    start: Color(0xFFFF989C), end: Color(0xFFFF5A5F)),
-                bubblesColor: const BubblesColor(
-                  dotPrimaryColor: Color(0xFFFF5A5F),
-                  dotSecondaryColor: Color(0xFFF2B203),
-                ),
-                likeBuilder: (bool isLiked) {
-                  return Icon(
-                    Icons.favorite,
-                    color: site.liked
-                        ? const Color(0xFFFF5A5F)
-                        : Colors.transparent,
-                    size: 30,
-                  );
+              child: GestureDetector(
+                onTap: () {
+                  _siteBloc.add(FetchLike(site.id));
                 },
+                child: LikeButton(
+                  size: 30,
+                  circleColor: const CircleColor(
+                      start: Color(0xFFFF989C), end: Color(0xFFFF5A5F)),
+                  bubblesColor: const BubblesColor(
+                    dotPrimaryColor: Color(0xFFFF5A5F),
+                    dotSecondaryColor: Color(0xFFF2B203),
+                  ),
+                  likeBuilder: (bool isLiked) {
+                    return Icon(
+                      Icons.favorite,
+                      color: site.liked
+                          ? const Color(0xFFFF5A5F)
+                          : Colors.transparent,
+                      size: 30,
+                    );
+                  },
+                ),
               ),
             ),
           ),

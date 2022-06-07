@@ -18,6 +18,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
     on<FetchSitesWithRate>(_sitesFetchedWithRate);
     on<FetchFavouriteSites>(_favouriteSitesFeteched);
     on<FetchSiteDetails>(_siteDetailsFetched);
+    on<FetchLike>(_addLike);
   }
 
   void _sitesFetched(FetchSites event, Emitter<SitesState> emit) async {
@@ -106,6 +107,24 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
       return;
     } on Exception catch (e) {
       emit(SitesFetchError(e.toString()));
+    }
+  }
+
+  void _addLike(FetchLike event, Emitter<SitesState> emit) async {
+    try {
+      emit(const SiteFetchLike());
+      return;
+    } on Exception catch (e) {
+      emit(SiteFetchLikeError(e.toString()));
+    }
+  }
+
+  void _removeLike(FetchLike event, Emitter<SitesState> emit) async {
+    try {
+      emit(const SiteFetchDislike());
+      return;
+    } on Exception catch (e) {
+      emit(SiteFetchLikeError(e.toString()));
     }
   }
 }

@@ -74,3 +74,21 @@ class FetchSiteDetails extends SitesEvent {
   @override
   List<Object> get props => [id];
 }
+
+class FetchLike extends SitesEvent {
+  final int id;
+
+  const FetchLike(this.id);
+
+  @override
+  List<Object> get props => [id];
+}
+
+class FetchDislike extends SitesEvent {
+  final int id;
+
+  const FetchDislike(this.id);
+
+  @override
+  List<Object> get props => [id];
+}
