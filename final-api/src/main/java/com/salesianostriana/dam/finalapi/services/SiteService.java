@@ -262,27 +262,31 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         } else {
             throw new FileNotSupportedException("File type not supported");
         }
-        try {
+        if (site.isPresent()) {
             Optional<Appointment> appointmentOptional = appointmentRepository.findBySiteIdAndClienteId(siteId, cliente.getId());
-            Comment comment = Comment.builder()
-                    .site(site.get())
-                    .cliente(cliente)
-                    .title(newComment.getTitle())
-                    .description(newComment.getDescription())
-                    .createdDate(LocalDateTime.now())
-                    .rate(newComment.getRate())
-                    .originalFile(originalFileUrl)
-                    .scaledFile(scaledFileUrl)
-                    .build();
-            comment.addCommentToCliente(cliente);
-            comment.addCommentToSite(site.get());
-            commentRepository.save(comment);
-            userRepository.save(cliente);
-            siteRepository.save(site.get());
-            site.get().getComments().add(comment);
-            save(site.get());
-            return commentDtoConverter.toGetCommentDto(comment);
-        } catch (Exception e) {
+            if(appointmentOptional.isPresent()) {
+                Comment comment = Comment.builder()
+                        .site(site.get())
+                        .cliente(cliente)
+                        .title(newComment.getTitle())
+                        .description(newComment.getDescription())
+                        .createdDate(LocalDateTime.now())
+                        .rate(newComment.getRate())
+                        .originalFile(originalFileUrl)
+                        .scaledFile(scaledFileUrl)
+                        .build();
+                comment.addCommentToCliente(cliente);
+                comment.addCommentToSite(site.get());
+                commentRepository.save(comment);
+                userRepository.save(cliente);
+                siteRepository.save(site.get());
+                site.get().getComments().add(comment);
+                save(site.get());
+                return commentDtoConverter.toGetCommentDto(comment);
+            } else {
+                throw new EntityNotFoundException("No appointment found for this site");
+            }
+        } else {
             throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
     }
