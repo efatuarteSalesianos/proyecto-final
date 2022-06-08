@@ -82,7 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         child: ListView(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Column(
                 children: [
                   SizedBox(
@@ -119,7 +119,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               child: OutlinedButton.icon(
                                 style: OutlinedButton.styleFrom(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 15, vertical: 15),
+                                      horizontal: 10, vertical: 15),
                                   side: const BorderSide(
                                       color: Color(0xFF385185), width: 2),
                                   shape: const RoundedRectangleBorder(

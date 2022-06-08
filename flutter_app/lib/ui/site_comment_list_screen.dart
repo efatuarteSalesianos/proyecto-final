@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/blocs/comment/comments_bloc.dart';
 import 'package:flutter_app/models/comment_response.dart';
@@ -123,7 +124,10 @@ class _CommentListState extends State<CommentList> {
       BuildContext context, List<CommentResponse> comments) {
     return ListView.builder(
       itemBuilder: (context, index) {
-        return _commentItem(context, comments[index]);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: _commentItem(context, comments[index]),
+        );
       },
       padding: const EdgeInsets.symmetric(vertical: 5),
       scrollDirection: Axis.vertical,
@@ -132,76 +136,113 @@ class _CommentListState extends State<CommentList> {
   }
 
   Widget _commentItem(BuildContext context, CommentResponse comment) {
+    String name = comment.cliente;
+    String decodedClienteName =
+        utf8.decode(latin1.encode(name), allowMalformed: true);
+    String commentTitle = comment.title;
+    String decodeCommentTitle =
+        utf8.decode(latin1.encode(commentTitle), allowMalformed: true);
     String commentDescription = comment.description;
     String decodeCommentDescription =
         utf8.decode(latin1.encode(commentDescription), allowMalformed: true);
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-      height: MediaQuery.of(context).size.height * 0.213,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Image.network(comment.image, fit: BoxFit.cover),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-                height: 175,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.black.withOpacity(0.8),
-                          Colors.transparent
-                        ]))),
-          ),
-          Positioned(
-            top: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Text(decodeCommentDescription,
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 20)),
-                ],
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.28,
+      child: Card(
+        color: const Color(0xFFE5E5E5),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5.0),
+                        child: Text(decodedClienteName,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                            )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30),
+                        child: Row(
+                          children: [
+                            Text(comment.rate.toString(),
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color(0xFFFF5A5F),
+                                  fontWeight: FontWeight.bold,
+                                )),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 3.0),
+                              child: IconTheme(
+                                  data: IconThemeData(
+                                      color: Color(0xFFFF5A5F), size: 28),
+                                  child: Icon(Icons.star)),
+                            )
+                          ],
+                        ),
+                      ),
+                    ]),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    child: ExpandablePanel(
+                      theme: const ExpandableThemeData(
+                        headerAlignment: ExpandablePanelHeaderAlignment.center,
+                        tapBodyToCollapse: true,
+                      ),
+                      header: Text(
+                        decodeCommentTitle,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      collapsed: Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: Text(
+                          decodeCommentDescription,
+                          softWrap: true,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      expanded: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10.0),
+                            child: Text(
+                              decodeCommentDescription,
+                              softWrap: true,
+                              overflow: TextOverflow.fade,
+                            ),
+                          ),
+                        ],
+                      ),
+                      builder: (_, collapsed, expanded) {
+                        return Expandable(
+                          collapsed: collapsed,
+                          expanded: expanded,
+                          theme: const ExpandableThemeData(crossFadePoint: 0),
+                        );
+                      },
+                    )),
+              )
+            ],
           ),
-          Positioned(
-            top: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Text(comment.cliente,
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 20)),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: IconTheme(
-                data: const IconThemeData(
-                  color: Color(0xFFFF5A5F),
-                  size: 25,
-                ),
-                child: RatingBarWidget(comment.rate),
-              ),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }

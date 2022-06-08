@@ -71,8 +71,7 @@ class _BookingDoneState extends State<BookingDone> {
             Image.network(widget.image),
           ]),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 50.0, horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(vertical: 50.0, horizontal: 10),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,

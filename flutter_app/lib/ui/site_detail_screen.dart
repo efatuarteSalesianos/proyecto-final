@@ -79,7 +79,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
   _createBody(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 0.9,
           color: Colors.white,
           child:
               BlocConsumer<SitesBloc, SitesState>(listenWhen: (context, state) {
@@ -129,15 +129,15 @@ class _SiteDetailState extends State<SiteDetailScreen> {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
                 child: Text(decodeDescription,
-                    style: const TextStyle(fontSize: 20)),
+                    style: const TextStyle(fontSize: 19)),
               ),
             ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,7 +154,10 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                         maxLines: 1,
                         softWrap: false,
                         overflow: TextOverflow.fade,
-                        style: const TextStyle(fontSize: 20),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF3366BB),
+                        ),
                       )),
                 ],
               ),
@@ -171,12 +174,15 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                         maxLines: 1,
                         softWrap: false,
                         overflow: TextOverflow.fade,
-                        style: const TextStyle(fontSize: 20),
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF3366BB),
+                        ),
                       )),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 4.0),
+                padding: const EdgeInsets.only(left: 2.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -190,13 +196,17 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                           maxLines: 1,
                           softWrap: false,
                           overflow: TextOverflow.fade,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFF3366BB),
+                          ),
                         )),
                   ],
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 10.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -204,27 +214,27 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                       children: [
                         const Text("Valoración: ",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
+                                fontSize: 18, fontWeight: FontWeight.bold)),
                         Text(
                           site.rate.toString(),
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.fade,
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Color(0xFFFF5A5F),
+                          ),
                         ),
                         const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 4),
+                          padding: EdgeInsets.symmetric(horizontal: 2),
                           child: IconTheme(
                               data: IconThemeData(
                                 color: Color(0xFFFF5A5F),
-                                size: 28,
+                                size: 22,
                               ),
-                              child: Icon(Icons.star_border)),
+                              child: Icon(Icons.star)),
                         ),
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 30.0),
+                      padding: const EdgeInsets.only(left: 22.0),
                       child: TextButton(
                           onPressed: () => Navigator.push(
                                 context,
@@ -236,11 +246,8 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                               ),
                           child: const Text(
                             'Ver comentarios',
-                            maxLines: 1,
-                            softWrap: false,
-                            overflow: TextOverflow.fade,
                             style: TextStyle(
-                                fontSize: 20, color: Color(0xFFFF5A5F)),
+                                fontSize: 18, color: Color(0xFFFF5A5F)),
                           )),
                     ),
                   ],
@@ -254,7 +261,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
           children: [
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xFFFF5A5F),

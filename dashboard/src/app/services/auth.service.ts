@@ -1,4 +1,3 @@
-import { environment } from './../../environments/environment.prod';
 import { LoginDTO } from './../models/dto/login.dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -6,6 +5,7 @@ import { Observable } from 'rxjs';
 import { RegisterDTO } from '../models/dto/register.dto';
 import { RegisterResponse } from '../models/interfaces/register.interface';
 import { LoginResponse } from '../models/interfaces/login.interface';
+import { environment } from 'src/environments/environment.prod';
 
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({

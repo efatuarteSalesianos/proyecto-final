@@ -60,6 +60,7 @@ dependencies:
   flutter_switch: ^0.3.2
   toggle_switch: ^2.0.1
   like_button: ^2.0.4
+  expandable: ^5.0.1
 
 dev_dependencies:
   flutter_test:

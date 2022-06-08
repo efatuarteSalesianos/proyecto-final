@@ -1,9 +1,9 @@
 import { SiteDTO } from './../models/dto/site.dto';
-import { environment } from 'src/environments/environment.prod';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SiteResponse } from '../models/interfaces/site.interface';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment.prod';
 
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({

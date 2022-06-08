@@ -114,7 +114,7 @@ class _SiteListState extends State<SiteList> {
     String decodeSiteName =
         utf8.decode(latin1.encode(siteName), allowMalformed: true);
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       height: MediaQuery.of(context).size.height * 0.213,
       child: Stack(
         children: [

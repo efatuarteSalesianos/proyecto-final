@@ -83,7 +83,7 @@ class _CreateCommentScreenState extends State<CreateCommentScreen> {
         child: ListView(
           children: [
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               child: Column(
                 children: [
                   SizedBox(
