@@ -14,6 +14,8 @@ public class CommentDtoConverter {
                 .site(comment.getSite().getName())
                 .title(comment.getTitle())
                 .description(comment.getDescription())
+                .rate(comment.getRate())
+                .image(comment.getScaledFile())
                 .build();
     }
 }

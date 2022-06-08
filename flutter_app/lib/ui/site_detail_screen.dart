@@ -268,6 +268,8 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                       MaterialPageRoute(
                         builder: (context) => CreateAppointmentScreen(
                           id: site.id,
+                          name: site.name,
+                          image: site.scaledFileUrl,
                         ),
                       ))
                 },

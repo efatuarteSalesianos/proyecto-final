@@ -2,9 +2,7 @@ package com.salesianostriana.dam.finalapi.services;
 
 import com.salesianostriana.dam.finalapi.awss3.AWSS3Service;
 import com.salesianostriana.dam.finalapi.dtos.user.*;
-import com.salesianostriana.dam.finalapi.errores.excepciones.EntityNotFoundException;
-import com.salesianostriana.dam.finalapi.errores.excepciones.PasswordMissMatchException;
-import com.salesianostriana.dam.finalapi.errores.excepciones.StorageException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.*;
 import com.salesianostriana.dam.finalapi.models.*;
 import com.salesianostriana.dam.finalapi.repositories.AppointmentRepository;
 import com.salesianostriana.dam.finalapi.repositories.CommentRepository;
@@ -110,7 +108,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public GetUserDto convertToAdmin(UserEntity userEntity, String username) {
         Optional <UserEntity> userOptional = userRepository.findFirstByUsername(username);
         if (userOptional.isEmpty()) {
-            throw new EntityNotFoundException("UserEntity not found");
+            throw new SingleEntityNotFoundException(userEntity.getId().toString(), UserEntity.class);
         }
         UserEntity newAdmin = userOptional.get();
 
@@ -123,7 +121,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         List<UserEntity> users = userRepository.findAll();
 
         if (users.isEmpty()) {
-            throw new EntityNotFoundException("Users not found");
+            throw new ListEntityNotFoundException(UserEntity.class);
         } else {
             return users.stream().map(userDtoConverter::toGetUserDto).collect(Collectors.toList());
         }
@@ -136,7 +134,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public GetUserDto getUserProfileByUsername(String username) {
         Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
-            throw new EntityNotFoundException("No userEntity matches the provided username");
+            throw new UsernameNotFoundException("No userEntity matches the provided username");
         }else{
             return userDtoConverter.toGetUserDto(user.get());
         }
@@ -145,7 +143,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public GetPropietarioDto getPropietarioProfileByUsername(String username) {
         Optional<UserEntity> user = userRepository.findFirstByUsername(username);
         if(user.isEmpty()){
-            throw new EntityNotFoundException("No userEntity matches the provided username");
+            throw new UsernameNotFoundException("No userEntity matches the provided username");
         }else{
             return userDtoConverter.toGetPropietarioDto(user.get());
         }
@@ -164,7 +162,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         Optional<UserEntity> userOptional = findById(userEntity.getId());
 
         if (userOptional.isEmpty()) {
-            throw new EntityNotFoundException("No userEntity matches the actual userEntity");
+            throw new SingleEntityNotFoundException(userEntity.getId().toString(), UserEntity.class);
         } else if (file == null || !imagesTypes.contains(file.getContentType())) {
             throw new StorageException("The provided file does not match any of the allowed file types, please ensure image type is jpg, jpeg or png.");
         } else {
@@ -187,7 +185,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
     public void deleteUser(UUID userId){
         Optional<UserEntity> userOptional = findById(userId);
         if(userOptional.isEmpty()){
-            throw new EntityNotFoundException("No user matches the provided userId");
+            throw new SingleEntityNotFoundException(userId.toString(), UserEntity.class);
         } else {
             UserEntity userEntity = userOptional.get();
             List<Like> likes = likeRepository.findAllByClienteId(userEntity.getId());

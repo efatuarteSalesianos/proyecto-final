@@ -19,6 +19,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
     on<FetchFavouriteSites>(_favouriteSitesFeteched);
     on<FetchSiteDetails>(_siteDetailsFetched);
     on<FetchLike>(_addLike);
+    on<FetchDislike>(_removeLike);
   }
 
   void _sitesFetched(FetchSites event, Emitter<SitesState> emit) async {
@@ -119,7 +120,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
     }
   }
 
-  void _removeLike(FetchLike event, Emitter<SitesState> emit) async {
+  void _removeLike(FetchDislike event, Emitter<SitesState> emit) async {
     try {
       emit(const SiteFetchDislike());
       return;

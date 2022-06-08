@@ -539,6 +539,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   },
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
                                       fixedSize: const Size(250, 50),
                                       primary: const Color(0xFFFF5A5F),
                                       onPrimary: Colors.white,

@@ -8,6 +8,8 @@ import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
 import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
+import com.salesianostriana.dam.finalapi.errores.excepciones.BadRequestException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.CantCommentWithoutAppointmentException;
 import com.salesianostriana.dam.finalapi.models.AppointmentPK;
 import com.salesianostriana.dam.finalapi.models.CommentPK;
 import com.salesianostriana.dam.finalapi.models.SiteTypes;
@@ -343,7 +345,7 @@ public class SiteController {
                     content = @Content)
     })
     @PostMapping("{id}/comment")
-    public ResponseEntity<GetCommentDto> addComment(@PathVariable Long id, @Valid @RequestPart("newComment") CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, @RequestPart("file") MultipartFile file){
+    public ResponseEntity<GetCommentDto> addComment(@PathVariable Long id, @Valid @RequestPart("newComment") CreateCommentDto newComment, @AuthenticationPrincipal UserEntity userEntity, @RequestPart("file") MultipartFile file) {
         return ResponseEntity.status(HttpStatus.CREATED).body(siteService.addComment(id, newComment, userEntity, file));
     }
 
@@ -415,7 +417,7 @@ public class SiteController {
                     content = @Content)
     })
     @DeleteMapping("{id}/comment/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable Long id, @PathVariable CommentPK commentId, @AuthenticationPrincipal UserEntity userEntity){
+    public ResponseEntity<?> deleteComment(@PathVariable Long id, @PathVariable CommentPK commentId, @AuthenticationPrincipal UserEntity userEntity) throws BadRequestException {
         siteService.deleteComment(id, userEntity.getId(), commentId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

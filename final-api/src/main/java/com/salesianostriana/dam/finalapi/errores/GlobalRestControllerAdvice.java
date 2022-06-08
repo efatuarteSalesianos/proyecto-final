@@ -1,8 +1,9 @@
 package com.salesianostriana.dam.finalapi.errores;
 
+import com.salesianostriana.dam.finalapi.errores.excepciones.AppointmentNotAvailableException;
 import com.salesianostriana.dam.finalapi.errores.excepciones.BadRequestException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.CantCommentWithoutAppointmentException;
 import com.salesianostriana.dam.finalapi.errores.excepciones.EntityNotFoundException;
-import com.salesianostriana.dam.finalapi.errores.excepciones.PrivateAccountException;
 import com.salesianostriana.dam.finalapi.errores.modelo.ApiError;
 import com.salesianostriana.dam.finalapi.errores.modelo.ApiSubError;
 import com.salesianostriana.dam.finalapi.errores.modelo.ApiValidationSubError;
@@ -32,6 +33,17 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
         return buildApiError404(ex, request);
     }
 
+    @ExceptionHandler({CantCommentWithoutAppointmentException.class})
+    public ResponseEntity<?> handleCantCommentWithoutAppointmentException(CantCommentWithoutAppointmentException ex, WebRequest request) {
+        return buildApiError400(ex, request);
+    }
+
+    //Exception handler for AppointmentNotAvailableException
+    @ExceptionHandler({AppointmentNotAvailableException.class})
+    public ResponseEntity<?> handleAppointmentNotAvailableException(AppointmentNotAvailableException ex, WebRequest request) {
+        return buildApiError400(ex, request);
+    }
+
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
         return buildApiErrorWithSubError(HttpStatus.BAD_REQUEST,
@@ -47,11 +59,6 @@ public class GlobalRestControllerAdvice extends ResponseEntityExceptionHandler {
                                 .build())
                         .collect(Collectors.toList())
                 );
-    }
-
-    @ExceptionHandler({PrivateAccountException.class})
-    public ResponseEntity<?> handlePrivateAccountException(PrivateAccountException ex, WebRequest request) {
-        return buildApiError400(ex, request);
     }
 
     @ExceptionHandler({BadRequestException.class})

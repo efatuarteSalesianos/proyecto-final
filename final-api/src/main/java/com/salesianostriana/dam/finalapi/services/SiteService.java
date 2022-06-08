@@ -52,7 +52,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 
         Optional<UserEntity> propietario = userRepository.findById(createSiteDto.getPropietarioId());
         if(propietario.isEmpty())
-            throw new EntityNotFoundException("No user matches the provided id");
+            throw new SingleEntityNotFoundException(createSiteDto.getPropietarioId().toString(), UserEntity.class);
 
         //Check if file is image or video and save it
         if (imagesTypes.contains(file.getContentType())) {
@@ -133,7 +133,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         List<Site> sites = findAll().stream().toList();
 
         if (sites.isEmpty()) {
-            throw new FileNotFoundException("There are not sites available");
+            throw new ListEntityNotFoundException(Site.class);
         } else {
             return sites.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
@@ -142,7 +142,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     public List<GetListSiteDto> getSitesByName(String name) {
         List<Site> sitesByName = siteRepository.findByNameContaining(name);
         if (sitesByName.isEmpty()) {
-            throw new FileNotFoundException("There are not sites available");
+            throw new ListEntityNotFoundException(Site.class);
         } else {
             return sitesByName.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
@@ -152,7 +152,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         List<Site> sitesByCity = siteRepository.findByCity(city);
 
         if (sitesByCity.isEmpty()) {
-            throw new FileNotFoundException("There are not sites in this city available");
+            throw new ListEntityNotFoundException(Site.class);
         } else {
             return sitesByCity.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
@@ -162,7 +162,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         List<Site> sitesByPostalCode = siteRepository.findByPostalCode(postalCode);
 
         if (sitesByPostalCode.isEmpty()) {
-            throw new FileNotFoundException("There are not sites with this postal code available");
+            throw new ListEntityNotFoundException(Site.class);
         } else {
             return sitesByPostalCode.stream().map(siteDtoConverter::toGetListSiteDto).collect(Collectors.toList());
         }
@@ -172,7 +172,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         List<GetListSiteDto> sitesByUserEntity = siteRepository.findByPropietarioId(id);
 
         if (sitesByUserEntity.isEmpty()) {
-            throw new FileNotFoundException("There are not sites with this userEntity id available");
+            throw new ListEntityNotFoundException(Site.class);
         } else {
             return sitesByUserEntity;
         }
@@ -182,7 +182,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         Optional<Site> site = findById(id);
 
         if (site.isEmpty())
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(id.toString(), Site.class);
         else
             return site.get();
     }
@@ -197,14 +197,14 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             delete(site);
             return true;
         } catch (Exception e) {
-            throw new FileNotFoundException("File not found");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
     }
 
     public GetSiteDto addLike(Long siteId, UserEntity cliente) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         } else {
             Optional<Like> likeOptional = likeRepository.findBySiteIdAndClienteId(siteId, cliente.getId());
             if(likeOptional.isPresent()){
@@ -228,7 +228,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     public void deleteLike(Long siteId, UserEntity userEntity) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         } else {
             site.get().getLikes().removeIf(like -> like.getCliente().getId().equals(userEntity.getId()));
             site.get().setLiked(false);
@@ -262,41 +262,39 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         } else {
             throw new FileNotSupportedException("File type not supported");
         }
-        if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
-        }
-        else {
+        try {
             Optional<Appointment> appointmentOptional = appointmentRepository.findBySiteIdAndClienteId(siteId, cliente.getId());
-            if(appointmentOptional.isEmpty()){
-                throw new UnauthorizeException("You can't comment on a site without an appointment");
+            try {
+                Comment comment = Comment.builder()
+                        .site(site.get())
+                        .cliente(cliente)
+                        .title(newComment.getTitle())
+                        .description(newComment.getDescription())
+                        .createdDate(LocalDateTime.now())
+                        .rate(newComment.getRate())
+                        .originalFile(originalFileUrl)
+                        .scaledFile(scaledFileUrl)
+                        .build();
+                comment.addCommentToCliente(cliente);
+                comment.addCommentToSite(site.get());
+                commentRepository.save(comment);
+                userRepository.save(cliente);
+                siteRepository.save(site.get());
+                site.get().getComments().add(comment);
+                save(site.get());
+                return commentDtoConverter.toGetCommentDto(comment);
+            } catch (Exception e) {
+                throw new CantCommentWithoutAppointmentException("You can't comment without on a site without an appointment");
             }
-//            Appointment appointment = appointmentOptional.get();
-//            if(appointment.getDate().isAfter(LocalDateTime.now())){
-//                throw new UnauthorizeException("You can't comment on a site that has not already passed");
-//            }
-            Comment comment = Comment.builder()
-                    .site(site.get())
-                    .cliente(cliente)
-                    .description(newComment.getDescription())
-                    .createdDate(LocalDateTime.now())
-                    .originalFile(originalFileUrl)
-                    .scaledFile(scaledFileUrl)
-                    .build();
-            comment.addCommentToCliente(cliente);
-            comment.addCommentToSite(site.get());
-            commentRepository.save(comment);
-            userRepository.save(cliente);
-            siteRepository.save(site.get());
-            site.get().getComments().add(comment);
-            save(site.get());
-            return commentDtoConverter.toGetCommentDto(comment);
+        } catch (Exception e) {
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
     }
 
     public List<GetCommentDto> getAllComments(Long siteId) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         return site.get().getComments().stream().map(commentDtoConverter::toGetCommentDto).collect(Collectors.toList());
     }
@@ -304,17 +302,18 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     public GetCommentDto getComment(Long siteId, CommentPK commentId) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         Optional<Comment> comment = site.get().getComments().stream().filter(c -> c.getId().equals(commentId)).findAny();
         if (comment.isEmpty()) {
-            throw new EntityNotFoundException("No comment matches the provided id");
+            throw new SingleEntityNotFoundException(commentId.toString(), Comment.class);
         }
         return GetCommentDto.builder()
                 .cliente(comment.get().getCliente().getFullName())
                 .site(comment.get().getSite().getName())
                 .title(comment.get().getTitle())
                 .description(comment.get().getDescription())
+                .rate(comment.get().getRate())
                 .image(comment.get().getScaledFile())
                 .build();
     }
@@ -338,10 +337,10 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             throw new FileNotSupportedException("File type not supported");
         }
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         else if (commentOptional.isEmpty()) {
-            throw new EntityNotFoundException("No comment matches the provided id");
+            throw new SingleEntityNotFoundException(commentId.toString(), Comment.class);
         }
         else {
             Comment commentEntity = commentOptional.get();
@@ -359,21 +358,21 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public void deleteComment(Long siteId, UUID clienteId, CommentPK commentId) {
+    public void deleteComment(Long siteId, UUID clienteId, CommentPK commentId) throws BadRequestException {
         Optional<Site> site = findById(siteId);
         Optional<Comment> comment = commentRepository.existsById(commentId);
         Optional<UserEntity> cliente = userRepository.findById(clienteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         if (comment.isEmpty()) {
-            throw new EntityNotFoundException("No comment matches the provided id");
+            throw new SingleEntityNotFoundException(commentId.toString(), Comment.class);
         }
         if (cliente.isEmpty()) {
-            throw new EntityNotFoundException("No cliente matches the provided id");
+            throw new SingleEntityNotFoundException(clienteId.toString(), UserEntity.class);
         }
         if (!comment.get().getCliente().getId().equals(cliente.get().getId())) {
-            throw new UnauthorizeException("You can't delete a comment that is not yours");
+            throw new BadRequestException("You can't delete a comment that is not yours");
         }
         //Delete old files
         awsS3Service.deleteObject(comment.get().getOriginalFile().substring(comment.get().getOriginalFile().lastIndexOf("/") + 1));
@@ -387,7 +386,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     public GetAppointmentDto addAppointment(Long siteId, UserEntity cliente, CreateAppointmentDto createAppointmentDto) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
 //        if (!site.get().getDaysOpen().contains(createAppointmentDto.getDate().getDayOfWeek())) {
 //            throw new AppointmentNotAvailableException("The appointment day is not available");
@@ -395,29 +394,27 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
 //        if (site.get().getOpeningHour().isAfter(createAppointmentDto.getDate().toLocalTime()) || site.get().getClosingHour().isBefore(createAppointmentDto.getDate().toLocalTime())) {
 //            throw new AppointmentNotAvailableException("The appointment hour is not available");
 //        }
-        if(isAppointmentTimeAvailable(site.get().getId(), createAppointmentDto.getDate())) {
-            Appointment appointment = Appointment.builder()
-                    .cliente(cliente)
-                    .site(site.get())
-                    .date(createAppointmentDto.getDate())
-                    .description(createAppointmentDto.getDescription())
-                    .build();
-            appointment.addAppointmentToCliente(cliente);
-            appointment.addAppointmentToSite(site.get());
-            appointmentRepository.save(appointment);
-            userRepository.save(cliente);
-            siteRepository.save(site.get());
-            save(site.get());
-            return appointmentDtoConverter.toGetAppointmentDto(appointment);
-        } else {
-            throw new AppointmentNotAvailableException("The appointment time is not available");
-        }
+        Appointment appointment = Appointment.builder()
+                .cliente(cliente)
+                .site(site.get())
+                .date(createAppointmentDto.getDate())
+                .hour(createAppointmentDto.getHour())
+                .description(createAppointmentDto.getDescription())
+                .status(StatusType.ESPERA)
+                .build();
+        appointment.addAppointmentToCliente(cliente);
+        appointment.addAppointmentToSite(site.get());
+        appointmentRepository.save(appointment);
+        userRepository.save(cliente);
+        save(site.get());
+        return appointmentDtoConverter.toGetAppointmentDto(appointment);
+
     }
 
     public List<GetAppointmentDto> getAllAppointments(Long siteId) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         return site.get().getAppointments().stream().map(appointmentDtoConverter::toGetAppointmentDto).collect(Collectors.toList());
     }
@@ -426,13 +423,13 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         Optional<Site> site = findById(siteId);
         Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         if (appointment.isEmpty()) {
-            throw new EntityNotFoundException("No appointment matches the provided id");
+            throw new SingleEntityNotFoundException(appointmentId.toString(), Appointment.class);
         }
         if (!appointment.get().getSite().getId().equals(siteId)) {
-            throw new UnauthorizeException("No appointment matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         return appointmentDtoConverter.toGetAppointmentDto(appointment.get());
     }
@@ -441,16 +438,16 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         Optional<Site> site = findById(siteId);
         Optional<Appointment> appointmentEntity = appointmentRepository.findById(appointmentId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         if (appointmentEntity.isEmpty()) {
-            throw new EntityNotFoundException("No appointment matches the provided id");
+            throw new SingleEntityNotFoundException(appointmentId.toString(), Appointment.class);
         }
         if (!appointmentEntity.get().getSite().getId().equals(siteId)) {
-            throw new UnauthorizeException("No appointment matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         if (!appointmentEntity.get().getCliente().getId().equals(userEntity.getId())) {
-            throw new UnauthorizeException("No appointment matches the provided id");
+            throw new SingleEntityNotFoundException(userEntity.getId().toString(), UserEntity.class);
         }
         appointmentEntity.get().setDate(appointment.getDate());
         appointmentEntity.get().setDescription(appointment.getDescription());
@@ -462,10 +459,10 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         Optional<Site> site = findById(siteId);
         Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         if (appointment.isEmpty()) {
-            throw new EntityNotFoundException("No appointment matches the provided id");
+            throw new SingleEntityNotFoundException(appointmentId.toString(), Appointment.class);
         }
         if (!appointment.get().getCliente().getId().equals(userEntity.getId())) {
             if (!userEntity.getRol().equals(Rol.ADMIN)) {
@@ -480,7 +477,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
     public boolean isAppointmentTimeAvailable(Long siteId, String appointmentDate) {
         Optional<Site> site = findById(siteId);
         if (site.isEmpty()) {
-            throw new EntityNotFoundException("No site matches the provided id");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
         List<Appointment> appointments = site.get().getAppointments();
         for (Appointment a : appointments) {

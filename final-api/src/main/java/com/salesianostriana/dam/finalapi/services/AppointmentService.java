@@ -3,13 +3,16 @@ package com.salesianostriana.dam.finalapi.services;
 import com.salesianostriana.dam.finalapi.dtos.appointment.AppointmentDtoConverter;
 import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
 import com.salesianostriana.dam.finalapi.errores.excepciones.EntityNotFoundException;
+import com.salesianostriana.dam.finalapi.errores.excepciones.SingleEntityNotFoundException;
 import com.salesianostriana.dam.finalapi.models.Appointment;
 import com.salesianostriana.dam.finalapi.models.AppointmentPK;
+import com.salesianostriana.dam.finalapi.models.Site;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.repositories.AppointmentRepository;
 import com.salesianostriana.dam.finalapi.repositories.UserRepository;
 import com.salesianostriana.dam.finalapi.services.base.BaseService;
 import lombok.RequiredArgsConstructor;
+import org.apache.catalina.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,8 +39,11 @@ public class AppointmentService extends BaseService<Appointment, AppointmentPK, 
 
     public GetAppointmentDto getAppointmentByIdAndClienteId(Long siteId, UUID clienteId) {
         Optional<Appointment> appointment = repository.findById(new AppointmentPK(clienteId, siteId));
+        Optional<UserEntity> user = userRepository.findById(clienteId);
         if (appointment.isEmpty()) {
-            throw new EntityNotFoundException("No appointment matches the provided information");
+            throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
+        } else if (user.isEmpty()) {
+            throw new SingleEntityNotFoundException(clienteId.toString(), UserEntity.class);
         } else {
             return appointmentRepository.findOneByIdAndClienteId(siteId, clienteId);
         }
