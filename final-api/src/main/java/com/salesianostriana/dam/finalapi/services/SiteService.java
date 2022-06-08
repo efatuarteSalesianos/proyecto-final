@@ -264,28 +264,24 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
         try {
             Optional<Appointment> appointmentOptional = appointmentRepository.findBySiteIdAndClienteId(siteId, cliente.getId());
-            try {
-                Comment comment = Comment.builder()
-                        .site(site.get())
-                        .cliente(cliente)
-                        .title(newComment.getTitle())
-                        .description(newComment.getDescription())
-                        .createdDate(LocalDateTime.now())
-                        .rate(newComment.getRate())
-                        .originalFile(originalFileUrl)
-                        .scaledFile(scaledFileUrl)
-                        .build();
-                comment.addCommentToCliente(cliente);
-                comment.addCommentToSite(site.get());
-                commentRepository.save(comment);
-                userRepository.save(cliente);
-                siteRepository.save(site.get());
-                site.get().getComments().add(comment);
-                save(site.get());
-                return commentDtoConverter.toGetCommentDto(comment);
-            } catch (Exception e) {
-                throw new CantCommentWithoutAppointmentException("You can't comment without on a site without an appointment");
-            }
+            Comment comment = Comment.builder()
+                    .site(site.get())
+                    .cliente(cliente)
+                    .title(newComment.getTitle())
+                    .description(newComment.getDescription())
+                    .createdDate(LocalDateTime.now())
+                    .rate(newComment.getRate())
+                    .originalFile(originalFileUrl)
+                    .scaledFile(scaledFileUrl)
+                    .build();
+            comment.addCommentToCliente(cliente);
+            comment.addCommentToSite(site.get());
+            commentRepository.save(comment);
+            userRepository.save(cliente);
+            siteRepository.save(site.get());
+            site.get().getComments().add(comment);
+            save(site.get());
+            return commentDtoConverter.toGetCommentDto(comment);
         } catch (Exception e) {
             throw new SingleEntityNotFoundException(siteId.toString(), Site.class);
         }
