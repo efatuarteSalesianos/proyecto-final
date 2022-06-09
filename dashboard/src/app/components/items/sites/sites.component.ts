@@ -1,7 +1,9 @@
+import { AddSiteDialogComponent } from './../../dialogs/add-site-dialog/add-site-dialog.component';
 import { SiteResponse } from '../../../models/interfaces/site.interface';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SiteService } from 'src/app/services/site.service';
+import { MatDialog } from '@angular/material/dialog/dialog';
 
 @Component({
   selector: 'app-sites',
@@ -15,7 +17,7 @@ export class SitesComponent implements OnInit {
   negocios!: SiteResponse[];
   dataSource = new MatTableDataSource(this.negocios);
 
-  constructor(private siteService: SiteService) { }
+  constructor(private siteService: SiteService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.siteService.getAllSites().subscribe(res => {
@@ -34,6 +36,8 @@ export class SitesComponent implements OnInit {
     if(confirm("¿Estás seguro de que quieres borrar este negocio?")) {
       this.deleteSite(id);
       this.ngOnInit();
+    } else {
+      return;
     }
   }
 
@@ -41,5 +45,12 @@ export class SitesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
+
+  openDialogAgregarInmobiliaria(){
+    this.dialog.open(AddSiteDialogComponent, {
+      height: '450px',
+      width: '400px',
+    });
+}
 
 }

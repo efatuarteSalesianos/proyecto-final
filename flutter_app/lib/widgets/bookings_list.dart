@@ -22,6 +22,21 @@ class BookingsSiteList extends StatefulWidget {
 class _BookingsSiteListState extends State<BookingsSiteList> {
   late AppointmentRepository appointmentRepository;
   late AppointmentsBloc _appointmentBloc;
+  var myMenuItems = <String>[
+    'Editar',
+    'Eliminar',
+  ];
+
+  void onSelect(item) {
+    switch (item) {
+      case 'Editar':
+        print('Editar clicked');
+        break;
+      case 'Eliminar':
+        print('Eliminar clicked');
+        break;
+    }
+  }
 
   @override
   void initState() {
@@ -89,66 +104,225 @@ class _BookingsSiteListState extends State<BookingsSiteList> {
 
   Widget _createAppointmentsView(
       BuildContext context, List<AppointmentResponse> appointments) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return GestureDetector(
-            onTap: () {},
-            child: _appointmentItem(context, appointments[index]));
-      },
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      scrollDirection: Axis.vertical,
-      itemCount: appointments.length,
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFFE5E5E5),
+      ),
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return GestureDetector(
+              onTap: () {},
+              child: _appointmentItem(context, appointments[index]));
+        },
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        scrollDirection: Axis.vertical,
+        itemCount: appointments.length,
+      ),
     );
   }
 
   Widget _appointmentItem(
       BuildContext context, AppointmentResponse appointment) {
+    String siteName = appointment.site;
+    String decodedSiteName =
+        utf8.decode(latin1.encode(siteName), allowMalformed: true);
+    String appointmentComment = appointment.description;
+    String decodedAppointmentComment =
+        utf8.decode(latin1.encode(appointmentComment), allowMalformed: true);
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      height: MediaQuery.of(context).size.height * 0.213,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Text(appointment.site,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white)),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-                height: 175,
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    gradient: LinearGradient(
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                        colors: [
-                          Colors.black.withOpacity(0.8),
-                          Colors.transparent
-                        ]))),
-          ),
-          Positioned(
-            top: 0,
-            child: Padding(
-              padding: const EdgeInsets.all(15),
-              child: Row(
-                children: [
-                  Text(appointment.date.toIso8601String(),
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 20)),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        height: MediaQuery.of(context).size.height * 0.20,
+        child: Card(
+            elevation: 10,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.23,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Text(getDayFromDate(appointment.date),
+                                  style: const TextStyle(
+                                      fontSize: 35,
+                                      color: Color(0xFFFF5A5F),
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                            Text(getMonthFromDate(appointment.date),
+                                style: const TextStyle(
+                                    fontSize: 35,
+                                    color: Color(0xFFFF5A5F),
+                                    fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const VerticalDivider(
+                  color: Colors.black26,
+                  thickness: 1,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 13.0),
+                          child: Text(decodedSiteName,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w700)),
+                        ),
+                        PopupMenuButton<String>(
+                            onSelected: onSelect,
+                            itemBuilder: (BuildContext context) {
+                              return myMenuItems.map((String choice) {
+                                return PopupMenuItem<String>(
+                                  value: choice,
+                                  child: Text(choice),
+                                );
+                              }).toList();
+                            })
+                      ],
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            child: Text(decodedAppointmentComment,
+                                softWrap: true,
+                                maxLines: 3,
+                                overflow: TextOverflow.ellipsis,
+                                style: const TextStyle(fontSize: 16)),
+                          ),
+                        ]),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.access_time,
+                                  color: Colors.black,
+                                  size: 22,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 3),
+                                  child: Text(appointment.hour,
+                                      style: const TextStyle(
+                                          fontSize: 21,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 55.0),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "◉",
+                                  style: TextStyle(
+                                      color:
+                                          getColorForStatus(appointment.status),
+                                      fontSize: 20),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(3.0, 2.0, 0, 0),
+                                  child: Text(
+                                    appointment.status,
+                                    style: TextStyle(
+                                        color: getColorForStatus(
+                                            appointment.status),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            )));
+  }
+
+  static const ESPERA = "ESPERA";
+  static const ACEPTADA = "ACEPTADA";
+  static const CANCELADA = "CANCELADA";
+
+  static const _colorMap = {
+    CANCELADA: Color(0xFFCC0000),
+    ACEPTADA: Color(0xFF6AA84F),
+    ESPERA: Color(0xFFF1C232)
+  };
+
+  static getColorForStatus(String status) => _colorMap[status];
+
+  static const _colorMapText = {
+    CANCELADA: Colors.white,
+    ACEPTADA: Colors.white,
+    ESPERA: Colors.black
+  };
+
+  static getColorTextForStatus(String status) => _colorMapText[status];
+
+  String getDayFromDate(String date) {
+    return date.split("-")[1];
+  }
+
+  String getMonthFromDate(String date) {
+    String month = date.split("-")[2];
+    switch (month) {
+      case "01":
+        return "Ene";
+      case "02":
+        return "Feb";
+      case "03":
+        return "Mar";
+      case "04":
+        return "Abr";
+      case "05":
+        return "May";
+      case "06":
+        return "Jun";
+      case "07":
+        return "Jul";
+      case "08":
+        return "Ago";
+      case "09":
+        return "Sep";
+      case "10":
+        return "Oct";
+      case "11":
+        return "Nov";
+      case "12":
+        return "Dic";
+      default:
+        return "";
+    }
   }
 }

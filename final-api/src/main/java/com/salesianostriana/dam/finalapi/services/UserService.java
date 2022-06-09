@@ -127,8 +127,8 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         }
     }
 
-    public List<UserEntity> findByRol(Rol rol) {
-        return userRepository.findUserEntityByRol(rol);
+    public List<GetPropietarioDto> findByRol(Rol rol) {
+        return userRepository.findUserEntityByRol(rol).stream().map(userDtoConverter::toGetPropietarioDto).collect(Collectors.toList());
     }
 
     public GetUserDto getUserProfileByUsername(String username) {

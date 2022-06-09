@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
-import { UserResponse } from '../models/interfaces/user.interface';
+import { PropietarioResponse, UserResponse } from '../models/interfaces/user.interface';
 
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({
@@ -20,6 +20,11 @@ export class UserService {
 
   listarUsuarios(): Observable<UserResponse[]> {
     let requestUrl = `${environment.API_BASE_URL}/users`;
+    return this.http.get<UserResponse[]>(requestUrl, DEFAULT_HEADERS);
+  }
+
+  listarPropietarios(): Observable<PropietarioResponse[]> {
+    let requestUrl = `${environment.API_BASE_URL}/users/propietarios`;
     return this.http.get<UserResponse[]>(requestUrl, DEFAULT_HEADERS);
   }
 

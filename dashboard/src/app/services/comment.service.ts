@@ -1,9 +1,9 @@
-import { SiteDTO } from './../models/dto/site.dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SiteResponse } from '../models/interfaces/site.interface';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
+import { CommentDTO } from '../models/dto/comment.dto';
+import { CommentResponse } from '../models/interfaces/comment.dto';
 
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({
@@ -19,23 +19,28 @@ export class CommentService {
 
   constructor(private http: HttpClient) { }
 
-  getAllSites(): Observable<SiteResponse[]> {
-    let requestUrl = `${environment.API_BASE_URL}/site/`;
-    return this.http.get<SiteResponse[]>(requestUrl, DEFAULT_HEADERS);
+  addComment(siteId: number, comment: CommentDTO) {
+    let requestUrl = `${environment.API_BASE_URL}/site/${siteId}/comment`;
+    return this.http.post(requestUrl, comment, DEFAULT_HEADERS);
   }
 
-  getSiteById(id: number): Observable<SiteResponse> {
-    let requestUrl = `${environment.API_BASE_URL}/site/${id}`;
-    return this.http.get<SiteResponse>(requestUrl, DEFAULT_HEADERS);
+  getAllComments(id: number): Observable<CommentResponse[]> {
+    let requestUrl = `${environment.API_BASE_URL}/site/${id}/comment`;
+    return this.http.get<CommentResponse[]>(requestUrl, DEFAULT_HEADERS);
   }
 
-  editSite(id: number, site: SiteDTO): Observable<SiteResponse> {
-    let requestUrl = `${environment.API_BASE_URL}/site/${id}`;
-    return this.http.put<SiteResponse>(requestUrl, site, DEFAULT_HEADERS);
+  getCommentById(siteId: number, commentId: number): Observable<CommentResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/site/${siteId}/comment/${commentId}`;
+    return this.http.get<CommentResponse>(requestUrl, DEFAULT_HEADERS);
   }
 
-  deleteSite(id: number) {
-    let requestUrl = `${environment.API_BASE_URL}/site/${id}`;
+  editComment(siteid: number, commentId: number, comment: CommentDTO): Observable<CommentResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/site/${siteid}/comment/${commentId}`;
+    return this.http.put<CommentResponse>(requestUrl, comment, DEFAULT_HEADERS);
+  }
+
+  deleteComment(siteId: number, commentId: number) {
+    let requestUrl = `${environment.API_BASE_URL}/site/${siteId}/comment/${commentId}`;
     return this.http.delete(requestUrl, DEFAULT_HEADERS);
   }
 }

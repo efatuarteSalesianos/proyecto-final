@@ -5,7 +5,7 @@ export class SiteDTO {
   description:	string;
   address:	string;
   city: string;
-  postalCode: Date;
+  postalCode: string;
   email: string;
   phone: string;
   web: string;
@@ -19,7 +19,7 @@ export class SiteDTO {
     this.description = '';
     this.address = '';
     this.city = '';
-    this.postalCode = new Date();
+    this.postalCode = '';
     this.email = '';
     this.phone = '';
     this.web = '';

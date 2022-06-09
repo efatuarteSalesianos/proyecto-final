@@ -247,6 +247,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                                 final createAppointmentDto =
                                     CreateAppointmentDto(
                                         date: _dateController.text,
+                                        hour: _hourController.text,
                                         description:
                                             _descriptionController.text);
                                 BlocProvider.of<AppointmentsBloc>(context).add(

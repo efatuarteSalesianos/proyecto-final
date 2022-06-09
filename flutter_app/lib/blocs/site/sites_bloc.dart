@@ -93,7 +93,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
       FetchFavouriteSites event, Emitter<SitesState> emit) async {
     try {
       final sites = await siteRepository.fetchFavouriteSites();
-      emit(SitesFetched(sites));
+      emit(FavouriteSitesFetched(sites));
       return;
     } on Exception catch (e) {
       emit(SitesFetchError(e.toString()));

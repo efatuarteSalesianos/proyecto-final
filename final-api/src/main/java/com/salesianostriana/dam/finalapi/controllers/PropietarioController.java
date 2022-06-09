@@ -34,32 +34,6 @@ public class PropietarioController {
     private final UserService userEntityService;
     private final UserDtoConverter userDtoConverter;
 
-    @Operation(summary = "Se muestra una lista de todos los propietarios")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200",
-                    description = "Se muestra la lista de propietarios correctamente",
-                    content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = Site.class))}),
-            @ApiResponse(responseCode = "404",
-                    description = "La lista de propietarios está vacía",
-                    content = @Content),
-            @ApiResponse(responseCode = "403",
-                    description = "Acceso denegado",
-                    content = @Content)
-    })
-    @GetMapping("/")
-    public ResponseEntity<List<GetPropietarioDto>> getPropietarios() {
-        List<GetPropietarioDto> propietarios = userEntityService.findByRol(Rol.PROPIETARIO)
-                .stream()
-                .map(userDtoConverter::toGetPropietarioDto)
-                .collect(Collectors.toList());
-        if(propietarios.isEmpty())
-            return ResponseEntity.notFound().build();
-
-        return ResponseEntity
-                .ok().body(propietarios);
-    }
-
     @Operation(summary = "Se muestran los datos de un propietario")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200",

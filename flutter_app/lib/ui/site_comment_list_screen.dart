@@ -122,16 +122,21 @@ class _CommentListState extends State<CommentList> {
 
   Widget _createCommentsView(
       BuildContext context, List<CommentResponse> comments) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: _commentItem(context, comments[index]),
-        );
-      },
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      scrollDirection: Axis.vertical,
-      itemCount: comments.length,
+    return Container(
+      decoration: const BoxDecoration(
+        color: Color(0xFFE5E5E5),
+      ),
+      child: ListView.builder(
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: _commentItem(context, comments[index]),
+          );
+        },
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        scrollDirection: Axis.vertical,
+        itemCount: comments.length,
+      ),
     );
   }
 
@@ -146,9 +151,9 @@ class _CommentListState extends State<CommentList> {
     String decodeCommentDescription =
         utf8.decode(latin1.encode(commentDescription), allowMalformed: true);
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.28,
+      height: MediaQuery.of(context).size.height * 0.29,
       child: Card(
-        color: const Color(0xFFE5E5E5),
+        color: Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           child: Column(
@@ -162,11 +167,11 @@ class _CommentListState extends State<CommentList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 5.0),
+                        padding: const EdgeInsets.only(top: 6.0),
                         child: Text(decodedClienteName,
                             style: const TextStyle(
                               fontSize: 16,
-                              fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w600,
                             )),
                       ),
                       Padding(
@@ -204,7 +209,7 @@ class _CommentListState extends State<CommentList> {
                         decodeCommentTitle,
                         style: const TextStyle(
                           fontSize: 18,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w700,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
@@ -213,6 +218,9 @@ class _CommentListState extends State<CommentList> {
                         padding: const EdgeInsets.only(top: 10.0),
                         child: Text(
                           decodeCommentDescription,
+                          style: const TextStyle(
+                            fontSize: 15,
+                          ),
                           softWrap: true,
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
@@ -225,6 +233,9 @@ class _CommentListState extends State<CommentList> {
                             padding: const EdgeInsets.only(top: 10.0),
                             child: Text(
                               decodeCommentDescription,
+                              style: const TextStyle(
+                                fontSize: 15,
+                              ),
                               softWrap: true,
                               overflow: TextOverflow.fade,
                             ),

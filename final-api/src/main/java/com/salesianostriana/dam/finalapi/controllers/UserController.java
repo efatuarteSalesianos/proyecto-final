@@ -2,6 +2,7 @@ package com.salesianostriana.dam.finalapi.controllers;
 
 import com.amazonaws.Response;
 import com.salesianostriana.dam.finalapi.dtos.user.*;
+import com.salesianostriana.dam.finalapi.models.Rol;
 import com.salesianostriana.dam.finalapi.models.UserEntity;
 import com.salesianostriana.dam.finalapi.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -122,6 +123,25 @@ public class UserController {
             return ResponseEntity.noContent().build();
         else
             return ResponseEntity.ok(users);
+    }
+
+    @Operation(summary = "Método para obtener todos los propietarios dados de alta en la aplicación.", description = "Método para obtener todos los usuarios dados de alta en la aplicación.", tags = "Usuarios")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200",
+                    description = "Se ha obtenido correctamente el listado de propietarios.",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GetUserDto.class))}),
+            @ApiResponse(responseCode = "403",
+                    description = "Acceso denegado.",
+                    content = @Content)
+    })
+    @GetMapping("/users/propietarios")
+    public ResponseEntity<List<GetPropietarioDto>> getAllPropietarios(@AuthenticationPrincipal UserEntity userEntity){
+        List<GetPropietarioDto> propietarios = userService.findByRol(Rol.PROPIETARIO);
+        if (propietarios.isEmpty())
+            return ResponseEntity.noContent().build();
+        else
+            return ResponseEntity.ok(propietarios);
     }
 
     @Operation(summary = "Método para convertir a un usuario en administrador.", description = "Método para convertir a un usuario en administrador.", tags = "Usuarios")

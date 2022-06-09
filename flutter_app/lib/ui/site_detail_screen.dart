@@ -79,7 +79,7 @@ class _SiteDetailState extends State<SiteDetailScreen> {
   _createBody(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-          height: MediaQuery.of(context).size.height * 0.9,
+          height: MediaQuery.of(context).size.height * 1.0,
           color: Colors.white,
           child:
               BlocConsumer<SitesBloc, SitesState>(listenWhen: (context, state) {

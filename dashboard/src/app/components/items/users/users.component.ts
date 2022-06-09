@@ -49,4 +49,19 @@ export class UsersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  deleteUser(id: number) {
+    this.userService.deleteUser(id).subscribe(res => {
+      console.log(res);
+      this.ngOnInit();
+    });
+  }
+
+  openDeleteDialog(id: number) {
+    if(confirm("¿Estás seguro de que quieres borrar este usuario?")) {
+      this.deleteUser(id);
+    } else {
+      return;
+    }
+  }
+
 }
