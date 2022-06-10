@@ -27,4 +27,44 @@ class UserRepositoryImpl extends UserRepository {
       throw Exception('Failed to load profile');
     }
   }
+
+  @override
+  Future<UserResponse> editUser(UserResponse user) async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http.put(
+      Uri.parse('${Constant.apiBaseUrl}/me'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+      body: json.encode(user.toJson()),
+    );
+    if (response.statusCode == 200) {
+      final jsonResponse = json.decode(response.body);
+      return UserResponse.fromJson(jsonResponse);
+    } else {
+      throw Exception('Failed to edit profile');
+    }
+  }
+
+  @override
+  Future<void> deleteUser(String id) async {
+    String token = PreferenceUtils.getString('TOKEN')!;
+
+    final response = await http.delete(
+      Uri.parse('${Constant.apiBaseUrl}/delete/$id'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Failed to delete profile');
+    }
+  }
 }

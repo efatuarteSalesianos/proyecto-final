@@ -113,7 +113,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
 
   void _addLike(FetchLike event, Emitter<SitesState> emit) async {
     try {
-      emit(const SiteFetchLike());
+      emit(SiteFetchLike(event.id));
       return;
     } on Exception catch (e) {
       emit(SiteFetchLikeError(e.toString()));
@@ -122,7 +122,7 @@ class SitesBloc extends Bloc<SitesEvent, SitesState> {
 
   void _removeLike(FetchDislike event, Emitter<SitesState> emit) async {
     try {
-      emit(const SiteFetchDislike());
+      emit(SiteFetchDislike(event.id));
       return;
     } on Exception catch (e) {
       emit(SiteFetchLikeError(e.toString()));

@@ -1,7 +1,9 @@
+import { AddUserDialogComponent } from './../../dialogs/add-user-dialog/add-user-dialog.component';
 import { UserService } from './../../../services/user.service';
 import { UserResponse } from './../../../models/interfaces/user.interface';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-users',
@@ -14,7 +16,7 @@ export class UsersComponent implements OnInit {
   usuarios!: UserResponse[];
   dataSource = new MatTableDataSource(this.usuarios);
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.userService.listarUsuarios().subscribe(res => {
@@ -64,4 +66,10 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  openDialogNewUser(){
+    this.dialog.open(AddUserDialogComponent, {
+      height: '450px',
+      width: '400px',
+    });
+  }
 }

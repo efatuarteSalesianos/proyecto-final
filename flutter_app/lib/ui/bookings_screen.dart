@@ -27,7 +27,7 @@ class _BookingsScreenState extends State<BookingsScreen> {
         shadowColor: const Color(0xFFFF5A5F),
         backgroundColor: const Color(0xFFFF5A5F),
         foregroundColor: const Color(0xFFFFFFFF),
-        title: Text('Mis Reservas'),
+        title: const Text('Mis Reservas'),
         actions: [
           IconButton(
               icon: const Icon(Icons.exit_to_app),

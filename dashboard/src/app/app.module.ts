@@ -24,6 +24,7 @@ import { CommentsComponent } from './components/items/comments/comments.componen
 import { AppointmentsComponent } from './components/items/appointments/appointments.component';
 import { SiteDetailComponent } from './components/pages/site-detail/site-detail.component';
 import { AddSiteDialogComponent } from './components/dialogs/add-site-dialog/add-site-dialog.component';
+import { AddUserDialogComponent } from './components/dialogs/add-user-dialog/add-user-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AddSiteDialogComponent } from './components/dialogs/add-site-dialog/add
     CommentsComponent,
     AppointmentsComponent,
     SiteDetailComponent,
-    AddSiteDialogComponent
+    AddSiteDialogComponent,
+    AddUserDialogComponent
   ],
   imports: [
     BrowserModule,

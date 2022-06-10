@@ -116,7 +116,7 @@ class _CreateAppointmentScreenState extends State<CreateAppointmentScreen> {
                                   confirmText: 'Seleccionar',
                                   helpText: 'Seleccione la fecha para su cita',
                                   errorInvalidText: 'Formato de fecha inválido',
-                                  locale: const Locale('es', 'ES'),
+                                  //locale: const Locale('es', 'ES'),
                                   initialDate: DateTime.now()
                                       .subtract(const Duration(days: 10 * 365)),
                                   firstDate: DateTime(1900),

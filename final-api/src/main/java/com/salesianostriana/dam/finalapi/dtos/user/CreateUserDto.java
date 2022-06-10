@@ -41,7 +41,6 @@ public class CreateUserDto {
     private String verifyEmail;
 
     @Past(message = "{userEntity.birthday.past}")
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
 
     @NotBlank(message = "{userEntity.phone.blank}")

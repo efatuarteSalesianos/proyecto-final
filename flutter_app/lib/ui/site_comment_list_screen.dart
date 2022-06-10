@@ -151,6 +151,7 @@ class _CommentListState extends State<CommentList> {
     String decodeCommentDescription =
         utf8.decode(latin1.encode(commentDescription), allowMalformed: true);
     return SizedBox(
+      //TODO: Ajustar altura según texto
       height: MediaQuery.of(context).size.height * 0.29,
       child: Card(
         color: Colors.white,

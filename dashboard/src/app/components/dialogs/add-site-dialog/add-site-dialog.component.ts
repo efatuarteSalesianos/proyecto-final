@@ -1,10 +1,10 @@
 import { SiteResponse } from './../../../models/interfaces/site.interface';
-import { SiteDTO } from './../../../models/dto/site.dto';
-import { SiteService } from './../../../services/site.service';
 import { UserService } from './../../../services/user.service';
-import { UserResponse } from './../../../models/interfaces/user.interface';
+import { PropietarioResponse } from './../../../models/interfaces/user.interface';
+import { SiteDTO } from './../../../models/dto/site.dto';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SiteService } from 'src/app/services/site.service';
 
 @Component({
   selector: 'app-add-site-dialog',
@@ -13,22 +13,29 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class AddSiteDialogComponent implements OnInit {
 
-  createSite!: SiteDTO;
+  siteDto = new SiteDTO();
   site!: SiteResponse;
-  propietariosList: UserResponse[] = [];
-  propietarioId!: number;
-  constructor( private userService: UserService, private route: ActivatedRoute, private siteService: SiteService) { }
+  propietariosList: PropietarioResponse [] = [];
+  constructor(private siteService: SiteService, private snackBar: MatSnackBar, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.userService.listarPropietarios().subscribe(propietario =>{
-      this.propietariosList = propietario;
+    this.userService.listarPropietarios().subscribe(result => {
+      this.propietariosList = result;
     });
   }
 
-    addSite(){
-      this.siteService.addSite(this.createSite).subscribe(result => {
+  addSite() {
+    if(this.siteDto.name===""||this.siteDto.address===""||
+      this.siteDto.city===""||this.siteDto.email===""||this.siteDto.postalCode===""
+      ||this.siteDto.phone===""){
+      this.snackBar.open('Faltan datos del negocio', 'Aceptar');
+    }else{
+      this.siteService.addSite(this.siteDto).subscribe(result => {
         this.site = result;
+        this.snackBar.open('Se ha creado el negocio correctamente', 'Aceptar');
+        history.go(0)
       });
     }
+  }
 
 }

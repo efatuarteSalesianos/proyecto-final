@@ -7,10 +7,7 @@ import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.CommentDtoConverter;
 import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
-import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
+import com.salesianostriana.dam.finalapi.dtos.site.*;
 import com.salesianostriana.dam.finalapi.errores.excepciones.*;
 import com.salesianostriana.dam.finalapi.models.*;
 import com.salesianostriana.dam.finalapi.repositories.*;
@@ -86,7 +83,7 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         return save(site);
     }
 
-    public Site editSite(Long siteId, CreateSiteDto createSiteDto, MultipartFile file) {
+    public Site editSite(Long siteId, EditSiteDto editSiteDto, MultipartFile file) {
         Optional<Site> siteOptional = findById(siteId);
         try {
 
@@ -95,17 +92,17 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
             awsS3Service.deleteObject(site.getOriginalFile().substring(site.getOriginalFile().lastIndexOf("/") + 1));
             awsS3Service.deleteObject(site.getScaledFile().substring(site.getScaledFile().lastIndexOf("/") + 1));
 
-            site.setName(createSiteDto.getName());
-            site.setDescription(createSiteDto.getDescription());
-            site.setAddress(createSiteDto.getAddress());
-            site.setCity(createSiteDto.getCity());
-            site.setPhone(createSiteDto.getPhone());
-            site.setPostalCode(createSiteDto.getPostalCode());
-            site.setEmail(createSiteDto.getEmail());
-            site.setPhone(createSiteDto.getPhone());
-            site.setWeb(createSiteDto.getWeb());
-            site.setOpeningHour(createSiteDto.getOpeningHour());
-            site.setClosingHour(createSiteDto.getClosingHour());
+            site.setName(editSiteDto.getName());
+            site.setDescription(editSiteDto.getDescription());
+            site.setAddress(editSiteDto.getAddress());
+            site.setCity(editSiteDto.getCity());
+            site.setPhone(editSiteDto.getPhone());
+            site.setPostalCode(editSiteDto.getPostalCode());
+            site.setEmail(editSiteDto.getEmail());
+            site.setPhone(editSiteDto.getPhone());
+            site.setWeb(editSiteDto.getWeb());
+            site.setOpeningHour(editSiteDto.getOpeningHour());
+            site.setClosingHour(editSiteDto.getClosingHour());
 
             //Check if file is image or video and save it
             if (file != null) {

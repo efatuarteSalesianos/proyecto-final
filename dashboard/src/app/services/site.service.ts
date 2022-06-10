@@ -19,8 +19,9 @@ export class SiteService {
 
   constructor(private http: HttpClient) { }
 
-  addSite(site: SiteDTO): Observable<SiteResponse> {
-    return this.http.post<SiteResponse>(`${environment.API_BASE_URL}/site/`, site, DEFAULT_HEADERS);
+  addSite(siteDto: SiteDTO): Observable<SiteResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/site/`;
+    return this.http.post<SiteResponse>(requestUrl, siteDto, DEFAULT_HEADERS);
   }
 
   getAllSites(): Observable<SiteResponse[]> {

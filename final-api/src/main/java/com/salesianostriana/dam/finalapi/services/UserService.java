@@ -158,7 +158,7 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
         }
     }
 
-    public GetUserDto editMyProfile (CreateUserDto newUser, MultipartFile file, UserEntity userEntity) {
+    public GetUserDto editMyProfile (EditUserDto newUser, MultipartFile file, UserEntity userEntity) {
         Optional<UserEntity> userOptional = findById(userEntity.getId());
 
         if (userOptional.isEmpty()) {
@@ -170,12 +170,12 @@ public class UserService extends BaseService<UserEntity, UUID, UserRepository> i
             awsS3Service.deleteObject(userEntityPresent.getAvatar().substring(userEntityPresent.getAvatar().lastIndexOf("/") + 1));
             String fileUrl = awsS3Service.storeCompressed(file);
 
-            userEntity.setUsername(newUser.getUsername());
+            userEntity.setUsername(userOptional.get().getUsername());
             userEntity.setAvatar(fileUrl);
             userEntity.setBirthDate(newUser.getBirthDate());
             userEntity.setEmail(newUser.getEmail());
             userEntity.setPhone(newUser.getPhone());
-            userEntity.setPassword(passwordEncoder.encode(newUser.getPassword()));
+            userEntity.setPassword(passwordEncoder.encode(userOptional.get().getPassword()));
 
             return userDtoConverter.toGetUserDto(save(userEntity));
         }

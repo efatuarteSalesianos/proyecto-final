@@ -10,7 +10,11 @@ class RatingBarWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: List.generate(5, (index) {
         return Icon(
-          index < value ? Icons.star : Icons.star_border,
+          index + 1 <= value
+              ? Icons.star
+              : value > index + 0.33 && value < index + 1 - 0.33
+                  ? Icons.star_half
+                  : Icons.star_border,
         );
       }),
     );

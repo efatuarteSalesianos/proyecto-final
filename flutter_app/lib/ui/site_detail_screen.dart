@@ -191,14 +191,17 @@ class _SiteDetailState extends State<SiteDetailScreen> {
                     TextButton(
                         onPressed: () => launch(
                             'https://www.google.com/maps/search/?api=1&query=$decodeName, $decodeAddress, ${site.postalCode}, ${site.city}'),
-                        child: Text(
-                          '$decodeAddress, ${site.postalCode}, ${site.city}',
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.fade,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Color(0xFF3366BB),
+                        child: Flexible(
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: Text(
+                              '$decodeAddress, ${site.postalCode}, ${site.city}',
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Color(0xFF3366BB),
+                              ),
+                            ),
                           ),
                         )),
                   ],

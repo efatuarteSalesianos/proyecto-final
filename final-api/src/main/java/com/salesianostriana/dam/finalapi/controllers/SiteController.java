@@ -4,10 +4,7 @@ import com.salesianostriana.dam.finalapi.dtos.appointment.CreateAppointmentDto;
 import com.salesianostriana.dam.finalapi.dtos.appointment.GetAppointmentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.CreateCommentDto;
 import com.salesianostriana.dam.finalapi.dtos.comment.GetCommentDto;
-import com.salesianostriana.dam.finalapi.dtos.site.CreateSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetListSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.GetSiteDto;
-import com.salesianostriana.dam.finalapi.dtos.site.SiteDtoConverter;
+import com.salesianostriana.dam.finalapi.dtos.site.*;
 import com.salesianostriana.dam.finalapi.errores.excepciones.BadRequestException;
 import com.salesianostriana.dam.finalapi.errores.excepciones.CantCommentWithoutAppointmentException;
 import com.salesianostriana.dam.finalapi.models.AppointmentPK;
@@ -252,7 +249,7 @@ public class SiteController {
                     content = @Content)
     })
     @PutMapping("/{id}")
-    public ResponseEntity<GetSiteDto> editSite(@PathVariable Long id, @Valid @RequestPart("newSite") CreateSiteDto newSite,
+    public ResponseEntity<GetSiteDto> editSite(@PathVariable Long id, @Valid @RequestPart("newSite") EditSiteDto newSite,
                                                  @RequestPart("file") MultipartFile file,
                                                  @AuthenticationPrincipal UserEntity userEntity) {
         return ResponseEntity.status(HttpStatus.OK).body(siteDtoConverter.toGetSiteDto(siteService.editSite(id, newSite, file)));

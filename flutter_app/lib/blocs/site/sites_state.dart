@@ -95,17 +95,19 @@ class SitesFetchError extends SitesState {
 }
 
 class SiteFetchLike extends SitesState {
-  const SiteFetchLike();
+  final int id;
+  const SiteFetchLike(this.id);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [id];
 }
 
 class SiteFetchDislike extends SitesState {
-  const SiteFetchDislike();
+  final int id;
+  const SiteFetchDislike(this.id);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [id];
 }
 
 class SiteFetchLikeError extends SitesState {

@@ -1,3 +1,6 @@
+import { RegisterDTO } from './../models/dto/register.dto';
+import { SiteResponse } from './../models/interfaces/site.interface';
+import { SiteDTO } from './../models/dto/site.dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -18,6 +21,11 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  addUser(userDto: RegisterDTO): Observable<UserResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/auth/register`;
+    return this.http.post<UserResponse>(requestUrl, userDto, DEFAULT_HEADERS);
+  }
+
   listarUsuarios(): Observable<UserResponse[]> {
     let requestUrl = `${environment.API_BASE_URL}/users`;
     return this.http.get<UserResponse[]>(requestUrl, DEFAULT_HEADERS);
@@ -25,7 +33,7 @@ export class UserService {
 
   listarPropietarios(): Observable<PropietarioResponse[]> {
     let requestUrl = `${environment.API_BASE_URL}/users/propietarios`;
-    return this.http.get<UserResponse[]>(requestUrl, DEFAULT_HEADERS);
+    return this.http.get<PropietarioResponse[]>(requestUrl, DEFAULT_HEADERS);
   }
 
   getUserByUsername(username: string): Observable<UserResponse> {

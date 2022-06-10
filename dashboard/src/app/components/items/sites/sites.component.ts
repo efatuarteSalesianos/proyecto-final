@@ -3,7 +3,7 @@ import { SiteResponse } from '../../../models/interfaces/site.interface';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SiteService } from 'src/app/services/site.service';
-import { MatDialog } from '@angular/material/dialog/dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-sites',
@@ -12,7 +12,7 @@ import { MatDialog } from '@angular/material/dialog/dialog';
 })
 export class SitesComponent implements OnInit {
 
-  displayedColumns: string[] = ['id', 'name', 'address', 'city', 'postalCode', 'phone', 'totalComments', 'rate', 'scaledFileUrl', 'actions'];
+  displayedColumns: string[] = ['scaledFileUrl', 'name', 'address', 'city', 'postalCode', 'phone', 'totalComments', 'rate', 'actions'];
 
   negocios!: SiteResponse[];
   dataSource = new MatTableDataSource(this.negocios);
@@ -46,7 +46,7 @@ export class SitesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialogAgregarInmobiliaria(){
+  openDialogNewSite(){
     this.dialog.open(AddSiteDialogComponent, {
       height: '450px',
       width: '400px',

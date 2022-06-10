@@ -215,7 +215,7 @@ public class UserController {
                     content = @Content)
     })
     @PutMapping("/me")
-    public ResponseEntity<GetUserDto> editMyProfile (@Valid @RequestPart CreateUserDto newUser,
+    public ResponseEntity<GetUserDto> editMyProfile (@Valid @RequestPart EditUserDto newUser,
                                                      @RequestPart MultipartFile file,
                                                      @AuthenticationPrincipal UserEntity userEntity){
         return ResponseEntity.status(HttpStatus.OK).body(userService.editMyProfile(newUser, file, userEntity));

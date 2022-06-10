@@ -1,1 +1,49 @@
-<p>add-site-dialog works!</p>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput placeholder="Descripción" [(ngModel)]="siteDto.description" name="description" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Dirección</mat-label>
+        <input matInput placeholder="Dirección" [(ngModel)]="siteDto.address" name="address" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Ciudad</mat-label>
+        <input matInput placeholder="Ciudad" [(ngModel)]="siteDto.city" name="city" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Código Postal</mat-label>
+        <input matInput placeholder="Código Postal" [(ngModel)]="siteDto.postalCode" name="postalCode" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Correo Electrónico</mat-label>
+        <input matInput placeholder="Correo Electrónico" [(ngModel)]="siteDto.email" name="email" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput placeholder="Teléfono" [(ngModel)]="siteDto.phone" name="phone" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-form-field appearance="outline">
+        <mat-label>Web</mat-label>
+        <input matInput placeholder="Sitio Web" [(ngModel)]="siteDto.web" name="web" required>
+    </mat-form-field>
+</div>
+<div class="col-2">
+    <mat-select>
+        <mat-option *ngFor="let propietario of propietariosList" value="{{propietario.id}}">{{propietario.fullName}}</mat-option>
+    </mat-select>
+    <mat-action-list>
+        <button mat-button (click)="addSite()" class="bg-primary">Crear</button>
+    </mat-action-list>

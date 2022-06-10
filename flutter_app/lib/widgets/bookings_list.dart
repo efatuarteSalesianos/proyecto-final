@@ -179,11 +179,19 @@ class _BookingsSiteListState extends State<BookingsSiteList> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 13.0),
-                          child: Text(decodedSiteName,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w700)),
-                        ),
+                            padding: const EdgeInsets.only(top: 13.0),
+                            child: Flexible(
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                child: Text(
+                                  decodedSiteName,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ),
+                            )),
                         PopupMenuButton<String>(
                             onSelected: onSelect,
                             itemBuilder: (BuildContext context) {
@@ -291,11 +299,11 @@ class _BookingsSiteListState extends State<BookingsSiteList> {
   static getColorTextForStatus(String status) => _colorMapText[status];
 
   String getDayFromDate(String date) {
-    return date.split("-")[1];
+    return date.split("-")[2];
   }
 
   String getMonthFromDate(String date) {
-    String month = date.split("-")[2];
+    String month = date.split("-")[1];
     switch (month) {
       case "01":
         return "Ene";

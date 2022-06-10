@@ -160,7 +160,11 @@ class _SiteListState extends State<SiteList> {
               padding: const EdgeInsets.all(15),
               child: GestureDetector(
                 onTap: () {
-                  _siteBloc.add(FetchLike(site.id));
+                  if (!site.liked) {
+                    _siteBloc.add(FetchLike(site.id));
+                  } else {
+                    _siteBloc.add(FetchDislike(site.id));
+                  }
                 },
                 child: LikeButton(
                   size: 30,

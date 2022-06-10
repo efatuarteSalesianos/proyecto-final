@@ -124,15 +124,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
             content: const Text('¿Está seguro que desea eliminar su cuenta?'),
             actions: [
               TextButton(
-                  onPressed: () {
-                    setState(() {});
-
-                    Navigator.of(context).pop();
-                  },
+                  onPressed: () => {
+                        //TODO: call delete user function
+                        Navigator.pop(ctx),
+                        PreferenceUtils.clear(),
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()))
+                      },
                   child: const Text('Si')),
               TextButton(
                   onPressed: () {
-                    Navigator.of(context).pop();
+                    Navigator.pop(ctx);
                   },
                   child: const Text('No'))
             ],
