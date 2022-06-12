@@ -39,9 +39,14 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('username', res.username);
         localStorage.setItem('avatar', res.avatar);
         this.router.navigate(['/home']);
+      } else if (res.rol == 'Propietario') {
+        localStorage.setItem('token', res.token);
+        localStorage.setItem('username', res.username);
+        localStorage.setItem('avatar', res.avatar);
+        this.router.navigate(['/home/propietario']);
       }
       else {
-        alert('Solo los administradores pueden entrar a la aplicación.')
+        alert('Sólo puedes entrar si eres administrador o propietario.')
       }
     });
   }

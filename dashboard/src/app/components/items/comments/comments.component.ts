@@ -23,13 +23,14 @@ export class CommentsComponent implements OnInit {
       this.siteId = params['id'];
       this.commentService.getAllComments(this.siteId).subscribe(result => {
         this.comments = result;
+        this.dataSource = new MatTableDataSource(this.comments);
         console.log(this.comments);
       });
     });
   }
 
-  deleteComment(appointmentId: number) {
-    this.commentService.deleteComment(this.siteId, appointmentId).subscribe(
+  deleteComment(commentId: number) {
+    this.commentService.deleteComment(this.siteId, commentId).subscribe(
       res => {
         console.log(res);
       }

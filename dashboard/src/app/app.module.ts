@@ -25,6 +25,9 @@ import { AppointmentsComponent } from './components/items/appointments/appointme
 import { SiteDetailComponent } from './components/pages/site-detail/site-detail.component';
 import { AddSiteDialogComponent } from './components/dialogs/add-site-dialog/add-site-dialog.component';
 import { AddUserDialogComponent } from './components/dialogs/add-user-dialog/add-user-dialog.component';
+import { EditSiteComponent } from './components/dialogs/edit-site/edit-site.component';
+import { EditUserComponent } from './components/dialogs/edit-user/edit-user.component';
+import { HomePropietariosComponent } from './components/pages/home-propietarios/home-propietarios.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +49,10 @@ import { AddUserDialogComponent } from './components/dialogs/add-user-dialog/add
     AppointmentsComponent,
     SiteDetailComponent,
     AddSiteDialogComponent,
-    AddUserDialogComponent
+    AddUserDialogComponent,
+    EditSiteComponent,
+    EditUserComponent,
+    HomePropietariosComponent
   ],
   imports: [
     BrowserModule,

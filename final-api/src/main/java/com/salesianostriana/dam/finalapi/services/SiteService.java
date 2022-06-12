@@ -165,8 +165,8 @@ public class SiteService extends BaseService<Site, Long, SiteRepository> {
         }
     }
 
-    public List<GetListSiteDto> getAllSitesByPropietario(Long id) {
-        List<GetListSiteDto> sitesByUserEntity = siteRepository.findByPropietarioId(id);
+    public List<GetListSiteDto> getAllSitesByPropietario(String username) {
+        List<GetListSiteDto> sitesByUserEntity = siteRepository.findByPropietarioUsername(username);
 
         if (sitesByUserEntity.isEmpty()) {
             throw new ListEntityNotFoundException(Site.class);

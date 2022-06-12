@@ -26,6 +26,7 @@ export class AppointmentsComponent implements OnInit {
       this.siteId = params['id'];
       this.appointmentService.getAllAppointments(this.siteId).subscribe(result => {
         this.appointments = result;
+        this.dataSource = new MatTableDataSource(this.appointments);
         console.log(this.appointments);
       });
     });

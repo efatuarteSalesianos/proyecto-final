@@ -24,6 +24,11 @@ export class SiteService {
     return this.http.post<SiteResponse>(requestUrl, siteDto, DEFAULT_HEADERS);
   }
 
+  getAllSitesByPropietario(username: String): Observable<SiteResponse[]> {
+    let requestUrl = `${environment.API_BASE_URL}/site/?propietario=${username}`;
+    return this.http.get<SiteResponse[]>(requestUrl, DEFAULT_HEADERS);
+  }
+
   getAllSites(): Observable<SiteResponse[]> {
     let requestUrl = `${environment.API_BASE_URL}/site/`;
     return this.http.get<SiteResponse[]>(requestUrl, DEFAULT_HEADERS);

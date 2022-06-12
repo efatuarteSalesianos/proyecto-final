@@ -36,48 +36,30 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
           title: const Text('Mi Cuenta'),
         ),
         body: BlocProvider(
-            create: ((context) => _userBloc),
-            child:
-                BlocBuilder<UsersBloc, UsersState>(builder: (context, state) {
-              if (state is UsersInitial) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is MyProfileFetched) {
-                return _createBody(context);
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            })));
+            create: (context) => _userBloc, child: _createBody(context)));
   }
 
-  _createBody(BuildContext context) {
+  _createBody(BuildContext ctx) {
     return SingleChildScrollView(
       child: Container(
-          height: MediaQuery.of(context).size.height * 1.0,
+          height: MediaQuery.of(ctx).size.height * 1.0,
           color: Colors.white,
-          child:
-              BlocConsumer<UsersBloc, UsersState>(listenWhen: (context, state) {
-            return state is MyProfileFetched || state is ProfileFetchError;
-          }, listener: (context, state) {
-            if (state is MyProfileFetched) {
-            } else if (state is ProfileFetchError) {
-              _showSnackbar(context, state.message);
-            }
-          }, buildWhen: (context, state) {
-            return state is UsersInitial || state is ProfileFetchError;
-          }, builder: (context, state) {
-            if (state is UsersInitial) {
-              return const Center(child: CircularProgressIndicator());
-            } else if (state is MyProfileFetched) {
-              return _myProfileForm(state.me);
-            } else if (state is ProfileFetchError) {
-              _showSnackbar(context, state.message);
-            }
-            return const Text('Ha ocurrido un error');
-          })),
+          child: BlocBuilder<UsersBloc, UsersState>(
+              bloc: _userBloc,
+              builder: (ctx, state) {
+                if (state is UsersInitial) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is MyProfileFetched) {
+                  return _myProfileForm(ctx, state.me);
+                } else if (state is ProfileFetchError) {
+                  _showSnackbar(context, state.message);
+                }
+                return const Text('Ha ocurrido un error');
+              })),
     );
   }
 
-  Widget _myProfileForm(UserResponse user) {
+  Widget _myProfileForm(BuildContext context, UserResponse user) {
     String name = user.fullName;
     String decodeName = utf8.decode(latin1.encode(name), allowMalformed: true);
     return Container(

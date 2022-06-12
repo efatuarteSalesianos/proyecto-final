@@ -1,3 +1,5 @@
+import { EditSiteComponent } from './../../dialogs/edit-site/edit-site.component';
+import { Router } from '@angular/router';
 import { AddSiteDialogComponent } from './../../dialogs/add-site-dialog/add-site-dialog.component';
 import { SiteResponse } from '../../../models/interfaces/site.interface';
 import { Component, OnInit } from '@angular/core';
@@ -17,7 +19,7 @@ export class SitesComponent implements OnInit {
   negocios!: SiteResponse[];
   dataSource = new MatTableDataSource(this.negocios);
 
-  constructor(private siteService: SiteService, private dialog: MatDialog) { }
+  constructor(private siteService: SiteService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
     this.siteService.getAllSites().subscribe(res => {
@@ -29,13 +31,13 @@ export class SitesComponent implements OnInit {
   deleteSite(id: number) {
     this.siteService.deleteSite(id).subscribe(res => {
       console.log(res);
+      this.ngOnInit();
     });
   }
 
   openDeleteDialog(id: number) {
     if(confirm("¿Estás seguro de que quieres borrar este negocio?")) {
       this.deleteSite(id);
-      this.ngOnInit();
     } else {
       return;
     }
@@ -51,6 +53,17 @@ export class SitesComponent implements OnInit {
       height: '450px',
       width: '400px',
     });
-}
+  }
+
+  openDialogEditSite(site: SiteResponse){
+    this.dialog.open(EditSiteComponent, {
+      height: '450px',
+      width: '400px',
+    });
+  }
+
+  openDetailSite(id: number) {
+    this.router.navigate(['/site', id]);
+  }
 
 }

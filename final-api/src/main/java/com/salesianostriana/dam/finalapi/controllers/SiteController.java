@@ -31,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -188,9 +189,9 @@ public class SiteController {
                     description = "Acceso denegado.",
                     content = @Content)
     })
-    @GetMapping(value = "/", params = {"propietarioId"})
-    public ResponseEntity<List<GetListSiteDto>> getAllSitesByPropietario(@PathVariable Long propietarioId){
-        List<GetListSiteDto> sites = siteRepository.findByPropietarioId(propietarioId);
+    @GetMapping(value = "/", params = {"username"})
+    public ResponseEntity<List<GetListSiteDto>> getAllSitesByPropietario(@PathVariable String username){
+        List<GetListSiteDto> sites = siteRepository.findByPropietarioUsername(username);
         if (sites.isEmpty()){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }

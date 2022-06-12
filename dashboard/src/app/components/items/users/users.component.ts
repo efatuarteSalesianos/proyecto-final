@@ -1,3 +1,4 @@
+import { EditUserComponent } from './../../dialogs/edit-user/edit-user.component';
 import { AddUserDialogComponent } from './../../dialogs/add-user-dialog/add-user-dialog.component';
 import { UserService } from './../../../services/user.service';
 import { UserResponse } from './../../../models/interfaces/user.interface';
@@ -64,6 +65,13 @@ export class UsersComponent implements OnInit {
     } else {
       return;
     }
+  }
+
+  openDialogEditUser(user: UserResponse){
+    this.dialog.open(EditUserComponent, {
+      height: '450px',
+      width: '400px',
+    });
   }
 
   openDialogNewUser(){

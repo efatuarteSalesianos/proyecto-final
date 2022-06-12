@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface SiteRepository extends JpaRepository<Site, Long> {
 
@@ -40,7 +41,7 @@ public interface SiteRepository extends JpaRepository<Site, Long> {
                 s.id, s.name, s.address, s.city, s.phone, s.postalCode, (select count(*) from Comment c where c.site.id = s.id), (select avg(c.rate) from Comment c where c.site.id = s.id), s.scaledFile, s.liked
             )
             from Site s
-            where s.propietario.id = :id
+            where s.propietario.username = :username
             """)
-    List<GetListSiteDto> findByPropietarioId(@Param("id") Long id);
+    List<GetListSiteDto> findByPropietarioUsername(@Param("username") String username);
 }
