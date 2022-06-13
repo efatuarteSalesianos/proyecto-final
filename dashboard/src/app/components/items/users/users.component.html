@@ -1,51 +1,50 @@
-<button style="margin-top: 30px; margin-bottom: 50px; display: flex; margin-left: auto;" mat-raised-button color="primary" (click)="openDialogNewUser()">Nuevo Usuario</button>
-<div class="main" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+<div class="main" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-raised-button color="primary" (click)="openDialogNewUser()" style="margin-top: 2%">Nuevo Usuario</button>
     <mat-form-field appearance="standard">
         <mat-label>Filtro</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
-
     <div class="table-container" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z20">
 
             <ng-container matColumnDef="avatar">
-                <th mat-header-cell *matHeaderCellDef> Avatar </th>
-                <td mat-cell *matCellDef="let element"><img src={{element.avatar}} /></td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Avatar </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"><img src={{element.avatar}} /></td>
             </ng-container>
 
             <ng-container matColumnDef="fullName">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Nombre </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.fullName}} </td>
             </ng-container>
 
             <ng-container matColumnDef="username">
-                <th mat-header-cell *matHeaderCellDef> Usuario </th>
-                <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Usuario </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.username}} </td>
             </ng-container>
 
             <ng-container matColumnDef="email">
-                <th mat-header-cell *matHeaderCellDef> Correo Electrónico </th>
-                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Correo Electrónico </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.email}} </td>
             </ng-container>
 
             <ng-container matColumnDef="birthDate">
-                <th mat-header-cell *matHeaderCellDef> Fecha de Nacimiento </th>
-                <td mat-cell *matCellDef="let element"> {{element.birthDate}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Fecha de Nacimiento </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.birthDate}} </td>
             </ng-container>
 
             <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef> Teléfono </th>
-                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Teléfono </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.phone}} </td>
             </ng-container>
 
             <ng-container matColumnDef="rol">
-                <th mat-header-cell *matHeaderCellDef> Rol </th>
-                <td mat-cell *matCellDef="let element"> {{element.rol}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Rol </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.rol}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Acciones </th>
+                <td mat-cell *matCellDef="let element" class="td-cell">
                     <button (click)="openDialogEditUser(element)" mat-icon-button matTooltip="Click to Edit User" class="iconbutton" color="primary">
                     <mat-icon aria-label="Edit">edit</mat-icon>
                   </button>

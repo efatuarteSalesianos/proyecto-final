@@ -1,0 +1,46 @@
+.site-card {
+    min-height: 300px;
+}
+
+.site-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 100%;
+    font-weight: bold;
+    margin-top: 5%;
+}
+
+.site-overview {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    max-width: 90%;
+    display: inline-block;
+}
+
+.site-image {
+    width: 100%;
+    overflow: hidden;
+    height: 200px;
+    border-radius: 20px;
+}
+
+.site-image:hover {
+    cursor: pointer;
+}
+
+.site-image img {
+    object-fit: cover;
+    transition: transform .5s ease;
+}
+
+.site-image:hover img {
+    transform: scale(1.3);
+    /* 130% de la escala original */
+    transition: transform .5s ease;
+}
+
+.icon_text {
+    vertical-align: middle;
+}

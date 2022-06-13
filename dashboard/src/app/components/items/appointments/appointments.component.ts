@@ -53,4 +53,12 @@ export class AppointmentsComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  formatDate(date: string) {
+    const dateArray = date.split('-');
+    const day = dateArray[2];
+    const month = dateArray[1];
+    const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    return `${day} de ${months[Number(month) - 1]}`;
+  }
+
 }

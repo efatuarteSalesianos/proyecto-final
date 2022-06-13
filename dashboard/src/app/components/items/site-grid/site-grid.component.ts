@@ -1,29 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { SiteResponse } from 'src/app/models/interfaces/site.interface';
 import { SiteService } from 'src/app/services/site.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { SiteResponse } from 'src/app/models/interfaces/site.interface';
 import { AddSiteDialogComponent } from '../../dialogs/add-site-dialog/add-site-dialog.component';
 import { EditSiteComponent } from '../../dialogs/edit-site/edit-site.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-home-propietarios',
-  templateUrl: './home-propietarios.component.html',
-  styleUrls: ['./home-propietarios.component.css']
+  selector: 'app-site-grid',
+  templateUrl: './site-grid.component.html',
+  styleUrls: ['./site-grid.component.css']
 })
-export class HomePropietariosComponent implements OnInit {
+export class SiteGridComponent implements OnInit {
 
-  negocios!: SiteResponse[];
-  dataSource = new MatTableDataSource(this.negocios);
+  @Input() site! : SiteResponse;
 
   constructor(private siteService: SiteService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit(): void {
-    this.siteService.getAllSitesByPropietario(localStorage.getItem('usernamePropietario')!).subscribe(res => {
-      this.negocios = res;
-      this.dataSource = new MatTableDataSource(this.negocios);
-    });
   }
 
   deleteSite(id: number) {
@@ -39,11 +33,6 @@ export class HomePropietariosComponent implements OnInit {
     } else {
       return;
     }
-  }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
   openDialogNewSite(){
@@ -64,4 +53,12 @@ export class HomePropietariosComponent implements OnInit {
     this.router.navigate(['/site', id]);
   }
 
+  //build rate bar with stars depends on site rate
+  buildRateBar(rate: number) {
+    let rateBar = '';
+    for(let i = 0; i < rate; i++) {
+      rateBar += '<i class="fas fa-star"></i>';
+    }
+    return rateBar;
+  }
 }

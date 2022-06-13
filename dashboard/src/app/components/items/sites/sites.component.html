@@ -1,55 +1,55 @@
-<div class="main" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
-    <button style="margin-top: 30px; margin-bottom: 50px; display: flex; margin-left: auto;" mat-raised-button color="primary" (click)="openDialogNewSite()">Añadir Negocio</button>
+<div class="main" fxLayout="column" fxLayoutAlign="start center">
+    <button mat-raised-button color="primary" (click)="openDialogNewSite()" style="margin-top: 2%">Añadir Negocio</button>
     <mat-form-field appearance="standard">
         <mat-label>Filtro</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
     <div class="table-container" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z20">
 
             <ng-container matColumnDef="scaledFileUrl">
-                <th mat-header-cell *matHeaderCellDef> Avatar </th>
-                <td mat-cell *matCellDef="let element"><img class="img-avatar" (click)="openDetailSite(element.id)" src={{element.scaledFileUrl}} /> </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Avatar </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"><img class="img-avatar" (click)="openDetailSite(element.id)" src={{element.scaledFileUrl}} /> </td>
             </ng-container>
 
             <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Nombre </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Nombre </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef="address">
-                <th mat-header-cell *matHeaderCellDef> Calle </th>
-                <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Calle </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.address}} </td>
             </ng-container>
 
             <ng-container matColumnDef="city">
-                <th mat-header-cell *matHeaderCellDef> Ciudad </th>
-                <td mat-cell *matCellDef="let element"> {{element.city}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Ciudad </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.city}} </td>
             </ng-container>
 
             <ng-container matColumnDef="postalCode">
-                <th mat-header-cell *matHeaderCellDef> Código Postal </th>
-                <td mat-cell *matCellDef="let element"> {{element.postalCode}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Código Postal </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.postalCode}} </td>
             </ng-container>
 
             <ng-container matColumnDef="phone">
-                <th mat-header-cell *matHeaderCellDef> Teléfono </th>
-                <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Teléfono </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.phone}} </td>
             </ng-container>
 
             <ng-container matColumnDef="totalComments">
-                <th mat-header-cell *matHeaderCellDef> Comentarios </th>
-                <td mat-cell *matCellDef="let element"> {{element.totalComments}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Comentarios </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.totalComments}} </td>
             </ng-container>
 
             <ng-container matColumnDef="rate">
-                <th mat-header-cell *matHeaderCellDef> Valoración Media </th>
-                <td mat-cell *matCellDef="let element"> {{element.rate}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Valoración Media </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.rate}} </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Acciones </th>
+                <td mat-cell *matCellDef="let element" class="td-cell">
                     <button mat-icon-button matTooltip="Click to Edit Site" class="iconbutton" color="primary">
                                 <mat-icon aria-label="Edit">edit</mat-icon>
                               </button>
@@ -67,3 +67,4 @@
             </tr>
         </table>
     </div>
+</div>

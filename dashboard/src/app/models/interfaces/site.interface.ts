@@ -3,6 +3,7 @@ export interface SiteResponse {
   name: string;
   address: string;
   city: string;
+  phone: string;
   postalCode: string;
   totalComments: number;
   rate: number;

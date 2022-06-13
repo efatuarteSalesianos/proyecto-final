@@ -28,6 +28,13 @@ import { AddUserDialogComponent } from './components/dialogs/add-user-dialog/add
 import { EditSiteComponent } from './components/dialogs/edit-site/edit-site.component';
 import { EditUserComponent } from './components/dialogs/edit-user/edit-user.component';
 import { HomePropietariosComponent } from './components/pages/home-propietarios/home-propietarios.component';
+import { SiteGridComponent } from './components/items/site-grid/site-grid.component';
+import { ToolbarPropietarioComponent } from './components/shared/toolbar-propietario/toolbar-propietario.component';
+import { StarRatingModule } from 'angular-star-rating';
+import { registerLocaleData } from '@angular/common';
+import localeES from '@angular/common/locales/es';
+
+registerLocaleData(localeES, 'es');
 
 @NgModule({
   declarations: [
@@ -52,7 +59,9 @@ import { HomePropietariosComponent } from './components/pages/home-propietarios/
     AddUserDialogComponent,
     EditSiteComponent,
     EditUserComponent,
-    HomePropietariosComponent
+    HomePropietariosComponent,
+    ToolbarPropietarioComponent,
+    SiteGridComponent
   ],
   imports: [
     BrowserModule,
@@ -61,9 +70,11 @@ import { HomePropietariosComponent } from './components/pages/home-propietarios/
     MaterialImportsModule,
     FormsModule,
     ReactiveFormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    StarRatingModule.forRoot()
   ],
-  providers: [Title],
+
+  providers: [Title, { provide: localeES, useValue: 'es' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

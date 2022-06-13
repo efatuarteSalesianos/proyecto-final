@@ -1,45 +1,40 @@
-<div class="main" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
+<div class="main" fxLayout="column" fxLayoutAlign="start center">
     <mat-form-field appearance="standard">
         <mat-label>Filtro</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Buscar..." #input>
     </mat-form-field>
 
     <div class="table-container" fxFlexFill fxLayout="column" fxLayoutAlign="start center">
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-            <ng-container matColumnDef="id">
-                <th mat-header-cell *matHeaderCellDef> Nº </th>
-                <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-            </ng-container>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z20">
 
             <ng-container matColumnDef="cliente">
-                <th mat-header-cell *matHeaderCellDef> Cliente </th>
-                <td mat-cell *matCellDef="let element"> {{element.cliente}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Cliente </th>
+                <td mat-cell *matCellDef="let element" style="width:15%; text-align: start; vertical-align: middle;"> {{element.cliente}} </td>
             </ng-container>
 
             <ng-container matColumnDef="date">
-                <th mat-header-cell *matHeaderCellDef> Día </th>
-                <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Día </th>
+                <td mat-cell *matCellDef="let element" class="td-cell" style="width:15%;"> {{formatDate(element.date)}} </td>
             </ng-container>
 
             <ng-container matColumnDef="hour">
-                <th mat-header-cell *matHeaderCellDef> Hora </th>
-                <td mat-cell *matCellDef="let element"> {{element.hour} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Hora </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.hour}} </td>
             </ng-container>
 
             <ng-container matColumnDef="description">
-                <th mat-header-cell *matHeaderCellDef> Descripción </th>
-                <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Descripción </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> {{element.description}} </td>
             </ng-container>
 
             <ng-container matColumnDef="image">
-                <th mat-header-cell *matHeaderCellDef> Avatar </th>
-                <td mat-cell *matCellDef="let element"> <img class="img-avatar" src={{element.scaledFileUrl}} /> </td>
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Avatar </th>
+                <td mat-cell *matCellDef="let element" class="td-cell"> <img class="img-avatar" src={{element.scaledFileUrl}} /> </td>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-                <th mat-header-cell *matHeaderCellDef> Acciones </th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef style="font-size: 1.2em; color: black; font-weight: bold; text-align:center !important"> Acciones </th>
+                <td mat-cell *matCellDef="let element" class="td-cell">
                     <button (click)="confirmDelete(element.id)" mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
                 <mat-icon aria-label="Delete">delete</mat-icon>
               </button>

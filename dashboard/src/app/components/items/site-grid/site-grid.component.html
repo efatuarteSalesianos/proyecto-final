@@ -1,0 +1,20 @@
+<mat-card class="site-card" style="margin-top: 30px;" class="mat-elevation-z20">
+    <br>
+    <div class="site-image">
+        <img [src]="site.scaledFileUrl" (click)="openDetailSite(site.id)" height="200px" width="100%" />
+    </div>
+    <h2 class="site-title" style="text-align: center; margin-bottom: -10px;">{{site.name}}</h2><br>
+    <span class="icon_text"><mat-icon aria-label="Adress" style="color: red; margin-top: 4px; margin-left: -5px; margin-right: 5px;">place</mat-icon><span class="site-overview">{{site.address}}, {{site.postalCode}}, {{site.city}}</span><br></span>
+    <span class="icon_text"><mat-icon aria-label="Phone" style="color: red; margin-top: 4px; margin-left: -5px; margin-right: 5px;">phone</mat-icon><span class="site-overview">{{site.phone}}</span><br></span>
+    <span class="icon_text"><span class="site-overview"><b>Valoración</b>: {{site.rate}}</span>
+    <mat-icon aria-label="Rate" style="color: red; margin-left: 3px;">star</mat-icon>
+    </span><br>
+    <mat-card-actions align="end">
+        <button (click)="openDialogEditSite(site)" mat-icon-button matTooltip="Click to Edit Site" class="iconbutton" color="primary">
+      <mat-icon aria-label="Delete">edit</mat-icon>
+    </button>
+        <button (click)="openDeleteDialog(site.id)" mat-icon-button matTooltip="Click to Delete" class="iconbutton" color="warn">
+      <mat-icon aria-label="Delete">delete</mat-icon>
+    </button>
+    </mat-card-actions>
+</mat-card>
