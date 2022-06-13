@@ -1,49 +1,113 @@
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Nombre</mat-label>
-        <input matInput placeholder="Descripción" [(ngModel)]="siteDto.description" name="description" required>
-    </mat-form-field>
+<div style="text-align: center; background-color: #3F51B5; height: 13%; margin-bottom: 5%; position: relative;">
+    <h2 style="color: white; margin: 0; position: absolute; left: 33%; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Nuevo negocio</h2>
 </div>
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Dirección</mat-label>
-        <input matInput placeholder="Dirección" [(ngModel)]="siteDto.address" name="address" required>
-    </mat-form-field>
+<div class="col-12">
+    <div class="text-center" style="text-align: center;">
+        <input type="file" class="file-input" onchange="handleFileInput($event.target.files)" #fileUpload>
+        <div class="file-upload">
+            {{fileName || "Debe subir una foto del negocio."}}
+            <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
+   <mat-icon>attach_file</mat-icon>
+</button>
+        </div>
+    </div>
 </div>
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Ciudad</mat-label>
-        <input matInput placeholder="Ciudad" [(ngModel)]="siteDto.city" name="city" required>
-    </mat-form-field>
+<div style="padding: 8% 15%;">
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Nombre</mat-label>
+            <input matInput placeholder="Nombre" name="name" formControlName="name" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['name'].dirty || newSiteForm.controls['name']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('name')?.hasError('required')">
+                Debe introducir el nombre del negocio.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Dirección</mat-label>
+            <input matInput placeholder="Dirección" name="address" formControlName="address" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['address'].dirty || newSiteForm.controls['address']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('address')?.hasError('required')">
+                Debe introducir una dirección.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Ciudad</mat-label>
+            <input matInput placeholder="Ciudad" name="city" formControlName="city" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['city'].dirty || newSiteForm.controls['city']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('city')?.hasError('required')">
+                Debe introducir una ciudad.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="Correo Electrónico" name="email" formControlName="email" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['email'].dirty || newSiteForm.controls['email']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('email')?.hasError('required')">
+                Debe introducir su email.
+            </div>
+            <div *ngIf="newSiteForm.get('email')?.hasError('email')">
+                Debe introducir un email válido.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Código Postal</mat-label>
+            <input matInput placeholder="Código Postal" name="postalCode" formControlName="postalCode" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['postalCode'].dirty || newSiteForm.controls['postalCode']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('postalCode')?.hasError('required')">
+                Debe introducir un código postal.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Teléfono</mat-label>
+            <input matInput placeholder="Teléfono" name="phone" formControlName="phone" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['phone'].dirty || newSiteForm.controls['phone']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('phone')?.hasError('required')">
+                Debe introducir un teléfono.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Página Web</mat-label>
+            <input matInput placeholder="Página Web" name="web" formControlName="web" required>
+        </mat-form-field>
+        <div *ngIf="newSiteForm.controls['web'].dirty || newSiteForm.controls['web']?.touched" class="alert alert-danger">
+            <div *ngIf="newSiteForm.get('web')?.hasError('required')">
+                Debe introducir una dirección web.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Propietario</mat-label>
+            <mat-select name="propietarioId" formControlName="propietarioId" required>
+                <mat-option *ngFor="let propietario of propietariosList" [value]="propietario.id">
+                    {{propietario.fullName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div style="margin-left: 66.5%; margin-top: 5%">
+        <div class="col-3">
+            <mat-action-list>
+                <button mat-raised-button color="primary" (click)="addSite()">Registrar</button>
+            </mat-action-list>
+        </div>
+    </div>
 </div>
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Código Postal</mat-label>
-        <input matInput placeholder="Código Postal" [(ngModel)]="siteDto.postalCode" name="postalCode" required>
-    </mat-form-field>
-</div>
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Correo Electrónico</mat-label>
-        <input matInput placeholder="Correo Electrónico" [(ngModel)]="siteDto.email" name="email" required>
-    </mat-form-field>
-</div>
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Teléfono</mat-label>
-        <input matInput placeholder="Teléfono" [(ngModel)]="siteDto.phone" name="phone" required>
-    </mat-form-field>
-</div>
-<div class="col-2">
-    <mat-form-field appearance="outline">
-        <mat-label>Web</mat-label>
-        <input matInput placeholder="Sitio Web" [(ngModel)]="siteDto.web" name="web" required>
-    </mat-form-field>
-</div>
-<div class="col-2">
-    <mat-select>
-        <mat-option *ngFor="let propietario of propietariosList" value="{{propietario.id}}">{{propietario.fullName}}</mat-option>
-    </mat-select>
-    <mat-action-list>
-        <button mat-button (click)="addSite()" class="bg-primary">Crear</button>
-    </mat-action-list>
