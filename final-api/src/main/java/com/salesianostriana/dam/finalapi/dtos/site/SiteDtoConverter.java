@@ -41,14 +41,17 @@ public class SiteDtoConverter {
         return GetListSiteDto.builder()
                 .id(site.getId())
                 .name(site.getName())
+                .description(site.getDescription())
                 .address(site.getAddress())
                 .city(site.getCity())
+                .email(site.getEmail())
                 .phone(site.getPhone())
                 .postalCode(site.getPostalCode())
                 .totalComments((site.getComments().size()))
                 .rate(average_rate(site.getComments()))
                 .scaledFileUrl(site.getScaledFile())
                 .liked(site.isLiked())
+                .propietario(site.getPropietario().getFullName())
                 .build();
     }
 

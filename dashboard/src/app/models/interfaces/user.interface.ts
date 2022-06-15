@@ -1,22 +1,22 @@
 export interface UserResponse {
+  id: string;
   fullName: string;
   username: string;
   email: string;
   avatar: string;
   birthDate: Date;
-  phone : number;
-  num_negocios: number;
+  phone : string;
   rol: string;
 }
 
 export interface PropietarioResponse {
-  id: number;
+  id: string;
   fullName: string;
   username: string;
   email: string;
   avatar: string;
   birthDate: Date;
-  phone : number;
+  phone : string;
   num_negocios: number;
   rol: string;
 }

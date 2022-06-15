@@ -1,11 +1,10 @@
 import { RegisterDTO } from './../models/dto/register.dto';
-import { SiteResponse } from './../models/interfaces/site.interface';
-import { SiteDTO } from './../models/dto/site.dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { PropietarioResponse, UserResponse } from '../models/interfaces/user.interface';
+import { EditUserDTO } from '../models/dto/edit-user.dto';
 
 const DEFAULT_HEADERS = {
   headers: new HttpHeaders({
@@ -46,7 +45,7 @@ export class UserService {
     return this.http.get<UserResponse>(requestUrl, DEFAULT_HEADERS);
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     let requestUrl = `${environment.API_BASE_URL}/user/${id}`;
     return this.http.delete(requestUrl, DEFAULT_HEADERS);
   }
@@ -54,5 +53,10 @@ export class UserService {
   giveAdmin(username: string): Observable<UserResponse> {
     let requestUrl = `${environment.API_BASE_URL}/users/${username}/admin`;
     return this.http.put<UserResponse>(requestUrl, null, DEFAULT_HEADERS);
+  }
+
+  editUser(userDto: EditUserDTO, id: string): Observable<UserResponse> {
+    let requestUrl = `${environment.API_BASE_URL}/profile/${id}`;
+    return this.http.put<UserResponse>(requestUrl, userDto, DEFAULT_HEADERS);
   }
 }

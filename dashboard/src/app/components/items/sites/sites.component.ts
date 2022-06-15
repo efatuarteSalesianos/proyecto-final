@@ -55,10 +55,11 @@ export class SitesComponent implements OnInit {
     });
   }
 
-  openDialogEditSite(site: SiteResponse){
+  openDialogEditSite(site: SiteResponse) {
     this.dialog.open(EditSiteComponent, {
       height: '450px',
       width: '400px',
+      data: site
     });
   }
 

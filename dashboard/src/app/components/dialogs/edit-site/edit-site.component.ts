@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { EditSiteDTO } from 'src/app/models/dto/edit-site.dto';
 import { SiteDTO } from 'src/app/models/dto/site.dto';
@@ -16,27 +17,63 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EditSiteComponent implements OnInit {
 
+  site!: SiteResponse;
+  formBuilder = new FormBuilder();
   editSiteForm!: FormGroup;
   siteDto = new SiteDTO();
-  site!: SiteResponse;
   propietariosList: PropietarioResponse [] = [];
-  loading: boolean = false; // Flag variable
+  name = "";
+  description = "";
+  address = "";
+  city = "";
+  postalCode = "";
+  email = "";
+  phone = "";
+  web = "";
+  propietario = "";
+  loading: boolean = false;
   fileName="";
   file: File | null = null;
-  constructor(private fileUploadService: UploadFileService, private siteService: SiteService, private snackBar: MatSnackBar, private userService: UserService) { }
+
+  constructor(@Inject(MAT_DIALOG_DATA) data: SiteResponse, private fileUploadService: UploadFileService, private siteService: SiteService, private snackBar: MatSnackBar, private userService: UserService) {
+    this.site = data;
+    this.name = data.name;
+    //this.description = data.description;
+    this.address = data.address;
+    this.city = data.city;
+    this.postalCode = data.postalCode;
+    this.email = data.email;
+    this.phone = data.phone;
+    this.web = data.web;
+    this.propietario = this.getPropietarioName(data.propietarioId)!;
+    console.log(data);
+  }
 
   ngOnInit(): void {
     this.editSiteForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      postalCode: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required]),
-      web: new FormControl('', [Validators.required]),
-      propietarioId: new FormControl('', [Validators.required]),
+      name: new FormControl(this.name, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      description: new FormControl(this.description, [Validators.required, Validators.maxLength(100)]),
+      address: new FormControl(this.address, [Validators.required]),
+      city: new FormControl(this.city, [Validators.required]),
+      postalCode: new FormControl(this.postalCode, [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+      email: new FormControl(this.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')]),
+      phone: new FormControl(this.phone, [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
+      web: new FormControl(this.web, [Validators.required, Validators.pattern('^(http(s)?://)?(www.)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$')]),
+      propietarioId: new FormControl(this.propietario, [Validators.required]),
     });
+
+    this.editSiteForm = this.formBuilder.group({
+      name: [this.name],
+      description: [this.description],
+      address: [this.address],
+      city: [this.city],
+      postalCode: [this.postalCode],
+      email: [this.email],
+      phone: [this.phone],
+      web: [this.web],
+      propietarioId: [this.propietario],
+    });
+
     this.userService.listarPropietarios().subscribe(result => {
       this.propietariosList = result;
     });
@@ -56,7 +93,7 @@ export class EditSiteComponent implements OnInit {
       this.siteDto.phone = this.editSiteForm.get('phone')?.value;
       this.siteDto.web = this.editSiteForm.get('web')?.value;
       this.siteDto.propietarioId = this.editSiteForm.get('propietarioId')?.value;
-      this.siteService.addSite(this.siteDto).subscribe(result => {
+      this.siteService.editSite(this.site.id, this.siteDto).subscribe(result => {
         this.site = result;
         this.snackBar.open('Se ha creado el negocio correctamente', 'Aceptar');
         history.go(0)
@@ -70,5 +107,10 @@ export class EditSiteComponent implements OnInit {
     this.fileUploadService.upload(this.file!).subscribe(result => {
       console.log(result);
     });
+  }
+
+  getPropietarioName(id: string) {
+      let propietario = this.propietariosList.find(x => x.id === id);
+      return propietario?.fullName;
   }
 }

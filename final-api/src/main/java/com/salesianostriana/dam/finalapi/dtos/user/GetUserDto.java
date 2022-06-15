@@ -15,7 +15,6 @@ public class GetUserDto {
     private String username;
     private String email;
     private String avatar;
-    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date birthDate;
     private String phone;
     private String rol;

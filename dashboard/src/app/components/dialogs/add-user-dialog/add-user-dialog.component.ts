@@ -24,12 +24,12 @@ export class AddUserDialogComponent implements OnInit {
 
   ngOnInit(): void {
     this.newUserForm = new FormGroup({
-      fullName: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      birthDate: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      fullName: new FormControl("", [Validators.required]),
+      username: new FormControl("", [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
+      email: new FormControl("", [Validators.required, Validators.email]),
+      birthDate: new FormControl("", [Validators.required]),
+      phone: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
+      password: new FormControl("", [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
     })
   }
 

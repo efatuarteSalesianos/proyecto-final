@@ -22,20 +22,22 @@ export class AddSiteDialogComponent implements OnInit {
   loading: boolean = false; // Flag variable
   fileName="";
   file: File | null = null;
+
   constructor(private fileUploadService: UploadFileService, private siteService: SiteService, private snackBar: MatSnackBar, private userService: UserService) { }
 
   ngOnInit(): void {
     this.newSiteForm = new FormGroup({
-      name: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required]),
-      address: new FormControl('', [Validators.required]),
-      city: new FormControl('', [Validators.required]),
-      postalCode: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required]),
-      web: new FormControl('', [Validators.required]),
-      propietarioId: new FormControl('', [Validators.required]),
+      name: new FormControl("", [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      description: new FormControl("", [Validators.required, Validators.maxLength(100)]),
+      address: new FormControl("", [Validators.required]),
+      city: new FormControl("", [Validators.required]),
+      postalCode: new FormControl("", [Validators.required, Validators.minLength(5), Validators.maxLength(5)]),
+      email: new FormControl("", [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')]),
+      phone: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
+      web: new FormControl("", [Validators.required, Validators.pattern('^(http(s)?://)?(www.)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$')]),
+      propietarioId: new FormControl("", [Validators.required]),
     });
+
     this.userService.listarPropietarios().subscribe(result => {
       this.propietariosList = result;
     });

@@ -29,9 +29,9 @@ import { EditSiteComponent } from './components/dialogs/edit-site/edit-site.comp
 import { EditUserComponent } from './components/dialogs/edit-user/edit-user.component';
 import { HomePropietariosComponent } from './components/pages/home-propietarios/home-propietarios.component';
 import { SiteGridComponent } from './components/items/site-grid/site-grid.component';
-import { ToolbarPropietarioComponent } from './components/shared/toolbar-propietario/toolbar-propietario.component';
 import { StarRatingModule } from 'angular-star-rating';
 import { registerLocaleData } from '@angular/common';
+import { MatNativeDateModule } from '@angular/material/core';
 import localeES from '@angular/common/locales/es';
 
 registerLocaleData(localeES, 'es');
@@ -60,7 +60,6 @@ registerLocaleData(localeES, 'es');
     EditSiteComponent,
     EditUserComponent,
     HomePropietariosComponent,
-    ToolbarPropietarioComponent,
     SiteGridComponent
   ],
   imports: [
@@ -71,6 +70,7 @@ registerLocaleData(localeES, 'es');
     FormsModule,
     ReactiveFormsModule,
     FlexLayoutModule,
+    MatNativeDateModule,
     StarRatingModule.forRoot()
   ],
 

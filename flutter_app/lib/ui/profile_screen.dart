@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/blocs/user/users_bloc.dart';
+import 'package:flutter_app/repositories/user/user_repository.dart';
+import 'package:flutter_app/repositories/user/user_repository_impl.dart';
 import 'package:flutter_app/ui/login_screen.dart';
 import 'package:flutter_app/ui/my_profile_screen.dart';
 import 'package:flutter_app/utils/shared_preferences.dart';
@@ -30,6 +33,17 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  late UserRepository userRepository;
+  late UsersBloc _userBloc;
+  String id = PreferenceUtils.getString('USER_ID')!;
+
+  @override
+  void initState() {
+    super.initState();
+    userRepository = UserRepositoryImpl();
+    _userBloc = UsersBloc(userRepository)..add(FetchDeleteMe(id));
+  }
+
   @override
   Widget build(BuildContext context) {
     String fullName = PreferenceUtils.getString('FULLNAME')!;

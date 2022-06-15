@@ -1,5 +1,5 @@
 <div style="text-align: center; background-color: #3F51B5; height: 13%; margin-bottom: 5%; position: relative;">
-    <h2 style="color: white; margin: 0; position: absolute; left: 33%; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Editar negocio</h2>
+    <h2 style="color: white; margin: 0; position: absolute; left: 33%; top: 50%; -ms-transform: translateY(-50%); transform: translateY(-50%);">Editar usuario</h2>
 </div>
 <div class="col-12">
     <div class="text-center" style="text-align: center;">
@@ -7,89 +7,130 @@
         <div class="file-upload">
             {{fileName || "Debe subir una foto del negocio."}}
             <button mat-mini-fab color="primary" class="upload-btn" (click)="fileUpload.click()">
-<mat-icon>attach_file</mat-icon>
+ <mat-icon>attach_file</mat-icon>
 </button>
         </div>
     </div>
 </div>
-<div style="padding: 8% 15%;">
+<form [formGroup]="editSiteForm" style="padding: 8% 15%;">
+    <div class="col-12" style="margin-left: 20%; margin-bottom: 7%">
+        <img src="{{fileName}}" alt="{{fileName}}" class="img-fluid" style="width: 100%;">
+    </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Nombre del negocio</mat-label>
-            <input matInput placeholder="Nombre del negocio" name="name" formControlName="name" required>
+            <input matInput placeholder="Nombre del negocio" formControlName="name" name="name" required>
         </mat-form-field>
         <div *ngIf="editSiteForm.controls['name'].dirty || editSiteForm.controls['name']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('name')?.hasError('required')">
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('required')">
                 Debe introducir el nombre del negocio.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('minlength')">
+                Debe introducir un nombre más largo.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('maxlength')">
+                Debe introducir un nombre más corto.
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <mat-form-field appearance="fill" fxFlex="100">
+            <mat-label>Descripción</mat-label>
+            <input matInput placeholder="Descripción" formControlName="description" name="description" required>
+        </mat-form-field>
+        <div *ngIf="editSiteForm.controls['description'].dirty || editSiteForm.controls['description']?.touched" class="alert alert-danger">
+            <div class="error" *ngIf="editSiteForm.get('description')?.hasError('required')">
+                Debe introducir una breve descripción del negocio.
             </div>
         </div>
     </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Dirección</mat-label>
-            <input matInput placeholder="Dirección" [(ngModel)]="siteDto.address" name="address" required>
+            <input matInput placeholder="Dirección" formControlName="address" name="address" required>
         </mat-form-field>
-        <div *ngIf="editSiteForm.controls['name'].dirty || editSiteForm.controls['name']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('name')?.hasError('required')">
-                Debe introducir su nombre completo.
+        <div *ngIf="editSiteForm.controls['address'].dirty || editSiteForm.controls['address']?.touched" class="alert alert-danger">
+            <div class="error" *ngIf="editSiteForm.get('address')?.hasError('required')">
+                Debe introducir una dirección.
             </div>
         </div>
     </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Ciudad</mat-label>
-            <input matInput placeholder="Ciudad" [(ngModel)]="siteDto.city" name="city" required>
+            <input matInput placeholder="Ciudad" formControlName="city" name="city" required>
         </mat-form-field>
         <div *ngIf="editSiteForm.controls['name'].dirty || editSiteForm.controls['name']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('name')?.hasError('required')">
-                Debe introducir su nombre completo.
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('required')">
+                Debe introducir una ciudad.
             </div>
         </div>
     </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Código Postal</mat-label>
-            <input matInput placeholder="Código Postal" [(ngModel)]="siteDto.postalCode" name="postalCode" required>
+            <input matInput placeholder="Código Postal" formControlName="postalCode" name="postalCode" required>
         </mat-form-field>
         <div *ngIf="editSiteForm.controls['name'].dirty || editSiteForm.controls['name']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('name')?.hasError('required')">
-                Debe introducir su nombre completo.
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('required')">
+                Debe introducir un código postal.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('minlength')">
+                Debe introducir un código postal más largo.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('name')?.hasError('maxlength')">
+                Debe introducir un código postal más corto.
             </div>
         </div>
     </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Email</mat-label>
-            <input matInput placeholder="Correo Electrónico" name="email" formControlName="email" required>
+            <input matInput placeholder="Correo Electrónico" formControlName="email" name="email" required>
         </mat-form-field>
         <div *ngIf="editSiteForm.controls['email'].dirty || editSiteForm.controls['email']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('email')?.hasError('required')">
-                Debe introducir el email del negocio.
+            <div class="error" *ngIf="editSiteForm.get('email')?.hasError('required')">
+                Debe introducir su email.
             </div>
-            <div *ngIf="editSiteForm.get('email')?.hasError('email')">
+            <div class="error" *ngIf="editSiteForm.get('email')?.hasError('email')">
                 Debe introducir un email válido.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('email')?.hasError('pattern')">
+                Debe introducir un correo electrónico válido.
             </div>
         </div>
     </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Teléfono</mat-label>
-            <input matInput placeholder="Teléfono" name="phone" formControlName="phone" required>
+            <input matInput placeholder="Teléfono" name="phone" required>
         </mat-form-field>
         <div *ngIf="editSiteForm.controls['phone'].dirty || editSiteForm.controls['phone']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('phone')?.hasError('required')">
+            <div class="error" *ngIf="editSiteForm.get('phone')?.hasError('required')">
                 Debe introducir el teléfono del negocio.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('phone')?.hasError('minlength')">
+                Debe introducir un teléfono más largo.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('phone')?.hasError('maxlength')">
+                Debe introducir un teléfono más corto.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('phone')?.hasError('pattern')">
+                Debe introducir un número de teléfono válido.
             </div>
         </div>
     </div>
     <div class="col-12">
         <mat-form-field appearance="fill" fxFlex="100">
             <mat-label>Web</mat-label>
-            <input matInput placeholder="Sitio Web" [(ngModel)]="siteDto.web" name="web" required>
+            <input matInput placeholder="Sitio Web" formControlName="web" name="web" required>
         </mat-form-field>
         <div *ngIf="editSiteForm.controls['web'].dirty || editSiteForm.controls['web']?.touched" class="alert alert-danger">
-            <div *ngIf="editSiteForm.get('web')?.hasError('required')">
+            <div class="error" *ngIf="editSiteForm.get('web')?.hasError('required')">
                 Debe introducir la url del negocio.
+            </div>
+            <div class="error" *ngIf="editSiteForm.get('web')?.hasError('pattern')">
+                Debe introducir una url válida.
             </div>
         </div>
     </div>
@@ -102,11 +143,11 @@
       </select>
         </mat-form-field>
     </div>
-    <div style="margin-left: 74%; margin-top: 5%">
+    <div style="margin-left: 70%; margin-top: 5%">
         <div class="col-3">
             <mat-action-list>
-                <button mat-raised-button color="primary" (click)="editSite()">Añadir</button>
+                <button mat-raised-button color="primary" (click)="editSite()">Guardar</button>
             </mat-action-list>
         </div>
     </div>
-</div>
+</form>

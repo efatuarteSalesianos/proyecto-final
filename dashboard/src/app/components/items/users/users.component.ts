@@ -52,14 +52,14 @@ export class UsersComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  deleteUser(id: number) {
+  deleteUser(id: string) {
     this.userService.deleteUser(id).subscribe(res => {
       console.log(res);
       this.ngOnInit();
     });
   }
 
-  openDeleteDialog(id: number) {
+  openDeleteDialog(id: string) {
     if(confirm("¿Estás seguro de que quieres borrar este usuario?")) {
       this.deleteUser(id);
     } else {
@@ -71,6 +71,7 @@ export class UsersComponent implements OnInit {
     this.dialog.open(EditUserComponent, {
       height: '450px',
       width: '400px',
+      data: user
     });
   }
 

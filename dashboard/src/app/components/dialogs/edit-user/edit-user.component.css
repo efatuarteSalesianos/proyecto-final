@@ -1,0 +1,14 @@
+.img-fluid {
+    max-width: 60%;
+    height: auto;
+    border-radius: 50%;
+}
+
+.error {
+    margin-top: -3%;
+    margin-left: 25%;
+    margin-bottom: 5%;
+    margin-right: 25%;
+    font-size: 12px;
+    color: red;
+}

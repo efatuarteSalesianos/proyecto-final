@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EditUserDTO } from 'src/app/models/dto/editUser.dto';
-import { RegisterDTO } from 'src/app/models/dto/register.dto';
+import { ActivatedRoute } from '@angular/router';
+import { EditUserDTO } from 'src/app/models/dto/edit-user.dto';
 import { UserResponse } from 'src/app/models/interfaces/user.interface';
 import { UploadFileService } from 'src/app/services/upload-file.service';
 import { UserService } from 'src/app/services/user.service';
@@ -15,26 +16,49 @@ import { UserService } from 'src/app/services/user.service';
 export class EditUserComponent implements OnInit {
 
   editUserForm!: FormGroup;
-  userDto = new RegisterDTO();
+  formBuilder = new FormBuilder();
+  userDto = new EditUserDTO();
   user!: UserResponse;
+  fullName = "";
+  username = "";
+  email = "";
+  birthDate = new Date();
+  phone = "";
   loading: boolean = false; // Flag variable
   fileName="";
   file: File | null = null;
 
-  constructor(private fileUploadService: UploadFileService, private snackBar: MatSnackBar, private userService: UserService) { }
+  constructor(@Inject(MAT_DIALOG_DATA) data: UserResponse, private fileUploadService: UploadFileService, private snackBar: MatSnackBar, private userService: UserService, private route : ActivatedRoute) {
+    this.user = data;
+    this.fullName = data.fullName;
+    this.username = data.username;
+    this.email = data.email;
+    this.birthDate = data.birthDate;
+    this.phone = data.phone;
+    this.fileName = data.avatar;
+  }
 
   ngOnInit(): void {
     this.editUserForm = new FormGroup({
-      fullName: new FormControl('', [Validators.required]),
-      username: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-      email: new FormControl('', [Validators.required, Validators.email]),
-      birthDate: new FormControl('', [Validators.required]),
-      phone: new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]),
-    })
+      fullName: new FormControl(this.fullName, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      username: new FormControl(this.username, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
+      email: new FormControl(this.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]),
+      birthDate: new FormControl(this.birthDate, [Validators.required, Validators.pattern('^[0-9]{4}-[0-9]{2}-[0-9]{2}$')]),
+      phone: new FormControl(this.phone, [Validators.required, Validators.pattern('^[0-9]{9}$'), Validators.minLength(9), Validators.maxLength(9)]),
+      avatar: new FormControl(this.fileName, [Validators.required]),
+    });
+
+    this.editUserForm = this.formBuilder.group({
+      fullName: [this.fullName],
+      username: [this.username],
+      email: [this.email],
+      birthDate: [this.birthDate],
+      phone: [this.phone],
+      avatar: [this.fileName],
+    });
   }
 
-  addUser() {
+  editUser() {
     if(this.userDto.fullName===""||this.userDto.username===""||
       this.userDto.email===""||this.userDto.email===""||this.userDto.phone==="") {
       this.snackBar.open('Faltan datos del usuario', 'Aceptar');
@@ -44,10 +68,10 @@ export class EditUserComponent implements OnInit {
       this.userDto.email = this.editUserForm.get('email')?.value;
       this.userDto.birthDate = this.editUserForm.get('birthDate')?.value;
       this.userDto.phone = this.editUserForm.get('phone')?.value;
-      this.userDto.password = this.editUserForm.get('password')?.value;
-      this.userService.addUser(this.userDto).subscribe(result => {
+      this.userDto.avatar = this.editUserForm.get('avatar')?.value;
+      this.userService.editUser(this.userDto, this.user.id).subscribe(result => {
         this.user = result;
-        this.snackBar.open('Se ha creado el usuario correctamente', 'Aceptar');
+        this.snackBar.open('Se ha guardado el usuario correctamente', 'Aceptar');
         history.go(0)
       });
     }
@@ -59,5 +83,13 @@ export class EditUserComponent implements OnInit {
     this.fileUploadService.upload(this.file!).subscribe(result => {
       console.log(result);
     });
+  }
+
+  //Parse date to string with format dd/mm/yyyy
+  parseDate(date: Date): string {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return day + "/" + month + "/" + year;
   }
 }
