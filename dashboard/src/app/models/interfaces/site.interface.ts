@@ -1,6 +1,7 @@
 export interface SiteResponse {
   id: number;
   name: string;
+  description: string;
   address: string;
   city: string;
   email: string;
@@ -10,5 +11,5 @@ export interface SiteResponse {
   web: string;
   rate: number;
   scaledFileUrl: string;
-  propietarioId: string;
+  propietario: string;
 }

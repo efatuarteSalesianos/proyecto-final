@@ -35,7 +35,7 @@ export class AddSiteDialogComponent implements OnInit {
       email: new FormControl("", [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')]),
       phone: new FormControl("", [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
       web: new FormControl("", [Validators.required, Validators.pattern('^(http(s)?://)?(www.)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$')]),
-      propietarioId: new FormControl("", [Validators.required]),
+      propietario: new FormControl("", [Validators.required]),
     });
 
     this.userService.listarPropietarios().subscribe(result => {

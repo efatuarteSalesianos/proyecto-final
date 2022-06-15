@@ -12,3 +12,17 @@
     font-size: 12px;
     color: red;
 }
+
+.file-upload p {
+    margin-top: 3%;
+    margin-left: 10%;
+    width: 80%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.upload-btn {
+    margin-top: -13%;
+    margin-left: -17%;
+}

@@ -22,6 +22,7 @@ export class EditSiteComponent implements OnInit {
   editSiteForm!: FormGroup;
   siteDto = new SiteDTO();
   propietariosList: PropietarioResponse [] = [];
+  id = 0;
   name = "";
   description = "";
   address = "";
@@ -36,20 +37,40 @@ export class EditSiteComponent implements OnInit {
   file: File | null = null;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: SiteResponse, private fileUploadService: UploadFileService, private siteService: SiteService, private snackBar: MatSnackBar, private userService: UserService) {
-    this.site = data;
-    this.name = data.name;
-    //this.description = data.description;
-    this.address = data.address;
-    this.city = data.city;
-    this.postalCode = data.postalCode;
-    this.email = data.email;
-    this.phone = data.phone;
-    this.web = data.web;
-    this.propietario = this.getPropietarioName(data.propietarioId)!;
-    console.log(data);
+    this.id = data.id;
   }
 
   ngOnInit(): void {
+
+    this.userService.listarPropietarios().subscribe(result => {
+      this.propietariosList = result;
+      console.log(this.propietariosList);
+      this.siteService.getSiteById(this.id).subscribe(result => {
+        this.name = result.name;
+        this.description = result.description;
+        this.address = result.address;
+        this.city = result.city;
+        this.postalCode = result.postalCode;
+        this.email = result.email;
+        this.phone = result.phone;
+        this.web = result.web;
+        this.propietario = result.propietario;
+        this.fileName = result.scaledFileUrl;
+
+        this.editSiteForm = this.formBuilder.group({
+          name: [this.name],
+          description: [this.description],
+          address: [this.address],
+          city: [this.city],
+          postalCode: [this.postalCode],
+          email: [this.email],
+          phone: [this.phone],
+          web: [this.web],
+          propietario: [this.propietario],
+        });
+      });
+    });
+
     this.editSiteForm = new FormGroup({
       name: new FormControl(this.name, [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       description: new FormControl(this.description, [Validators.required, Validators.maxLength(100)]),
@@ -59,23 +80,7 @@ export class EditSiteComponent implements OnInit {
       email: new FormControl(this.email, [Validators.required, Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$')]),
       phone: new FormControl(this.phone, [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('^[0-9]*$')]),
       web: new FormControl(this.web, [Validators.required, Validators.pattern('^(http(s)?://)?(www.)?[a-z0-9]+([-.]{1}[a-z0-9]+).[a-z]{2,5}(:[0-9]{1,5})?(/.*)?$')]),
-      propietarioId: new FormControl(this.propietario, [Validators.required]),
-    });
-
-    this.editSiteForm = this.formBuilder.group({
-      name: [this.name],
-      description: [this.description],
-      address: [this.address],
-      city: [this.city],
-      postalCode: [this.postalCode],
-      email: [this.email],
-      phone: [this.phone],
-      web: [this.web],
-      propietarioId: [this.propietario],
-    });
-
-    this.userService.listarPropietarios().subscribe(result => {
-      this.propietariosList = result;
+      propietario: new FormControl(this.propietario, [Validators.required]),
     });
   }
 
@@ -107,10 +112,5 @@ export class EditSiteComponent implements OnInit {
     this.fileUploadService.upload(this.file!).subscribe(result => {
       console.log(result);
     });
-  }
-
-  getPropietarioName(id: string) {
-      let propietario = this.propietariosList.find(x => x.id === id);
-      return propietario?.fullName;
   }
 }
