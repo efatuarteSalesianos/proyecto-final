@@ -38,11 +38,13 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('token', res.token);
         localStorage.setItem('username', res.username);
         localStorage.setItem('avatar', res.avatar);
+        localStorage.setItem('Rol', 'admin');
         this.router.navigate(['/home']);
       } else if (res.rol == 'Propietario') {
         localStorage.setItem('token', res.token);
         localStorage.setItem('username', res.username);
         localStorage.setItem('avatar', res.avatar);
+        localStorage.setItem('Rol', 'propietario');
         this.router.navigate(['/home/propietario']);
       }
       else {

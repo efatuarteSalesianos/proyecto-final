@@ -17,6 +17,14 @@ export class ToolbarComponent implements OnInit {
     return localStorage.getItem('username')
   }
 
+  setUrl() {
+    if (localStorage.getItem('Rol') === 'admin') {
+      return '/home';
+    } else {
+      return '/home/propietario';
+    }
+  }
+
   getAvatar() {
     return localStorage.getItem('avatar')
   }
