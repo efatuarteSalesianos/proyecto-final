@@ -1,6 +1,5 @@
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.001.png)
 
-**Proyecto Final de Grado ![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.002.png)**
+**Proyecto Final de Grado**
 
 **D.A.M**
 
@@ -58,7 +57,7 @@ La  investigación  de  mercado  realizada  mostró  que [ España  es  el  paí
 
 A continuación se detalla el[ volumen de negocio del sector estético dentro de España ](https://www.aquora.es/blog/el-negocio-de-las-peluquerias-y-los-centros-de-estetica-supera-los-3-500-millones-de-euros/)de peluquería y tratamientos de belleza del primer trimestre de 2015 al cuarto trimestre de 2020: 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.003.jpeg)
+![](grafica_evolucion_peluquerias.jpeg)
 
 **Explicación del nombre y logo de la aplicación** 
 
@@ -66,33 +65,33 @@ El nombre de la aplicación se basa en la palabra inglesa Salon, el cual se util
 
 Por otro lado, el logo es una clara referencia a los clásicos utensilios que se utilizan en peluquería. Se intenta ofrecer con el diseño del logo un estilo simple y ligero, en armonía con la experiencia de la aplicación. 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.004.png)
+![](logo_mysalon.png)
 
 **¿Qué ofrece la aplicación MySalon?** 
 
-`  `El uso principal de MySalon se basa en la gestión de citas en locales de cuidado personal, por lo que la pantalla  principal  de  la aplicación  mostrará  un  listado de todos los  centros  existentes  en  la aplicación, pudiendo el cliente buscar su ciudad para localizar los centros más cercanos a su zona. Además,  podrá  filtrar  por  el  tipo  de  centro  que  desee  buscar  haciendo  uso  de  unas  tarjetas implementadas bajo el buscador. 
+`El uso principal de MySalon se basa en la gestión de citas en locales de cuidado personal, por lo que la pantalla  principal  de  la aplicación  mostrará  un  listado de todos los  centros  existentes  en  la aplicación, pudiendo el cliente buscar su ciudad para localizar los centros más cercanos a su zona. Además,  podrá  filtrar  por  el  tipo  de  centro  que  desee  buscar  haciendo  uso  de  unas  tarjetas implementadas bajo el buscador. 
 
-`  `Además, para mayor precisión a la hora de buscar en una ciudad, el cliente dispondrá de un mapa interactivo, a través del cual podrá visualizar los negocios cercanos a su zona. 
+`Además, para mayor precisión a la hora de buscar en una ciudad, el cliente dispondrá de un mapa interactivo, a través del cual podrá visualizar los negocios cercanos a su zona. 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.005.jpeg)![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.006.jpeg)
+![](main_mockup.jpeg)![](search_mockup.jpeg)
 
-`  `Como podemos ver, la navegación consistirá en un menú en la zona inferior de la pantalla, a través del cual podremos acceder a las diferentes pantallas de la aplicación, como son los centros favoritos, el buscador, la pantalla de consulta de citas pendientes o nuestro perfil. 
+`Como podemos ver, la navegación consistirá en un menú en la zona inferior de la pantalla, a través del cual podremos acceder a las diferentes pantallas de la aplicación, como son los centros favoritos, el buscador, la pantalla de consulta de citas pendientes o nuestro perfil. 
 
-`  `Una vez estemos en la pantalla principal, si seleccionamos uno de los locales, entraremos en la página de detalles de dicho centro, en la cual podremos ver una información más detallada sobre el negocio,  pudiendo  además  ver  los  diferentes  comentarios  que  tiene  o  comprobar  las  horas disponibles para coger cita. 
+`Una vez estemos en la pantalla principal, si seleccionamos uno de los locales, entraremos en la página de detalles de dicho centro, en la cual podremos ver una información más detallada sobre el negocio,  pudiendo  además  ver  los  diferentes  comentarios  que  tiene  o  comprobar  las  horas disponibles para coger cita. 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.007.jpeg)
+![](site_detail_mockup.jpeg)
 
-`  `Una vez entremos a ver la disponibilidad de cita nos encontraremos con un calendario, el cual, pinchando en cada día, podremos comprobar las diferentes horas que se encuentren disponibles a lo largo de ese día. 
+`Una vez entremos a ver la disponibilidad de cita nos encontraremos con un calendario, el cual, pinchando en cada día, podremos comprobar las diferentes horas que se encuentren disponibles a lo largo de ese día. 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.008.jpeg)![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.009.jpeg)
+![](set_day.jpeg)![](set_hour.jpeg)
 
-`  `Una vez finalicemos nuestra reserva, se nos mostrará una pantalla de confirmación, desde donde podremos acceder a nuestras reservas. 
+`Una vez finalicemos nuestra reserva, se nos mostrará una pantalla de confirmación, desde donde podremos acceder a nuestras reservas. 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.010.jpeg)
+![](appointment_complete_mockup.jpeg)
 
-`  `Además, una vez haya pasado nuestra hora de la reserva, se nos ofrecerá la posibilidad de realizar un comentario en el perfil del local que hayamos visitado, pudiendo incluir una imagen o vídeo del resultado y una valoración general de nuestra experiencia. 
+`Además, una vez haya pasado nuestra hora de la reserva, se nos ofrecerá la posibilidad de realizar un comentario en el perfil del local que hayamos visitado, pudiendo incluir una imagen o vídeo del resultado y una valoración general de nuestra experiencia. 
 
-![](Aspose.Words.fd6d50a2-5998-4afe-935e-3ccc249406ce.011.jpeg)
+![](comment_mockup.jpeg)
 
 **Modelo de negocio** 
 
